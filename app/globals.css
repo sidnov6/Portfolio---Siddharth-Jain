@@ -1,0 +1,303 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,800;0,9..144,900;1,9..144,700;1,9..144,800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ── Root tokens ───────────────────────────────── */
+:root {
+  --cream: #F8F5EE;
+  --green-forest: #1A3D2B;
+  --green-mid: #2D7A52;
+  --green-vivid: #3DAA72;
+  --ink: #1A1A18;
+  --muted: #8A9280;
+  --border: #E4E0D6;
+}
+
+/* ── Base ──────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+  background: var(--cream);
+}
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: rgba(61, 170, 114, 0.25); color: var(--ink); }
+
+/* ── Scrollbar ─────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: rgba(45, 122, 82, 0.3); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(45, 122, 82, 0.6); }
+
+/* ── Typography helpers ────────────────────────── */
+.font-display { font-family: 'Playfair Display', Georgia, serif; }
+
+/* ── Scroll reveal ─────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-32px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+.reveal-right {
+  opacity: 0;
+  transform: translateX(32px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+/* staggered children */
+.reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.2s; }
+.reveal-d3 { transition-delay: 0.3s; }
+.reveal-d4 { transition-delay: 0.4s; }
+
+/* ── Photo reveal (blur-to-focus) ──────────────── */
+.photo-reveal {
+  filter: blur(12px) brightness(0.9);
+  transform: scale(1.06);
+  opacity: 0.4;
+  transition: filter 1.1s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1.1s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.photo-reveal.active {
+  filter: blur(0px) brightness(1);
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* ── Wind turbine SVG animation ────────────────── */
+.turbine-blade-group {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: turbineSpin 3s linear infinite;
+}
+.turbine-blade-group-slow {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: turbineSpin 5s linear infinite;
+}
+@keyframes turbineSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ── Basketball SVG animation ──────────────────── */
+.bb-ball {
+  animation: bbDrop 0.75s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+}
+.bb-shadow {
+  animation: bbShadow 0.75s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+}
+@keyframes bbDrop {
+  0%, 100% { transform: translateY(0) scaleY(1) scaleX(1); }
+  45%       { transform: translateY(-44px) scaleY(1.04) scaleX(0.97); }
+  90%       { transform: translateY(2px) scaleY(0.88) scaleX(1.12); }
+}
+@keyframes bbShadow {
+  0%, 100% { transform: scaleX(1); opacity: 0.25; }
+  45%       { transform: scaleX(0.5); opacity: 0.1; }
+  90%       { transform: scaleX(1.15); opacity: 0.35; }
+}
+
+/* ── Heartbeat / pulse line ────────────────────── */
+.heartbeat-line {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawHeart 2s ease forwards, pulseStroke 2s ease 2s infinite;
+}
+@keyframes drawHeart {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes pulseStroke {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+/* ── Signal wave (5G) ──────────────────────────── */
+.signal-ring {
+  transform-origin: center;
+  animation: signalExpand 2s ease-out infinite;
+}
+.signal-ring:nth-child(2) { animation-delay: 0.5s; }
+.signal-ring:nth-child(3) { animation-delay: 1s; }
+@keyframes signalExpand {
+  0%   { opacity: 0.9; transform: scale(0.3); }
+  100% { opacity: 0;   transform: scale(1.5); }
+}
+
+/* ── Gradient text ─────────────────────────────── */
+.gradient-text-green {
+  background: linear-gradient(135deg, #1A3D2B 0%, #3DAA72 50%, #1A3D2B 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmerGreen 4s linear infinite;
+}
+@keyframes shimmerGreen {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ── Blob morphing bg ──────────────────────────── */
+.blob {
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  animation: blobMorph 10s ease-in-out infinite;
+}
+@keyframes blobMorph {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  25%       { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  50%       { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; }
+  75%       { border-radius: 60% 40% 60% 30% / 70% 30% 50% 60%; }
+}
+
+/* ── Noise texture overlay ─────────────────────── */
+.noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* ── Card styles ───────────────────────────────── */
+.card-lift {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-lift:hover {
+  transform: translateY(-6px) rotate(-0.3deg);
+  box-shadow: 0 20px 60px rgba(26, 61, 43, 0.12);
+}
+
+/* ── Sticky journey progress bar ───────────────── */
+.progress-bar-fill {
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Grain overlay on sections ─────────────────── */
+.section-grain {
+  position: relative;
+}
+.section-grain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Tag / badge ───────────────────────────────── */
+.tag-green {
+  background: rgba(61, 170, 114, 0.12);
+  color: #1A3D2B;
+  border: 1px solid rgba(61, 170, 114, 0.25);
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.tag-orange {
+  background: rgba(240, 78, 35, 0.1);
+  color: #C03810;
+  border: 1px solid rgba(240, 78, 35, 0.2);
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* ── Journey section ───────────────────────────── */
+.journey-bg-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.journey-bg-image.entering {
+  opacity: 1;
+  filter: blur(0px) brightness(0.95);
+  transform: scale(1);
+}
+.journey-bg-image.leaving {
+  opacity: 0;
+  filter: blur(8px);
+  transform: scale(1.04);
+}
+
+/* ── Wind turbine wind lines ───────────────────── */
+@keyframes windLine {
+  0%   { opacity: 0; transform: translateX(-8px); }
+  50%  { opacity: 1; transform: translateX(0px); }
+  100% { opacity: 0; transform: translateX(6px); }
+}
+
+/* ── Scroll hint arrow ─────────────────────────── */
+@keyframes scrollHint {
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  50%       { transform: translateY(8px); opacity: 1; }
+}
+
+/* ── Floating particles ────────────────────────── */
+.particle-green {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #3DAA72;
+  border-radius: 50%;
+  animation: floatParticle var(--dur, 6s) ease-in-out var(--delay, 0s) infinite;
+}
+@keyframes floatParticle {
+  0%, 100% { transform: translateY(0) translateX(0) scale(1); opacity: 0.3; }
+  33%       { transform: translateY(-20px) translateX(8px) scale(1.2); opacity: 0.6; }
+  66%       { transform: translateY(-10px) translateX(-6px) scale(0.9); opacity: 0.4; }
+}
+
+/* ── Globe placeholder ─────────────────────────── */
+.globe-ring {
+  animation: globeRotate 20s linear infinite;
+  transform-origin: center;
+}
+@keyframes globeRotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── Marquee ───────────────────────────────────── */
+.marquee-track {
+  animation: marquee 25s linear infinite;
+  display: flex;
+  width: max-content;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}

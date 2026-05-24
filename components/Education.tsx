@@ -1,0 +1,188 @@
+'use client'
+import { useEffect, useRef } from 'react'
+import { useLang } from '@/lib/language-context'
+
+const schools = [
+  {
+    name: 'Frankfurt School of Finance & Management',
+    short: 'Frankfurt School',
+    degree: { en: 'MSc Artificial Intelligence & Data Science', de: 'MSc Künstliche Intelligenz & Data Science' },
+    period: '2026 – 2028',
+    location: { en: 'Frankfurt, Germany 🇩🇪', de: 'Frankfurt, Deutschland 🇩🇪' },
+    status: { en: 'In Progress', de: 'Laufend' },
+    brand: '#006B38',
+    brandLight: 'rgba(0,107,56,0.07)',
+    photo: '/education/frankfurt-school.jpg',
+    description: {
+      en: "Pursuing an MSc in AI & Data Science at one of Europe's leading finance and management schools, located in the heart of Frankfurt — Germany's financial capital.",
+      de: 'Studium des MSc in KI & Data Science an einer der führenden Finanz- und Managementhochschulen Europas, im Herzen von Frankfurt — Deutschlands Finanzhauptstadt.',
+    },
+    courses: ['Machine Learning', 'Deep Learning', 'NLP & LLMs', 'Data Engineering', 'AI Ethics', 'Cloud Computing', 'Research Methods'],
+    highlights: {
+      en: [
+        "One of Europe's top-ranked private business schools (FT-ranked)",
+        'Specialising in applied AI for financial and industrial systems',
+        'Located in Frankfurt — hub of European finance and fintech',
+        'Research focus: enterprise LLMs and data-intensive AI systems',
+      ],
+      de: [
+        'Eine der bestplatzierten privaten Wirtschaftshochschulen Europas (FT-Ranking)',
+        'Schwerpunkt auf angewandter KI für Finanz- und Industriesysteme',
+        'In Frankfurt — Zentrum europäischer Finanz- und Fintechbranche',
+        'Forschungsschwerpunkt: Unternehmens-LLMs und datenintensive KI-Systeme',
+      ],
+    },
+    accentText: { en: 'FT-Ranked · Frankfurt, Germany', de: 'FT-Ranking · Frankfurt, Deutschland' },
+  },
+  {
+    name: 'VIT Vellore',
+    short: 'Vellore Institute of Technology',
+    degree: { en: 'B.Tech — Information Technology', de: 'B.Tech — Informationstechnologie' },
+    period: '2021 – 2025',
+    location: { en: 'Vellore, Tamil Nadu, India 🇮🇳', de: 'Vellore, Tamil Nadu, Indien 🇮🇳' },
+    status: { en: 'Completed', de: 'Abgeschlossen' },
+    brand: '#2E3191',
+    brandLight: 'rgba(46,49,145,0.06)',
+    photo: '/education/vit-vellore.jpg',
+    description: {
+      en: "Completed B.Tech in IT from one of India's top-ranked private engineering universities, while completing 3 international research internships across the USA and India.",
+      de: 'B.Tech in IT an einer der bestplatzierten privaten Ingenieursuniversitäten Indiens abgeschlossen, mit 3 internationalen Forschungspraktika in den USA und Indien.',
+    },
+    courses: ['Data Structures & Algorithms', 'Database Systems', 'Machine Learning', 'Computer Networks', 'OS', 'Software Engineering', 'Linear Algebra & Probability'],
+    highlights: {
+      en: [
+        'Top 10 private engineering institute in India — QS World University Rankings & NIRF Research Rankings',
+        'Completed 3 international research internships during undergrad — Georgia Tech, Emory, IIT Jammu',
+        'National-level basketball player throughout all 4 years',
+        'Led ACM student chapter as Operations & Marketing Head',
+      ],
+      de: [
+        'Top 10 private Ingenieurseinrichtung in Indien — QS World University Rankings & NIRF Research Rankings',
+        '3 internationale Forschungspraktika während des Studiums absolviert — Georgia Tech, Emory, IIT Jammu',
+        'Nationaler Basketballspieler in allen 4 Studienjahren',
+        'ACM-Studentenkapitel als Betriebs- und Marketingleiter geführt',
+      ],
+    },
+    accentText: { en: 'QS & NIRF Top 10 · Vellore, India', de: 'QS & NIRF Top 10 · Vellore, Indien' },
+  },
+]
+
+export default function Education() {
+  const ref = useRef<HTMLElement>(null)
+  const { lang } = useLang()
+  const isDE = lang === 'de'
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      es => es.forEach(e => e.isIntersecting && e.target.classList.add('visible')),
+      { threshold: 0.12 }
+    )
+    ref.current?.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => io.observe(el))
+    return () => io.disconnect()
+  }, [])
+
+  return (
+    <section id="education" ref={ref} className="py-28 px-6 bg-[#F8F5EE] section-grain">
+      <div className="max-w-6xl mx-auto">
+        <p className="reveal text-xs font-mono uppercase tracking-[0.2em] text-[#3DAA72] mb-4">
+          {isDE ? '05 / Ausbildung' : '05 / Education'}
+        </p>
+        <h2 className="reveal font-display text-[clamp(2.2rem,5vw,3.8rem)] font-black text-[#1A1A18] mb-3 leading-tight">
+          {isDE ? <>Akademische <em className="text-[#1A3D2B]">Grundlagen</em></> : <>Academic <em className="text-[#1A3D2B]">Foundations</em></>}
+        </h2>
+        <p className="reveal text-[#6E7A70] text-lg max-w-2xl mb-16 leading-relaxed">
+          {isDE
+            ? 'Von VIT Vellore zur Frankfurt School — die Grundlagen für praxisnahe Unternehmens-KI.'
+            : 'From VIT Vellore to Frankfurt School — building the foundations that power real-world enterprise AI.'}
+        </p>
+
+        <div className="space-y-8">
+          {schools.map((s, idx) => (
+            <div
+              key={s.name}
+              className={`reveal reveal-d${idx + 1} bg-white border border-[#E4E0D6] rounded-3xl overflow-hidden shadow-sm card-lift`}
+            >
+              <div className="grid lg:grid-cols-5">
+                {/* Photo panel */}
+                <div
+                  className="lg:col-span-2 relative min-h-[220px] lg:min-h-0 overflow-hidden flex items-center justify-center"
+                  style={{ background: s.brandLight }}
+                >
+                  {/* Actual photo */}
+                  <img
+                    src={s.photo}
+                    alt={s.name}
+                    className="photo-reveal active absolute inset-0 w-full h-full object-cover"
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                  />
+                  {/* Overlay */}
+                  <div className="absolute inset-0" style={{ background: `linear-gradient(135deg, ${s.brand}20, transparent 60%)` }} />
+
+                  {/* Brand identity block */}
+                  <div className="relative z-10 p-8 flex flex-col justify-between h-full">
+                    {/* Status */}
+                    <div
+                      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full w-fit"
+                      style={{ background: `${s.brand}15`, border: `1.5px solid ${s.brand}30` }}
+                    >
+                      <span className={`w-2 h-2 rounded-full ${s.status.en === 'In Progress' ? 'animate-pulse' : ''}`}
+                        style={{ background: s.brand }} />
+                      <span className="text-xs font-semibold font-mono" style={{ color: s.brand }}>{isDE ? s.status.de : s.status.en}</span>
+                    </div>
+
+                    <div className="mt-auto">
+                      {/* School initial large */}
+                      <div
+                        className="font-display text-[80px] font-black leading-none mb-2 opacity-10"
+                        style={{ color: s.brand }}
+                      >
+                        {s.short.split(' ').map(w => w[0]).join('').slice(0, 3)}
+                      </div>
+                      <p className="text-xs font-mono text-[#8A9280]">{isDE ? s.accentText.de : s.accentText.en}</p>
+                      <p className="text-[10px] font-mono text-[#B0A898] mt-1">📷 Add campus photo</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Content panel */}
+                <div className="lg:col-span-3 p-8">
+                  <div className="flex flex-wrap items-start justify-between gap-3 mb-5">
+                    <div>
+                      <h3 className="font-display text-xl font-black text-[#1A1A18] leading-tight mb-1">{isDE ? s.degree.de : s.degree.en}</h3>
+                      <p className="font-semibold text-sm" style={{ color: s.brand }}>{s.name}</p>
+                      <p className="text-xs font-mono text-[#8A9280] mt-1">{s.period} · {isDE ? s.location.de : s.location.en}</p>
+                    </div>
+                  </div>
+
+                  <p className="text-[#6E7A70] text-sm leading-relaxed mb-5">{isDE ? s.description.de : s.description.en}</p>
+
+                  <ul className="space-y-2 mb-6">
+                    {(isDE ? s.highlights.de : s.highlights.en).map((h, i) => (
+                      <li key={i} className="flex items-start gap-2.5 text-sm text-[#4A4A47]">
+                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: s.brand }} />
+                        {h}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div>
+                    <p className="text-[10px] font-mono uppercase tracking-[0.15em] text-[#8A9280] mb-2.5">
+                      {isDE ? 'Hauptfächer' : 'Key Courses'}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {s.courses.map(c => (
+                        <span key={c} className="text-xs px-2.5 py-1 rounded-full font-medium"
+                          style={{ background: s.brandLight, color: s.brand, border: `1px solid ${s.brand}20` }}>
+                          {c}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
