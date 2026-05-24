@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
-import { Github, ExternalLink, Lock } from 'lucide-react'
+import { Github, ExternalLink, Lock, X, Maximize2 } from 'lucide-react'
 import { useLang } from '@/lib/language-context'
 
 const projects = [
@@ -66,6 +66,19 @@ const projects = [
   },
   {
     id: 6, category: 'Gen AI',
+    title: 'Dam Rehabilitation Chatbot',
+    org: 'Personal Project',
+    desc: 'AI-powered chatbot for dam condition assessment and rehabilitation planning. Guides engineers through structural inspection, interprets damage data, and recommends maintenance strategies.',
+    impact: 'Civil Infrastructure AI · Live',
+    tags: ['Streamlit', 'Python', 'LLM', 'AI Chatbot', 'Civil AI'],
+    color: '#1A6B8A', bg: 'rgba(26,107,138,0.06)',
+    live: true,
+    github: 'https://github.com/sidnov6/Dam-Rehabilitation-Chatbot',
+    demoUrl: 'https://dam-rehabilitation-chatbot-75ykbjzaxmyugbchirtoxp.streamlit.app/?embed=true',
+    demoFallback: 'https://dam-rehabilitation-chatbot-75ykbjzaxmyugbchirtoxp.streamlit.app/',
+  },
+  {
+    id: 7, category: 'Gen AI',
     title: 'LLM-Powered BI Assistant',
     org: 'Personal Project',
     desc: 'Natural language interface for business intelligence. Translates plain-English queries to SQL, executes against live DB, and returns insight summaries with charts.',
@@ -75,7 +88,7 @@ const projects = [
     live: true, github: 'https://github.com/sidnov6',
   },
   {
-    id: 7, category: 'Data Engineering',
+    id: 8, category: 'Data Engineering',
     title: 'Real-Time Pipeline Framework',
     org: 'Personal Project',
     desc: 'Scalable streaming pipeline with Kafka + Spark Streaming. Supports real-time analytics, event processing, and ML feature generation with a Grafana monitoring dashboard.',
@@ -88,9 +101,63 @@ const projects = [
 
 const filters = ['All', 'Gen AI', 'Data Science', 'Data Engineering']
 
+function LiveDemoModal({ title, demoUrl, fallbackUrl, color, onClose }: {
+  title: string
+  demoUrl: string
+  fallbackUrl: string
+  color: string
+  onClose: () => void
+}) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-black/60 backdrop-blur-sm" onClick={onClose}>
+      <div
+        className="relative w-full sm:max-w-5xl h-[92vh] sm:h-[85vh] bg-white sm:rounded-2xl overflow-hidden shadow-2xl flex flex-col"
+        onClick={e => e.stopPropagation()}
+      >
+        {/* Modal header */}
+        <div className="flex items-center justify-between px-5 py-3 border-b border-[#E4E0D6] bg-white flex-shrink-0">
+          <div className="flex items-center gap-3">
+            <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: color }} />
+            <div>
+              <p className="font-bold text-[#1A1A18] text-sm">{title}</p>
+              <p className="text-[10px] text-[#8A9280] font-mono">Live Demo · Streamlit</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <a
+              href={fallbackUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-xs font-medium text-[#1A3D2B] hover:underline px-3 py-1.5 rounded-lg hover:bg-[#E8F5EE] transition-colors"
+            >
+              <Maximize2 size={12} />
+              Full screen
+            </a>
+            <button
+              onClick={onClose}
+              className="w-8 h-8 rounded-lg flex items-center justify-center text-[#8A9280] hover:text-[#1A1A18] hover:bg-[#F8F5EE] transition-colors"
+            >
+              <X size={16} />
+            </button>
+          </div>
+        </div>
+
+        {/* iframe */}
+        <iframe
+          src={demoUrl}
+          className="flex-1 w-full border-0"
+          title={title}
+          allow="microphone; camera"
+        />
+      </div>
+    </div>
+  )
+}
+
 export default function Projects() {
   const ref = useRef<HTMLElement>(null)
   const [cat, setCat] = useState('All')
+  const [demo, setDemo] = useState<typeof projects[0] | null>(null)
   const { lang } = useLang()
   const isDE = lang === 'de'
 
@@ -101,6 +168,13 @@ export default function Projects() {
     )
     ref.current?.querySelectorAll('.reveal').forEach(el => io.observe(el))
     return () => io.disconnect()
+  }, [])
+
+  // Close modal on Escape
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setDemo(null) }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
   }, [])
 
   const shown = cat === 'All' ? projects : projects.filter(p => p.category === cat)
@@ -136,7 +210,6 @@ export default function Projects() {
             <div key={p.id} className="group bg-[#F8F5EE] border border-[#E4E0D6] rounded-2xl overflow-hidden card-lift flex flex-col">
               {/* Top color band + photo slot */}
               <div className="relative h-36 flex items-center justify-center overflow-hidden" style={{ background: p.bg }}>
-                {/* Photo (when added) */}
                 <img src={`/projects/project-${p.id}.jpg`} alt="" className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-20 transition-opacity duration-500"
                   onError={() => {}} />
                 {/* Category pill */}
@@ -153,8 +226,6 @@ export default function Projects() {
                     <span className="text-[10px] font-mono text-[#1A3D2B] font-bold">LIVE</span>
                   </div>
                 )}
-                {/* Photo hint */}
-                <span className="absolute bottom-2 left-2 text-[9px] font-mono text-[#C0B8B0] opacity-0 group-hover:opacity-100 transition-opacity">📷 drop photo here</span>
               </div>
 
               <div className="p-5 flex flex-col flex-1">
@@ -188,10 +259,18 @@ export default function Projects() {
                       <Lock size={13} /> Enterprise
                     </span>
                   )}
-                  {p.live ? (
-                    <a href="#" className="ml-auto flex items-center gap-1.5 text-xs font-semibold transition-colors" style={{ color: p.color }}>
+                  {'demoUrl' in p && p.demoUrl ? (
+                    <button
+                      onClick={() => setDemo(p)}
+                      className="ml-auto flex items-center gap-1.5 text-xs font-semibold transition-colors hover:opacity-80"
+                      style={{ color: p.color }}
+                    >
                       <ExternalLink size={13} /> Live Demo
-                    </a>
+                    </button>
+                  ) : p.live && !('demoUrl' in p) ? (
+                    <span className="ml-auto text-[10px] font-mono text-[#C0B8B0]">
+                      {isDE ? 'Demnächst' : 'Coming soon'}
+                    </span>
                   ) : (
                     <span className="ml-auto text-[10px] font-mono text-[#C0B8B0]">Private / NDA</span>
                   )}
@@ -205,6 +284,17 @@ export default function Projects() {
           More on <a href="https://github.com/sidnov6" target="_blank" className="text-[#1A3D2B] hover:underline">github.com/sidnov6</a>
         </p>
       </div>
+
+      {/* Live Demo Modal */}
+      {demo && 'demoUrl' in demo && demo.demoUrl && (
+        <LiveDemoModal
+          title={demo.title}
+          demoUrl={demo.demoUrl}
+          fallbackUrl={'demoFallback' in demo && demo.demoFallback ? demo.demoFallback : demo.demoUrl}
+          color={demo.color}
+          onClose={() => setDemo(null)}
+        />
+      )}
     </section>
   )
 }
