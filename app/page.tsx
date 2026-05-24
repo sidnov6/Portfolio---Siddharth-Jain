@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { LanguageProvider } from '@/lib/language-context'
+import { LanguageProvider, useLang } from '@/lib/language-context'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import About from '@/components/About'
@@ -14,10 +14,10 @@ import Footer from '@/components/Footer'
 import Chatbot from '@/components/Chatbot'
 import { MessageCircle } from 'lucide-react'
 
-export default function Home() {
+function PageContent() {
   const [chatOpen, setChatOpen] = useState(false)
+  const { lang } = useLang()
   return (
-    <LanguageProvider>
     <main className="bg-[#F8F5EE]">
       <Navbar onChatOpen={() => setChatOpen(true)} />
       <Hero />
@@ -30,7 +30,6 @@ export default function Home() {
       <Contact />
       <Footer />
 
-      {/* Floating chat button */}
       {!chatOpen && (
         <button
           onClick={() => setChatOpen(true)}
@@ -38,13 +37,19 @@ export default function Home() {
           style={{ boxShadow: '0 8px 32px rgba(26,61,43,0.35)' }}
         >
           <MessageCircle size={18} />
-          Ask AI About Me
+          {lang === 'de' ? 'KI fragen' : 'Ask AI About Me'}
           <span className="w-2 h-2 rounded-full bg-[#3DAA72] animate-pulse" />
         </button>
       )}
-
       <Chatbot isOpen={chatOpen} onClose={() => setChatOpen(false)} />
     </main>
+  )
+}
+
+export default function Home() {
+  return (
+    <LanguageProvider>
+      <PageContent />
     </LanguageProvider>
   )
 }

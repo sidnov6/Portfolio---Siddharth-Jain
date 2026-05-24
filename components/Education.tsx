@@ -138,13 +138,12 @@ export default function Education() {
                         {s.short.split(' ').map(w => w[0]).join('').slice(0, 3)}
                       </div>
                       <p className="text-xs font-mono text-[#8A9280]">{isDE ? s.accentText.de : s.accentText.en}</p>
-                      <p className="text-[10px] font-mono text-[#B0A898] mt-1">📷 Add campus photo</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Content panel */}
-                <div className="lg:col-span-3 p-8">
+                <div className="lg:col-span-3 p-6 lg:p-8">
                   <div className="flex flex-wrap items-start justify-between gap-3 mb-5">
                     <div>
                       <h3 className="font-display text-xl font-black text-[#1A1A18] leading-tight mb-1">{isDE ? s.degree.de : s.degree.en}</h3>

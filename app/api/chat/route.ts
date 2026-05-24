@@ -9,7 +9,7 @@ const SYSTEM_PROMPT = `You are Siddharth Jain's personal AI assistant on his por
 - Email: sidnov6@gmail.com
 - LinkedIn: https://www.linkedin.com/in/siddharth-jain-b33394219/
 - GitHub: https://github.com/sidnov6
-- Age: ~24 years old (born ~2001)
+- Age: 22 years old (born November 23, 2003)
 - Nationality: Indian
 
 ## PROFESSIONAL ROLE
@@ -104,7 +104,7 @@ Core Domains: Data Engineering, Analytics Engineering, Predictive Analytics, Bus
 
 ## JOURNEY
 India (Vellore for BTech) → IIT Jammu (research) → Atlanta, USA (Georgia Tech + Emory research) → India (Pune, Suzlon CEO Office) → Frankfurt, Germany (Frankfurt School Masters)
-All by age 24!
+All by age 22!
 
 ## VOLUNTEERING
 1. Suzlon Energy CSR — Volunteer Educator (Jun 2025–Present, Pune)
@@ -144,7 +144,7 @@ ACM Student Chapter — Operations & Marketing Head (Mar 2022–Aug 2024, VIT Ve
 
 export async function POST(req: NextRequest) {
   try {
-    const { messages } = await req.json()
+    const { messages, lang } = await req.json()
 
     const apiKey = process.env.GEMINI_API_KEY
     if (!apiKey) {
@@ -154,10 +154,14 @@ export async function POST(req: NextRequest) {
       )
     }
 
+    const languageInstruction = lang === 'de'
+      ? '\n\n## LANGUAGE INSTRUCTION\nDu MUSST auf Deutsch antworten. Alle Antworten müssen auf Deutsch (Deutsch) sein. Sei natürlich und flüssig auf Deutsch.'
+      : ''
+
     const genAI = new GoogleGenerativeAI(apiKey)
     const model = genAI.getGenerativeModel({
       model: 'gemini-2.5-flash',
-      systemInstruction: SYSTEM_PROMPT,
+      systemInstruction: SYSTEM_PROMPT + languageInstruction,
     })
 
     // Build conversation history for Gemini (must start with a user turn)

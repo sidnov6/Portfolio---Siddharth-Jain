@@ -466,7 +466,7 @@ export default function Journey() {
           <div className="relative z-10 h-full flex flex-col">
 
             {/* Section label */}
-            <div className="pt-24 px-6 lg:px-16 pb-4 flex items-center justify-between">
+            <div className="pt-16 lg:pt-24 px-4 lg:px-16 pb-4 flex items-center justify-between">
               <p className="text-xs font-mono uppercase tracking-[0.2em] text-[#1A3D2B] font-semibold">
                 {isDE ? '02 / Beruflicher Werdegang' : '02 / Professional Journey'}
               </p>
@@ -497,14 +497,14 @@ export default function Journey() {
             </div>
 
             {/* Main content grid */}
-            <div className="flex-1 grid lg:grid-cols-2 gap-0 items-center px-6 lg:px-16 pb-16">
+            <div className="flex-1 grid lg:grid-cols-2 gap-0 items-center px-4 lg:px-16 pb-4 lg:pb-16">
 
               {/* Left — company info + animated SVG */}
               <div className="flex flex-col justify-center pr-0 lg:pr-12">
 
                 {/* Company brand badge */}
                 <div
-                  className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full mb-6 w-fit transition-all duration-500"
+                  className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full mb-3 lg:mb-6 w-fit transition-all duration-500"
                   style={{ background: exp.brandLight, border: `1.5px solid ${exp.brand}30` }}
                 >
                   <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: exp.brand }} />
@@ -513,16 +513,16 @@ export default function Journey() {
                   </span>
                 </div>
 
-                <h2 className="font-display text-[clamp(3rem,6vw,5rem)] font-black leading-[0.95] text-[#1A1A18] mb-3 transition-all duration-500">
+                <h2 className="font-display text-[clamp(2rem,6vw,5rem)] font-black leading-[0.95] text-[#1A1A18] mb-3 transition-all duration-500">
                   {exp.company}
                 </h2>
-                <p className="font-display font-bold text-xl mb-1" style={{ color: exp.brand }}>{isDE ? exp.role.de : exp.role.en}</p>
+                <p className="font-display font-bold text-base lg:text-xl mb-1" style={{ color: exp.brand }}>{isDE ? exp.role.de : exp.role.en}</p>
                 <p className="font-display text-[#4A4A47] text-base font-semibold mb-1">{isDE ? exp.sub.de : exp.sub.en}</p>
                 <p className="font-mono text-xs text-[#8A9280] mb-5">
                   {exp.period} · {isDE ? exp.location.de : exp.location.en}
                 </p>
 
-                <p className="font-display text-[#1A1A18] text-xl leading-snug font-bold max-w-md mb-8">
+                <p className="font-display text-[#1A1A18] text-sm lg:text-xl leading-snug font-bold max-w-md mb-4 lg:mb-8">
                   {isDE ? exp.headline.de : exp.headline.en}
                 </p>
 
@@ -538,8 +538,8 @@ export default function Journey() {
                 </p>
               </div>{/* end left column */}
 
-              {/* Right — achievement bullets */}
-              <div className="flex flex-col justify-center pl-0 lg:pl-12 lg:border-l border-[#E4E0D6]/60 lg:bg-white/40 lg:backdrop-blur-[1px] lg:rounded-2xl lg:px-8 lg:py-6">
+              {/* Right — achievement bullets (desktop only) */}
+              <div className="hidden lg:flex flex-col justify-center pl-0 lg:pl-12 lg:border-l border-[#E4E0D6]/60 lg:bg-white/40 lg:backdrop-blur-[1px] lg:rounded-2xl lg:px-8 lg:py-6">
                 <div
                   className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-xl mb-6 w-fit"
                   style={{ background: exp.brand }}

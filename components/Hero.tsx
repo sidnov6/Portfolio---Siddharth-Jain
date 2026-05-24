@@ -176,7 +176,7 @@ export default function Hero() {
       </div>
 
       {/* Main content */}
-      <div className="relative z-10 max-w-6xl mx-auto px-6 pt-28 pb-20">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 pt-20 sm:pt-28 pb-16 sm:pb-20">
 
         {/* Availability chip */}
         <div className="reveal mb-8 inline-flex items-center gap-2.5 px-4 py-2 bg-white border border-[#D6EDE2] rounded-full shadow-sm">
@@ -201,7 +201,7 @@ export default function Hero() {
         </div>
 
         {/* Tagline */}
-        <p className="reveal reveal-d3 text-[#3D3D3A] text-xl max-w-xl leading-relaxed mb-10">
+        <p className="reveal reveal-d3 text-[#3D3D3A] text-base sm:text-xl max-w-xl leading-relaxed mb-10">
           {isDE
             ? <>Ich entwickle Unternehmens-KI, die messbare Ergebnisse liefert —<strong className="text-[#1A3D2B] font-semibold"> 4,8 Mio. $ Einsparungen</strong> bei Suzlon. Forscher am Georgia Tech. Student an der Frankfurt School. Nationaler Basketballspieler.</>
             : <>I build enterprise AI that moves needles —<strong className="text-[#1A3D2B] font-semibold"> $4.8M in savings</strong> at Suzlon. Georgia Tech researcher. Frankfurt School student. National basketball player.</>
@@ -238,7 +238,7 @@ export default function Hero() {
         </div>
 
         {/* Stats strip */}
-        <div ref={statsRef} className="mt-20 grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div ref={statsRef} className="mt-10 sm:mt-20 grid grid-cols-2 sm:grid-cols-4 gap-4">
           {stats[lang].map((s, i) => (
             <div key={s.label} className={`p-5 bg-white rounded-2xl border border-[#E4E0D6] shadow-sm card-lift transition-all duration-700 ${statsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
               style={{ transitionDelay: `${i * 0.1}s` }}>

@@ -1,17 +1,28 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
 import { X, Send, Bot, User, Minimize2, Maximize2, Loader2, Sparkles } from 'lucide-react'
+import { useLang } from '@/lib/language-context'
 
 type Message = { role: 'user' | 'assistant'; content: string; id: string }
 
-const starters = [
-  'What did Siddharth build at Suzlon?',
-  'Tell me about his Georgia Tech work',
-  'What is his tech stack?',
-  'Is he available for hiring?',
-  'Tell me about his basketball career',
-  'What are his research publications?',
-]
+const starters = {
+  en: [
+    'What did Siddharth build at Suzlon?',
+    'Tell me about his Georgia Tech work',
+    'What is his tech stack?',
+    'Is he available for hiring?',
+    'Tell me about his basketball career',
+    'What are his research publications?',
+  ],
+  de: [
+    'Was hat Siddharth bei Suzlon gebaut?',
+    'Erzähl mir von seiner Arbeit am Georgia Tech',
+    'Was ist sein Tech-Stack?',
+    'Ist er für Jobs verfügbar?',
+    'Erzähl mir von seiner Basketball-Karriere',
+    'Was sind seine Forschungspublikationen?',
+  ],
+}
 
 function Bubble({ msg }: { msg: Message }) {
   const isUser = msg.role === 'user'
@@ -54,9 +65,13 @@ function Typing() {
 }
 
 export default function Chatbot({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const { lang } = useLang()
+  const isDE = lang === 'de'
   const [messages, setMessages] = useState<Message[]>([{
     id: '0', role: 'assistant',
-    content: "Hi! I'm Siddharth's AI assistant. Ask me anything about his work, research, skills, or even his basketball career!",
+    content: lang === 'de'
+      ? "Hallo! Ich bin Siddharthss KI-Assistent. Frag mich alles über seine Arbeit, Forschung, Fähigkeiten oder Basketball!"
+      : "Hi! I'm Siddharth's AI assistant. Ask me anything about his work, research, skills, or even his basketball career!",
   }])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
@@ -80,7 +95,7 @@ export default function Chatbot({ isOpen, onClose }: { isOpen: boolean; onClose:
     setInput('')
     setLoading(true)
     try {
-      const res  = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: next }) })
+      const res  = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: next, lang }) })
       const data = await res.json()
       setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: 'assistant', content: data.message ?? data.error ?? 'Sorry, try again!' }])
     } catch {
@@ -111,7 +126,7 @@ export default function Chatbot({ isOpen, onClose }: { isOpen: boolean; onClose:
               <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-[#3DAA72] rounded-full border-2 border-white animate-pulse" />
             </div>
             <div>
-              <p className="font-bold text-[#1A1A18] text-sm">Ask About Siddharth</p>
+              <p className="font-bold text-[#1A1A18] text-sm">{isDE ? 'Frag über Siddharth' : 'Ask About Siddharth'}</p>
               <p className="text-[10px] text-[#8A9280] font-mono">Powered by Gemini · Free</p>
             </div>
           </div>
@@ -139,9 +154,11 @@ export default function Chatbot({ isOpen, onClose }: { isOpen: boolean; onClose:
             {/* Quick starters */}
             {messages.length <= 1 && (
               <div className="px-4 pb-2">
-                <p className="text-[10px] font-mono text-[#B0A898] mb-2 uppercase tracking-widest">Quick questions</p>
+                <p className="text-[10px] font-mono text-[#B0A898] mb-2 uppercase tracking-widest">
+                  {isDE ? 'Schnellfragen' : 'Quick questions'}
+                </p>
                 <div className="flex flex-wrap gap-1.5">
-                  {starters.map(s => (
+                  {starters[lang].map(s => (
                     <button key={s} onClick={() => send(s)}
                       className="text-[11px] px-2.5 py-1.5 bg-white border border-[#E4E0D6] text-[#6E7A70] rounded-lg hover:border-[#1A3D2B]/30 hover:text-[#1A3D2B] transition-all">
                       {s}
@@ -157,7 +174,7 @@ export default function Chatbot({ isOpen, onClose }: { isOpen: boolean; onClose:
                 <input ref={inputRef} type="text" value={input}
                   onChange={e => setInput(e.target.value)}
                   onKeyDown={e => e.key === 'Enter' && !e.shiftKey && send()}
-                  placeholder="Ask anything about Siddharth…"
+                  placeholder={isDE ? 'Frag alles über Siddharth…' : 'Ask anything about Siddharth…'}
                   className="flex-1 bg-[#F8F5EE] border border-[#E4E0D6] rounded-xl px-4 py-2.5 text-[#1A1A18] text-sm placeholder-[#C0B8B0] focus:outline-none focus:border-[#1A3D2B]/40 focus:ring-2 focus:ring-[#1A3D2B]/10 transition-all" />
                 <button onClick={() => send()} disabled={!input.trim() || loading}
                   className="w-10 h-10 rounded-xl bg-[#1A3D2B] flex items-center justify-center text-white hover:bg-[#2D7A52] transition-all disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0">

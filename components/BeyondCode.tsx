@@ -226,7 +226,7 @@ export default function BeyondCode() {
                 </div>
 
                 {/* Content panel */}
-                <div className={`p-8 flex flex-col justify-center ${isEven ? 'order-2' : 'lg:order-1'}`}>
+                <div className={`p-6 sm:p-8 flex flex-col justify-center ${isEven ? 'order-2' : 'lg:order-1'}`}>
                   <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full w-fit mb-4"
                     style={{ background: `${p.color}12`, border: `1.5px solid ${p.color}25` }}>
                     <span className="text-xs font-mono font-semibold" style={{ color: p.color }}>
