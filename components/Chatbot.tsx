@@ -99,7 +99,7 @@ export default function Chatbot({ isOpen, onClose }: { isOpen: boolean; onClose:
       const data = await res.json()
       setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: 'assistant', content: data.message ?? data.error ?? 'Sorry, try again!' }])
     } catch {
-      setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: 'assistant', content: '⚠️ Connection error. Make sure GEMINI_API_KEY is set in .env.local' }])
+      setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: 'assistant', content: '⚠️ Connection error. Please try again!' }])
     } finally {
       setLoading(false)
     }
@@ -127,7 +127,7 @@ export default function Chatbot({ isOpen, onClose }: { isOpen: boolean; onClose:
             </div>
             <div>
               <p className="font-bold text-[#1A1A18] text-sm">{isDE ? 'Frag über Siddharth' : 'Ask About Siddharth'}</p>
-              <p className="text-[10px] text-[#8A9280] font-mono">Powered by Gemini · Free</p>
+              <p className="text-[10px] text-[#8A9280] font-mono">Powered by Groq · Free</p>
             </div>
           </div>
           <div className="flex items-center gap-1">
