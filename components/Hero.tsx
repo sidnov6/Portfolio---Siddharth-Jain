@@ -50,11 +50,11 @@ function Polaroid({ src, caption, rotate, style }: {
       style={{ transform: rotate, transition: 'transform 0.35s cubic-bezier(0.16,1,0.3,1)', ...style }}
     >
       <div
-        className="bg-white p-3 pb-9 shadow-[0_12px_40px_rgba(0,0,0,0.14)] transition-transform duration-300 group-hover:scale-110"
-        style={{ width: '148px' }}
+        className="bg-white p-3.5 pb-10 shadow-[0_14px_44px_rgba(0,0,0,0.16)] transition-transform duration-300 group-hover:scale-110"
+        style={{ width: '185px' }}
       >
-        <img src={src} alt="" className="w-full h-[108px] object-cover object-top" onError={e => { (e.target as HTMLImageElement).style.display = 'none' }} />
-        <p className="text-center text-[9px] font-mono text-[#8A9280] mt-2 tracking-wide">{caption}</p>
+        <img src={src} alt="" className="w-full h-[135px] object-cover object-top" onError={e => { (e.target as HTMLImageElement).style.display = 'none' }} />
+        <p className="text-center text-[10px] font-mono text-[#8A9280] mt-2.5 tracking-wide">{caption}</p>
       </div>
     </div>
   )
@@ -133,7 +133,7 @@ export default function Hero() {
       </div>
 
       {/* LEFT polaroids — xl only */}
-      <div className="pointer-events-none absolute left-0 top-0 h-full hidden xl:block" style={{ width: '280px' }}>
+      <div className="pointer-events-none absolute left-0 top-0 h-full hidden xl:block" style={{ width: '320px' }}>
         <Polaroid
           src="/beyond/IMG_0401.jpg"
           caption="exploring cities"
@@ -149,7 +149,7 @@ export default function Hero() {
       </div>
 
       {/* RIGHT polaroids — xl only */}
-      <div className="pointer-events-none absolute right-0 top-0 h-full hidden xl:block" style={{ width: '300px' }}>
+      <div className="pointer-events-none absolute right-0 top-0 h-full hidden xl:block" style={{ width: '340px' }}>
         <Polaroid
           src="/beyond/IMG_5397.jpg"
           caption="Georgia Tech '24"
