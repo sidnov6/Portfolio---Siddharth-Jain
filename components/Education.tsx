@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useRef } from 'react'
 import { useLang } from '@/lib/language-context'
+import { GraduationCapSVG, OpenBookSVG } from '@/components/Decorations'
 
 const schools = [
   {
@@ -81,8 +82,19 @@ export default function Education() {
   }, [])
 
   return (
-    <section id="education" ref={ref} className="py-28 px-6 bg-[#F8F5EE] section-grain">
-      <div className="max-w-6xl mx-auto">
+    <section id="education" ref={ref} className="relative py-28 px-6 bg-[#F8F5EE] section-grain overflow-hidden">
+      {/* Background decorations */}
+      <div className="pointer-events-none absolute hidden lg:block opacity-[0.08] float-slow" style={{ right: '60px', top: '100px' }}>
+        <GraduationCapSVG size={130} color="#1A3D2B" />
+      </div>
+      <div className="pointer-events-none absolute hidden lg:block opacity-[0.07] float-slow-2" style={{ left: '50px', top: '350px' }}>
+        <OpenBookSVG size={160} color="#1A3D2B" />
+      </div>
+      <div className="pointer-events-none absolute hidden lg:block opacity-[0.08]" style={{ right: '80px', bottom: '120px' }}>
+        <GraduationCapSVG size={100} color="#1A3D2B" />
+      </div>
+
+      <div className="max-w-6xl mx-auto relative">
         <p className="reveal text-xs font-mono uppercase tracking-[0.2em] text-[#3DAA72] mb-4">
           {isDE ? '06 / Ausbildung' : '06 / Education'}
         </p>

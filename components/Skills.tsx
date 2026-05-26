@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import { useLang } from '@/lib/language-context'
+import { CodeBracketsSVG } from '@/components/Decorations'
 
 const categories = [
   {
@@ -72,8 +73,16 @@ export default function Skills() {
   }, [])
 
   return (
-    <section id="skills" ref={ref} className="py-28 px-6 bg-[#F8F5EE] section-grain">
-      <div className="max-w-6xl mx-auto">
+    <section id="skills" ref={ref} className="relative py-28 px-6 bg-[#F8F5EE] section-grain overflow-hidden">
+      {/* Background code brackets decoration */}
+      <div className="pointer-events-none absolute hidden lg:block opacity-[0.07] float-slow" style={{ right: '60px', top: '120px' }}>
+        <CodeBracketsSVG size={130} color="#1A3D2B" />
+      </div>
+      <div className="pointer-events-none absolute hidden lg:block opacity-[0.06] float-slow-2" style={{ left: '40px', bottom: '160px' }}>
+        <CodeBracketsSVG size={110} color="#1A3D2B" />
+      </div>
+
+      <div className="max-w-6xl mx-auto relative">
 
         {/* Header */}
         <p className="reveal text-xs font-mono uppercase tracking-[0.2em] text-[#3DAA72] mb-4">

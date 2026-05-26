@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from 'react'
 import { Github, Linkedin, Mail, ArrowDown, Download } from 'lucide-react'
 import { useLang } from '@/lib/language-context'
 import { track } from '@/lib/track'
+import { BasketballMiniSVG, GlobeSVG, StockLineSVG } from '@/components/Decorations'
 
 const roles = {
   en: ['Full Stack AI Engineer', 'Data Scientist', 'Gen AI Engineer', 'Data Engineer', 'Point Guard · Basketball'],
@@ -174,6 +175,21 @@ export default function Hero() {
       {/* Decorative wind turbine */}
       <div className="pointer-events-none absolute hidden xl:block opacity-[0.05]" style={{ right: '310px', top: '50px', ...parallax(0.12, 0.08) }}>
         <WindTurbine size={140} />
+      </div>
+
+      {/* Decorative globe (geopolitics) */}
+      <div className="pointer-events-none absolute hidden xl:block opacity-[0.07] float-slow" style={{ left: '330px', bottom: '90px', ...parallax(-0.08, 0.06) }}>
+        <GlobeSVG size={130} color="#1A3D2B" />
+      </div>
+
+      {/* Decorative basketball (sports) */}
+      <div className="pointer-events-none absolute hidden xl:block opacity-[0.08] float-slow-2" style={{ right: '380px', bottom: '180px', ...parallax(0.06, 0.05) }}>
+        <BasketballMiniSVG size={56} />
+      </div>
+
+      {/* Decorative stock line (finance pivot) */}
+      <div className="pointer-events-none absolute hidden xl:block opacity-[0.08]" style={{ left: '280px', top: '120px', ...parallax(0.05, 0.04) }}>
+        <StockLineSVG size={150} color="#003F88" />
       </div>
 
       {/* Main content */}

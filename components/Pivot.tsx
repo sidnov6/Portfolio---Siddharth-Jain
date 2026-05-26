@@ -7,6 +7,7 @@ import {
   LineChart, Search, Scale, BookOpen, Briefcase, GraduationCap,
   Sparkles, ArrowRight, Mail, Linkedin, Quote,
 } from 'lucide-react'
+import { CandlestickChartSVG, DollarCoinSVG, OpenBookSVG, StockLineSVG } from '@/components/Decorations'
 
 /* ─────────────────────────────────────────────────────────
    CEO QUOTES (paraphrased + attributed)
@@ -127,6 +128,23 @@ export default function Pivot() {
           WebkitMaskImage: 'linear-gradient(180deg, transparent, black 20%, black 80%, transparent)',
         }}
       />
+
+      {/* Floating finance decorations */}
+      <div className="pointer-events-none absolute hidden lg:block opacity-[0.10] float-slow" style={{ left: '40px', top: '120px' }}>
+        <CandlestickChartSVG size={180} />
+      </div>
+      <div className="pointer-events-none absolute hidden lg:block opacity-[0.12] float-slow-2" style={{ right: '40px', top: '200px' }}>
+        <DollarCoinSVG size={70} />
+      </div>
+      <div className="pointer-events-none absolute hidden lg:block opacity-[0.08] float-slow" style={{ left: '60px', bottom: '280px' }}>
+        <OpenBookSVG size={140} color="#003F88" />
+      </div>
+      <div className="pointer-events-none absolute hidden lg:block opacity-[0.10]" style={{ right: '60px', bottom: '160px' }}>
+        <StockLineSVG size={170} color="#003F88" />
+      </div>
+      <div className="pointer-events-none absolute hidden lg:block opacity-[0.14] float-slow-2" style={{ right: '120px', top: '60px' }}>
+        <DollarCoinSVG size={50} />
+      </div>
 
       <div className="relative max-w-6xl mx-auto">
         {/* ── HEADER ─────────────────────────────────────── */}

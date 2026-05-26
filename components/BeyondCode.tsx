@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useRef } from 'react'
 import { useLang } from '@/lib/language-context'
+import { BasketballMiniSVG, FootballSVG, GlobeSVG, TrophySVG, ChessKnightSVG } from '@/components/Decorations'
 
 function ManUtdCrest() {
   return (
@@ -35,6 +36,42 @@ function BasketballFull() {
         <line x1="40" y1="4" x2="40" y2="76" stroke="#C45F10" strokeWidth="2.5"/>
       </svg>
       <div className="bb-shadow w-16 h-3 rounded-full" style={{ background: 'radial-gradient(ellipse, rgba(26,61,43,0.2) 0%, transparent 70%)' }} />
+    </div>
+  )
+}
+
+function GeopoliticsGlobeSVG() {
+  return (
+    <div className="relative w-full h-full flex items-center justify-center">
+      <svg viewBox="0 0 120 120" className="w-28 h-28" aria-hidden>
+        <defs>
+          <clipPath id="bcGlobeClip"><circle cx="60" cy="60" r="46" /></clipPath>
+        </defs>
+        <circle cx="60" cy="60" r="46" fill="rgba(26,61,43,0.06)" stroke="#1A3D2B" strokeWidth="2" />
+        <g className="globe-ring" style={{ transformOrigin: '60px 60px' }}>
+          <g clipPath="url(#bcGlobeClip)">
+            {[20, 40, 60, 80, 100].map(y => (
+              <ellipse key={y} cx="60" cy={y} rx="46" ry="6" fill="none" stroke="#1A3D2B" strokeWidth="1" opacity="0.4" />
+            ))}
+            {[0, 30, 60, 90, 120, 150].map(deg => (
+              <ellipse key={deg} cx="60" cy="60" rx="14" ry="46" fill="none" stroke="#1A3D2B" strokeWidth="1" opacity="0.45"
+                transform={`rotate(${deg} 60 60)`} />
+            ))}
+          </g>
+        </g>
+        {/* connection pulses */}
+        <circle cx="32" cy="44" r="3" fill="#3DAA72">
+          <animate attributeName="opacity" values="0.3;1;0.3" dur="2.5s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="88" cy="68" r="3" fill="#3DAA72">
+          <animate attributeName="opacity" values="1;0.3;1" dur="3s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="62" cy="32" r="2.5" fill="#3DAA72">
+          <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite" />
+        </circle>
+        {/* arc */}
+        <path d="M 32 44 Q 60 22, 88 68" fill="none" stroke="#3DAA72" strokeWidth="1.5" opacity="0.6" strokeDasharray="3 3" />
+      </svg>
     </div>
   )
 }
@@ -97,7 +134,7 @@ const passions = [
     sub: { en: 'The grand chessboard', de: 'Das große Schachbrett' },
     color: '#1A3D2B',
     bg: 'rgba(26,61,43,0.05)',
-    Visual: null,
+    Visual: GeopoliticsGlobeSVG,
     story: {
       en: `I follow geopolitics the way some people follow football — obsessively, analytically, with strong opinions. From Indo-Pacific power shifts to EU economic architecture, from energy markets to defense policy. Understanding power structures makes me a sharper systems architect.`,
       de: `Ich verfolge Geopolitik so, wie andere Fußball verfolgen — obsessiv, analytisch, mit klaren Meinungen. Von indo-pazifischen Machtverschiebungen bis zur EU-Wirtschaftsarchitektur, von Energiemärkten bis zur Verteidigungspolitik. Das Verstehen von Machtstrukturen macht mich zu einem schärferen Systemarchitekten.`,
@@ -142,8 +179,25 @@ export default function BeyondCode() {
   }, [])
 
   return (
-    <section id="beyond" ref={ref} className="py-28 px-6 bg-white">
-      <div className="max-w-6xl mx-auto">
+    <section id="beyond" ref={ref} className="relative py-28 px-6 bg-white overflow-hidden">
+      {/* Background decorations matching each passion */}
+      <div className="pointer-events-none absolute hidden lg:block opacity-[0.07] float-slow-2" style={{ left: '40px', top: '100px' }}>
+        <BasketballMiniSVG size={70} />
+      </div>
+      <div className="pointer-events-none absolute hidden lg:block opacity-[0.08]" style={{ right: '60px', top: '180px' }}>
+        <FootballSVG size={75} />
+      </div>
+      <div className="pointer-events-none absolute hidden lg:block opacity-[0.07] float-slow" style={{ right: '90px', bottom: '320px' }}>
+        <GlobeSVG size={120} color="#1A3D2B" />
+      </div>
+      <div className="pointer-events-none absolute hidden lg:block opacity-[0.09]" style={{ left: '60px', bottom: '220px' }}>
+        <ChessKnightSVG size={95} color="#1A3D2B" />
+      </div>
+      <div className="pointer-events-none absolute hidden lg:block opacity-[0.10] float-slow-2" style={{ right: '160px', bottom: '80px' }}>
+        <TrophySVG size={90} />
+      </div>
+
+      <div className="max-w-6xl mx-auto relative">
         <p className="reveal text-xs font-mono uppercase tracking-[0.2em] text-[#3DAA72] mb-4">
           {isDE ? '07 / Leben' : '07 / Life'}
         </p>
