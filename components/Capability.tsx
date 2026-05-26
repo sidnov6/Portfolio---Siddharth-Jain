@@ -137,13 +137,6 @@ export default function Capability() {
     },
   ]
 
-  const stats = [
-    { n: '50+', en: 'Data sources integrated', de: 'Integrierte Datenquellen' },
-    { n: '14',  en: 'Enterprise dashboards',   de: 'Enterprise-Dashboards' },
-    { n: '7',   en: 'GenAI chatbots shipped',  de: 'GenAI-Chatbots ausgeliefert' },
-    { n: '$4.8M', en: 'Annualized savings',    de: 'Jährliche Einsparungen' },
-  ]
-
   return (
     <section
       id="capability"
@@ -501,27 +494,6 @@ export default function Capability() {
           })}
         </div>
 
-        {/* IMPACT STATS */}
-        <div className="reveal bg-[#1A3D2B] rounded-2xl p-8 md:p-10 relative overflow-hidden">
-          <div
-            className="absolute inset-0 opacity-20 pointer-events-none"
-            style={{
-              backgroundImage: 'radial-gradient(circle, #3DAA72 1px, transparent 1px)',
-              backgroundSize: '24px 24px',
-            }}
-          />
-          <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#3DAA72] mb-5 relative">
-            {isDE ? 'Realer Impact bei Suzlon Energy' : 'Real Impact at Suzlon Energy'}
-          </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 relative">
-            {stats.map((s, i) => (
-              <div key={i}>
-                <div className="font-display text-4xl md:text-5xl font-black text-white mb-1">{s.n}</div>
-                <p className="text-xs text-white/60 font-medium leading-tight">{isDE ? s.de : s.en}</p>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   )

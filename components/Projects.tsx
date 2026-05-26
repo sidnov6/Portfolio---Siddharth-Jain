@@ -8,8 +8,10 @@ const projects = [
     id: 0, category: 'Gen AI',
     title: 'Manufacturing GenAI Suite',
     org: 'Suzlon Energy',
-    desc: '7 production GenAI chatbots covering KPI Q&A, production insights, safety alerts, and shift-handover automation. Deployed for 300+ users across 10 plants.',
-    impact: '300+ daily users · 10 plants',
+    desc_en: '7 production GenAI chatbots covering KPI Q&A, production insights, safety alerts, and shift-handover automation. Deployed for 300+ users across 10 plants.',
+    desc_de: '7 produktive GenAI-Chatbots für KPI-Q&A, Produktions-Insights, Sicherheitswarnungen und Schichtübergabe-Automatisierung. Im Einsatz für 300+ Nutzer in 10 Werken.',
+    impact_en: '300+ daily users · 10 plants',
+    impact_de: '300+ tägliche Nutzer · 10 Werke',
     tags: ['LangChain', 'RAG', 'OpenAI', 'Azure', 'FastAPI'],
     color: '#F04E23', bg: 'rgba(240,78,35,0.06)',
     live: false, private: true,
@@ -17,9 +19,11 @@ const projects = [
   {
     id: 1, category: 'Data Science',
     title: 'CT Scan Sarcopenia Detector',
-    org: 'Emory / Georgia Tech',
-    desc: 'Deep learning pipeline for automated sarcopenia detection from CT scans. 94% accuracy at ~1mm precision. Analysis time slashed from 10 minutes → <1 second.',
-    impact: '94% accuracy · 1000+ CT scans',
+    org: 'Coulter BME (GT × Emory)',
+    desc_en: 'Deep learning pipeline for automated sarcopenia detection from CT scans. 94% accuracy at ~1mm precision. Analysis time slashed from 10 minutes → <1 second.',
+    desc_de: 'Deep-Learning-Pipeline zur automatisierten Sarkopenie-Erkennung aus CT-Scans. 94% Genauigkeit bei ~1mm Präzision. Analysezeit von 10 Minuten auf <1 Sekunde reduziert.',
+    impact_en: '94% accuracy · 1000+ CT scans',
+    impact_de: '94% Genauigkeit · 1000+ CT-Scans',
     tags: ['PyTorch', 'Computer Vision', 'DICOM', 'Medical AI'],
     color: '#012169', bg: 'rgba(1,33,105,0.05)',
     live: false, private: true,
@@ -28,8 +32,10 @@ const projects = [
     id: 2, category: 'Data Engineering',
     title: 'Manufacturing Analytics Platform',
     org: 'Suzlon Energy',
-    desc: 'Enterprise data platform unifying 50+ operational sources across 10 plants into 14 dashboards covering 250+ KPIs — Safety, Quality, Productivity, Cost, Energy.',
-    impact: '$4.8M savings · 50+ data sources',
+    desc_en: 'Enterprise data platform unifying 50+ operational sources across 10 plants into 14 dashboards covering 250+ KPIs — Safety, Quality, Productivity, Cost, Energy.',
+    desc_de: 'Enterprise-Datenplattform, die 50+ operative Quellen über 10 Werke in 14 Dashboards mit 250+ KPIs vereint — Sicherheit, Qualität, Produktivität, Kosten, Energie.',
+    impact_en: '14 dashboards · 50+ data sources',
+    impact_de: '14 Dashboards · 50+ Datenquellen',
     tags: ['Spark', 'dbt', 'Snowflake', 'Airflow', 'Power BI'],
     color: '#F04E23', bg: 'rgba(240,78,35,0.06)',
     live: false, private: true,
@@ -38,8 +44,10 @@ const projects = [
     id: 3, category: 'Data Engineering',
     title: 'Healthcare Cybersecurity Middleware',
     org: 'Georgia Institute of Technology',
-    desc: 'Middleware platform enabling secure data exchange between legacy hospital systems and cloud EHR platforms. Resolved 50+ critical interoperability failures.',
-    impact: '50+ critical failures fixed',
+    desc_en: 'Middleware platform enabling secure data exchange between legacy hospital systems and cloud EHR platforms. Resolved 50+ critical interoperability failures.',
+    desc_de: 'Middleware-Plattform für sicheren Datenaustausch zwischen Legacy-Krankenhaussystemen und Cloud-EHR-Plattformen. 50+ kritische Interoperabilitätsfehler behoben.',
+    impact_en: '50+ critical failures fixed',
+    impact_de: '50+ kritische Fehler behoben',
     tags: ['Python', 'FHIR', 'Cybersecurity', 'Healthcare', 'Cloud'],
     color: '#B3A369', bg: 'rgba(179,163,105,0.07)',
     live: false, private: true,
@@ -48,8 +56,10 @@ const projects = [
     id: 4, category: 'Data Science',
     title: 'Predictive Quality Analytics',
     org: 'Suzlon Energy',
-    desc: 'ML system for quality control across 40 production lines — anomaly detection, automated alerting, and yield optimization contributing directly to plant efficiency.',
-    impact: '40 production lines · Real-time',
+    desc_en: 'ML system for quality control across 40 production lines — anomaly detection, automated alerting, and yield optimization contributing directly to plant efficiency.',
+    desc_de: 'ML-System zur Qualitätskontrolle über 40 Produktionslinien — Anomalieerkennung, automatisierte Alarmierung und Ertragsoptimierung mit direkter Wirkung auf die Werkseffizienz.',
+    impact_en: '40 production lines · Real-time',
+    impact_de: '40 Produktionslinien · Echtzeit',
     tags: ['XGBoost', 'Time Series', 'MLflow', 'Anomaly Detection'],
     color: '#2D7A52', bg: 'rgba(45,122,82,0.06)',
     live: false, private: true,
@@ -58,8 +68,10 @@ const projects = [
     id: 5, category: 'Data Engineering',
     title: '5G Network Security Analyzer',
     org: 'IIT Jammu',
-    desc: 'Containerized IDS/IPS for 5G traffic analysis and anomaly detection under Dr. Samaresh Bera. Improved network throughput by 19% under peak load.',
-    impact: '+19% throughput under peak load',
+    desc_en: 'Containerized IDS/IPS for 5G traffic analysis and anomaly detection under Dr. Samaresh Bera. Improved network throughput by 19% under peak load.',
+    desc_de: 'Containerisiertes IDS/IPS zur 5G-Verkehrsanalyse und Anomalieerkennung unter Dr. Samaresh Bera. 19% höherer Netzwerkdurchsatz unter Spitzenlast.',
+    impact_en: '+19% throughput under peak load',
+    impact_de: '+19% Durchsatz unter Spitzenlast',
     tags: ['Docker', '5G', 'IDS/IPS', 'Network Security'],
     color: '#003F88', bg: 'rgba(0,63,136,0.06)',
     live: false, private: true,
@@ -68,8 +80,10 @@ const projects = [
     id: 6, category: 'Gen AI',
     title: 'Dam Rehabilitation Chatbot',
     org: 'Personal Project',
-    desc: 'AI-powered chatbot for dam condition assessment and rehabilitation planning. Guides engineers through structural inspection, interprets damage data, and recommends maintenance strategies.',
-    impact: 'Civil Infrastructure AI · Live',
+    desc_en: 'AI-powered chatbot for dam condition assessment and rehabilitation planning. Guides engineers through structural inspection, interprets damage data, and recommends maintenance strategies.',
+    desc_de: 'KI-Chatbot zur Bewertung von Dammzuständen und Sanierungsplanung. Führt Ingenieure durch die strukturelle Inspektion, interpretiert Schadensdaten und empfiehlt Wartungsstrategien.',
+    impact_en: 'Civil Infrastructure AI · Live',
+    impact_de: 'KI für Infrastruktur · Live',
     tags: ['Streamlit', 'Python', 'LLM', 'AI Chatbot', 'Civil AI'],
     color: '#1A6B8A', bg: 'rgba(26,107,138,0.06)',
     live: true,
@@ -81,8 +95,10 @@ const projects = [
     id: 7, category: 'Gen AI',
     title: 'LLM-Powered BI Assistant',
     org: 'Personal Project',
-    desc: 'Natural language interface for business intelligence. Translates plain-English queries to SQL, executes against live DB, and returns insight summaries with charts.',
-    impact: 'Democratises data access',
+    desc_en: 'Natural language interface for business intelligence. Translates plain-English queries to SQL, executes against live DB, and returns insight summaries with charts.',
+    desc_de: 'Natürlichsprachliche Schnittstelle für Business Intelligence. Übersetzt Klartext-Anfragen in SQL, führt sie gegen die Live-DB aus und liefert Insight-Zusammenfassungen mit Charts.',
+    impact_en: 'Democratises data access',
+    impact_de: 'Demokratisiert Datenzugang',
     tags: ['LangChain', 'Text-to-SQL', 'Streamlit', 'PostgreSQL'],
     color: '#1A3D2B', bg: 'rgba(26,61,43,0.06)',
     live: true, github: 'https://github.com/sidnov6',
@@ -91,15 +107,22 @@ const projects = [
     id: 8, category: 'Data Engineering',
     title: 'Real-Time Pipeline Framework',
     org: 'Personal Project',
-    desc: 'Scalable streaming pipeline with Kafka + Spark Streaming. Supports real-time analytics, event processing, and ML feature generation with a Grafana monitoring dashboard.',
-    impact: 'Millions of events / minute',
+    desc_en: 'Scalable streaming pipeline with Kafka + Spark Streaming. Supports real-time analytics, event processing, and ML feature generation with a Grafana monitoring dashboard.',
+    desc_de: 'Skalierbare Streaming-Pipeline mit Kafka + Spark Streaming. Unterstützt Echtzeit-Analytics, Event-Verarbeitung und ML-Feature-Generierung mit Grafana-Monitoring.',
+    impact_en: 'Millions of events / minute',
+    impact_de: 'Millionen Events / Minute',
     tags: ['Kafka', 'Spark Streaming', 'Docker', 'Grafana', 'Redis'],
     color: '#2D7A52', bg: 'rgba(45,122,82,0.06)',
     live: true, github: 'https://github.com/sidnov6',
   },
 ]
 
-const filters = ['All', 'Gen AI', 'Data Science', 'Data Engineering']
+const filters: { id: string; en: string; de: string }[] = [
+  { id: 'All',              en: 'All',              de: 'Alle' },
+  { id: 'Gen AI',           en: 'Gen AI',           de: 'GenAI' },
+  { id: 'Data Science',     en: 'Data Science',     de: 'Data Science' },
+  { id: 'Data Engineering', en: 'Data Engineering', de: 'Data Engineering' },
+]
 
 function LiveDemoModal({ title, demoUrl, fallbackUrl, color, onClose }: {
   title: string
@@ -182,25 +205,31 @@ export default function Projects() {
   return (
     <section id="projects" ref={ref} className="py-28 px-6 bg-white">
       <div className="max-w-6xl mx-auto">
-        <p className="reveal text-xs font-mono uppercase tracking-[0.2em] text-[#3DAA72] mb-4">05 / Projects</p>
+        <p className="reveal text-xs font-mono uppercase tracking-[0.2em] text-[#3DAA72] mb-4">
+          {isDE ? '05 / Projekte' : '05 / Projects'}
+        </p>
         <h2 className="reveal font-display text-[clamp(2.2rem,5vw,3.8rem)] font-black text-[#1A1A18] mb-3 leading-tight">
-          Things I've <em className="text-[#1A3D2B]">Built</em>
+          {isDE
+            ? <>Was ich <em className="text-[#1A3D2B]">gebaut habe</em></>
+            : <>Things I&apos;ve <em className="text-[#1A3D2B]">Built</em></>}
         </h2>
         <p className="reveal text-[#6E7A70] text-lg max-w-2xl mb-10 leading-relaxed">
-          Production systems at enterprise scale, not just demos. Most are private — the impact is the proof.
+          {isDE
+            ? 'Produktionssysteme im Unternehmensmaßstab — keine Demos. Die meisten sind privat — der Impact ist der Beweis.'
+            : 'Production systems at enterprise scale, not just demos. Most are private — the impact is the proof.'}
         </p>
 
         {/* Filter */}
         <div className="reveal flex flex-wrap gap-2 mb-10">
           {filters.map(f => (
-            <button key={f} onClick={() => setCat(f)}
+            <button key={f.id} onClick={() => setCat(f.id)}
               className="px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200"
-              style={cat === f
+              style={cat === f.id
                 ? { background: '#1A3D2B', color: '#fff', boxShadow: '0 4px 16px rgba(26,61,43,0.25)' }
                 : { background: '#F8F5EE', color: '#4A4A47', border: '1.5px solid #E4E0D6' }
               }
             >
-              {f}
+              {isDE ? f.de : f.en}
             </button>
           ))}
         </div>
@@ -230,13 +259,13 @@ export default function Projects() {
                 <h3 className="font-bold text-[#1A1A18] text-base mb-1.5 leading-snug group-hover:text-[#1A3D2B] transition-colors">
                   {p.title}
                 </h3>
-                <p className="text-[#6E7A70] text-sm leading-relaxed mb-3 flex-1">{p.desc}</p>
+                <p className="text-[#6E7A70] text-sm leading-relaxed mb-3 flex-1">{isDE ? p.desc_de : p.desc_en}</p>
 
                 {/* Impact */}
                 <div className="flex items-center gap-2 px-3 py-2 rounded-lg mb-3"
                   style={{ background: `${p.color}08`, border: `1px solid ${p.color}20` }}>
                   <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: p.color }} />
-                  <span className="text-xs font-semibold" style={{ color: p.color }}>{p.impact}</span>
+                  <span className="text-xs font-semibold" style={{ color: p.color }}>{isDE ? p.impact_de : p.impact_en}</span>
                 </div>
 
                 {/* Tags */}

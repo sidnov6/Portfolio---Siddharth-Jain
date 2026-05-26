@@ -109,7 +109,7 @@ const experiences = [
     sub: { en: 'Manufacturing AI, Data & Digitisation Strategy', de: 'Fertigungs-KI, Daten & Digitalisierungsstrategie' },
     period: 'Jun 2025 – Jun 2026', location: { en: 'Pune, India', de: 'Pune, Indien' },
     brand: '#F04E23', brandLight: 'rgba(240,78,35,0.08)',
-    photo: '/journey/suzlon-3.jpg',
+    photo: '/journey/suzlon-team.jpg',
     tag: { en: 'Full-time · India\'s leading wind-energy company', de: 'Vollzeit · Indiens führender Windenergie-Konzern' },
     headline: {
       en: 'Owned the AI, BI, and data strategy for Suzlon\'s manufacturing organisation — 10 plants, 300+ users, $4.8M annualised impact.',
@@ -140,7 +140,7 @@ const experiences = [
     sub: { en: 'Research Computing & Data — Healthcare Systems', de: 'Forschungsrechnen & Daten — Gesundheitssysteme' },
     period: 'May – Aug 2024', location: { en: 'Atlanta, USA', de: 'Atlanta, USA' },
     brand: '#B3A369', brandLight: 'rgba(179,163,105,0.08)',
-    photo: '/journey/gt-2.jpg',
+    photo: '/journey/gt-buzzcard.jpg',
     tag: { en: '1 of 10 Selected Nationally · 10,000+ Applicants', de: '1 von 10 national ausgewählt · 10.000+ Bewerber' },
     headline: {
       en: 'Built cybersecurity middleware that solved 50+ critical interoperability failures across US healthcare systems.',
@@ -173,7 +173,7 @@ const experiences = [
     sub: { en: 'Automated Sarcopenia Assessment · Dr. Rakesh Shiradkar', de: 'Automatisierte Sarkopenie-Erkennung · Dr. Rakesh Shiradkar' },
     period: 'Jan – Sep 2024', location: { en: 'Atlanta, USA', de: 'Atlanta, USA' },
     brand: '#012169', brandLight: 'rgba(1,33,105,0.06)',
-    photo: '/journey/emory-2.jpg',
+    photo: '/journey/coulter-team.jpg',
     tag: { en: 'Joint GT + Emory · Top-3 US BME Programme', de: 'GT + Emory Joint · Top-3 US BME-Programm' },
     headline: {
       en: 'Built a deep learning pipeline achieving 94% accuracy and <1 second inference on 1000+ CT scans at the joint Georgia Tech × Emory BME department.',
@@ -204,7 +204,7 @@ const experiences = [
     sub: { en: 'Containerized IDS/IPS · Dr. Samaresh Bera', de: 'Containerisiertes IDS/IPS · Dr. Samaresh Bera' },
     period: 'Oct – Dec 2023', location: { en: 'Jammu, India', de: 'Jammu, Indien' },
     brand: '#003F88', brandLight: 'rgba(0,63,136,0.06)',
-    photo: '/journey/iitj-1.jpg',
+    photo: '/journey/iitj-view.jpg',
     tag: { en: 'Network Security Research', de: 'Netzwerksicherheitsforschung' },
     headline: {
       en: 'Improved 5G network throughput by 19% under peak loads via containerized IDS/IPS architecture.',
@@ -415,7 +415,7 @@ export default function Journey() {
 
           {/* Scroll nudge */}
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-center">
-            <p className="text-[10px] font-mono uppercase tracking-widest text-[#B0A898] mb-1">scroll to explore</p>
+            <p className="text-[10px] font-mono uppercase tracking-widest text-[#B0A898] mb-1">{isDE ? 'scrollen zum erkunden' : 'scroll to explore'}</p>
             <div className="w-px h-8 bg-gradient-to-b from-[#B0A898] to-transparent mx-auto" style={{ animation: 'scrollHint 2s ease-in-out infinite' }} />
           </div>
         </div>

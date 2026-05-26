@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { getPost, listPosts, readingTime, type Post } from '@/lib/posts'
 import BlogNav from '@/components/BlogNav'
+import LocaleText from '@/components/LocaleText'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -92,12 +93,19 @@ export default async function PostPage({ params }: Params) {
 
           {/* Footer / CTA */}
           <div className="mt-16 p-7 rounded-2xl bg-gradient-to-br from-[#1A3D2B] to-[#0F2A1C] text-white">
-            <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#3DAA72] mb-3">Let&apos;s talk</p>
+            <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#3DAA72] mb-3">
+              <LocaleText en="Let's talk" de="Lass uns reden" />
+            </p>
             <p className="text-base md:text-lg leading-relaxed mb-4">
-              I&apos;m pivoting from manufacturing AI to finance — open to roles, mentorship, and collaborators in fintech, quant, and bank AI.
+              <LocaleText
+                en="I'm pivoting from manufacturing AI to finance — open to roles, mentorship, and collaborators in fintech, quant, and bank AI."
+                de="Ich wechsle von der Industrie-KI in den Finanzsektor — offen für Stellen, Mentoring und Mitarbeit in Fintech, Quant und Bank-KI."
+              />
             </p>
             <div className="flex gap-3 flex-wrap">
-              <a href="mailto:sidnov6@gmail.com" className="px-4 py-2 rounded-lg bg-[#FFD56B] text-[#1A1A18] text-sm font-bold hover:bg-[#FFE08C] transition-colors">Email me</a>
+              <a href="mailto:sidnov6@gmail.com" className="px-4 py-2 rounded-lg bg-[#FFD56B] text-[#1A1A18] text-sm font-bold hover:bg-[#FFE08C] transition-colors">
+                <LocaleText en="Email me" de="E-Mail schreiben" />
+              </a>
               <a href="https://www.linkedin.com/in/siddharth-jain-b33394219/" target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-lg bg-white/10 text-white text-sm font-bold border border-white/15 hover:bg-white/15 transition-colors">LinkedIn</a>
             </div>
           </div>
@@ -105,7 +113,9 @@ export default async function PostPage({ params }: Params) {
           {/* Related */}
           {others.length > 0 && (
             <div className="mt-14">
-              <p className="text-xs font-mono uppercase tracking-[0.2em] text-[#3DAA72] mb-5">More posts</p>
+              <p className="text-xs font-mono uppercase tracking-[0.2em] text-[#3DAA72] mb-5">
+                <LocaleText en="More posts" de="Weitere Beiträge" />
+              </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 {others.map((p: Post) => (
                   <Link

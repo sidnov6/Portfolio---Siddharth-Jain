@@ -21,19 +21,19 @@ const schools = [
     courses: ['Machine Learning', 'Deep Learning', 'NLP & LLMs', 'Data Engineering', 'AI Ethics', 'Cloud Computing', 'Research Methods'],
     highlights: {
       en: [
-        "One of Europe's top-ranked private business schools (FT-ranked)",
+        'Ranked #32 worldwide — among the strongest global positions in Finance & Management (FT Global Rankings)',
         'Specialising in applied AI for financial and industrial systems',
-        'Located in Frankfurt — hub of European finance and fintech',
-        'Research focus: enterprise LLMs and data-intensive AI systems',
+        'Located in Frankfurt — the financial capital of continental Europe',
+        'Research focus: enterprise LLMs, agentic finance, and data-intensive AI systems',
       ],
       de: [
-        'Eine der bestplatzierten privaten Wirtschaftshochschulen Europas (FT-Ranking)',
+        'Weltweit auf Platz 32 — eine der stärksten globalen Positionen in Finance & Management (FT Global Rankings)',
         'Schwerpunkt auf angewandter KI für Finanz- und Industriesysteme',
-        'In Frankfurt — Zentrum europäischer Finanz- und Fintechbranche',
-        'Forschungsschwerpunkt: Unternehmens-LLMs und datenintensive KI-Systeme',
+        'Frankfurt — die Finanzhauptstadt Kontinentaleuropas',
+        'Forschungsschwerpunkt: Enterprise-LLMs, agentenbasierte Finance-Systeme und datenintensive KI',
       ],
     },
-    accentText: { en: 'FT-Ranked · Frankfurt, Germany', de: 'FT-Ranking · Frankfurt, Deutschland' },
+    accentText: { en: '#32 Worldwide · Frankfurt, Germany', de: 'Weltweit #32 · Frankfurt, Deutschland' },
   },
   {
     name: 'VIT Vellore',
@@ -52,19 +52,19 @@ const schools = [
     courses: ['Data Structures & Algorithms', 'Database Systems', 'Machine Learning', 'Computer Networks', 'OS', 'Software Engineering', 'Linear Algebra & Probability'],
     highlights: {
       en: [
-        'Top 10 private engineering institute in India — QS World University Rankings & NIRF Research Rankings',
-        'Completed 3 international research internships during undergrad — Georgia Tech, Emory, IIT Jammu',
+        'Ranked #12 in India among top universities (NIRF + QS rankings)',
+        'Completed 3 international research internships during undergrad — Georgia Tech, Coulter BME (GT × Emory), IIT Jammu',
         'National-level basketball player throughout all 4 years',
-        'Led ACM student chapter as Operations & Marketing Head',
+        'Led the ACM Student Chapter as Operations & Marketing Head — raised $11K in sponsorships',
       ],
       de: [
-        'Top 10 private Ingenieurseinrichtung in Indien — QS World University Rankings & NIRF Research Rankings',
-        '3 internationale Forschungspraktika während des Studiums absolviert — Georgia Tech, Emory, IIT Jammu',
+        'In Indien auf Platz 12 unter den Top-Universitäten (NIRF + QS-Ranking)',
+        'Während des Studiums 3 internationale Forschungspraktika absolviert — Georgia Tech, Coulter BME (GT × Emory), IIT Jammu',
         'Nationaler Basketballspieler in allen 4 Studienjahren',
-        'ACM-Studentenkapitel als Betriebs- und Marketingleiter geführt',
+        'ACM Student Chapter als Operations- und Marketing-Lead geführt — 11.000 $ Sponsoring eingeworben',
       ],
     },
-    accentText: { en: 'QS & NIRF Top 10 · Vellore, India', de: 'QS & NIRF Top 10 · Vellore, Indien' },
+    accentText: { en: '#12 India · Vellore', de: 'Indien #12 · Vellore' },
   },
 ]
 

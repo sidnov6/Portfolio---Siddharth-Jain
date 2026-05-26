@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { listPosts, readingTime } from '@/lib/posts'
 import BlogNav from '@/components/BlogNav'
+import LocaleText from '@/components/LocaleText'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -21,19 +22,24 @@ export default async function BlogIndex() {
         <div className="max-w-3xl mx-auto px-5 py-16 md:py-24">
           {/* Header */}
           <div className="mb-14">
-            <p className="text-xs font-mono uppercase tracking-[0.2em] text-[#3DAA72] mb-4">Writing</p>
+            <p className="text-xs font-mono uppercase tracking-[0.2em] text-[#3DAA72] mb-4">
+              <LocaleText en="Writing" de="Blog" />
+            </p>
             <h1 className="font-display text-4xl md:text-6xl font-black text-[#1A1A18] leading-[1.05] mb-5">
-              Notes on <em className="text-[#003F88]">AI in Finance.</em>
+              <LocaleText en="Notes on" de="Notizen zu" /> <em className="text-[#003F88]"><LocaleText en="AI in Finance." de="KI in Finance." /></em>
             </h1>
             <p className="text-[#6E7A70] text-lg leading-relaxed max-w-xl">
-              Where the agentic moment meets capital markets — what is happening, why it matters, and what I am building toward.
+              <LocaleText
+                en="Where the agentic moment meets capital markets — what is happening, why it matters, and what I am building toward."
+                de="Wo der agentenbasierte Moment auf Kapitalmärkte trifft — was passiert, warum es zählt und was ich baue."
+              />
             </p>
           </div>
 
           {/* Post list */}
           {posts.length === 0 ? (
             <div className="text-center py-20 text-[#8A9280]">
-              <p className="font-mono text-sm">No posts yet.</p>
+              <p className="font-mono text-sm"><LocaleText en="No posts yet." de="Noch keine Beiträge." /></p>
             </div>
           ) : (
             <div className="space-y-5">
@@ -58,7 +64,7 @@ export default async function BlogIndex() {
                   </h2>
                   <p className="text-[#6E7A70] text-sm md:text-base leading-relaxed">{p.excerpt}</p>
                   <p className="mt-4 text-xs font-mono text-[#3DAA72] group-hover:translate-x-1 transition-transform inline-block">
-                    Read post →
+                    <LocaleText en="Read post →" de="Beitrag lesen →" />
                   </p>
                 </Link>
               ))}
