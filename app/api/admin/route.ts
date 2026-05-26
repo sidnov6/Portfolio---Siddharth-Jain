@@ -1,17 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { promises as fs } from 'fs'
-import path from 'path'
+import { Redis } from '@upstash/redis'
 
-const DATA_FILE = path.join(process.cwd(), 'data', 'analytics.json')
+const EVENTS_KEY = 'analytics:events'
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'sidportfolio2025'
 
-async function readData() {
-  try {
-    const raw = await fs.readFile(DATA_FILE, 'utf8')
-    return JSON.parse(raw)
-  } catch {
-    return { events: [] }
-  }
+const redis = new Redis({
+  url:   process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+})
+
+type Event = {
+  id: number
+  type: string
+  meta?: { link?: string; subject?: string; message?: string }
+  timestamp: string
+  ip: string
+  ua: string
+  referrer: string
 }
 
 export async function GET(req: NextRequest) {
@@ -20,14 +25,25 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  const data = await readData()
-  const events: Array<{type: string; meta?: {link?: string}; timestamp: string; ip: string; ua: string; referrer: string}> = data.events || []
+  // Fetch all stored events (newest first because we LPUSH)
+  const raw = await redis.lrange(EVENTS_KEY, 0, -1)
+  const events: Event[] = raw.map(item => {
+    // Upstash SDK may auto-parse JSON, handle both cases
+    if (typeof item === 'string') {
+      try { return JSON.parse(item) } catch { return null }
+    }
+    return item
+  }).filter(Boolean) as Event[]
 
-  // Summarise
-  const pageviews = events.filter(e => e.type === 'pageview').length
-  const uniqueIPs = new Set(events.filter(e => e.type === 'pageview').map(e => e.ip)).size
-  const clicks = events.filter(e => e.type === 'click')
+  const pageviews   = events.filter(e => e.type === 'pageview').length
+  const uniqueIPs   = new Set(events.filter(e => e.type === 'pageview').map(e => e.ip)).size
+  const clicks      = events.filter(e => e.type === 'click')
   const formSubmits = events.filter(e => e.type === 'form_submit').length
+
+  // Custom event counts
+  const chatbotOpens    = events.filter(e => e.type === 'chatbot_open').length
+  const chatbotMessages = events.filter(e => e.type === 'chatbot_message').length
+  const resumeDownloads = events.filter(e => e.type === 'resume_download').length
 
   const clickBreakdown: Record<string, number> = {}
   clicks.forEach(e => {
@@ -35,10 +51,10 @@ export async function GET(req: NextRequest) {
     clickBreakdown[key] = (clickBreakdown[key] || 0) + 1
   })
 
-  // Last 50 events for the live log
-  const recent = [...events].reverse().slice(0, 50)
+  // Latest 50 for the activity log (events are already newest-first)
+  const recent = events.slice(0, 50)
 
-  // Daily visits (last 14 days)
+  // Daily pageviews for last 14 days
   const daily: Record<string, number> = {}
   const cutoff = Date.now() - 14 * 24 * 60 * 60 * 1000
   events
@@ -48,5 +64,15 @@ export async function GET(req: NextRequest) {
       daily[day] = (daily[day] || 0) + 1
     })
 
-  return NextResponse.json({ pageviews, uniqueIPs, formSubmits, clickBreakdown, daily, recent })
+  return NextResponse.json({
+    pageviews,
+    uniqueIPs,
+    formSubmits,
+    chatbotOpens,
+    chatbotMessages,
+    resumeDownloads,
+    clickBreakdown,
+    daily,
+    recent,
+  })
 }

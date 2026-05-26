@@ -1,13 +1,8 @@
 'use client'
 import { useEffect } from 'react'
+import { track } from '@/lib/track'
 
 export default function Analytics() {
-  useEffect(() => {
-    fetch('/api/track', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ type: 'pageview' }),
-    }).catch(() => {})
-  }, [])
+  useEffect(() => { track('pageview') }, [])
   return null
 }

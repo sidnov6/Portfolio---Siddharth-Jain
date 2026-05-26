@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useRef } from 'react'
 import { useLang } from '@/lib/language-context'
+import { track } from '@/lib/track'
 import {
   Factory, Building2, TrendingUp, Shield, Banknote, Bot, FileText,
   LineChart, Search, Scale, BookOpen, Briefcase, GraduationCap,
@@ -407,6 +408,7 @@ export default function Pivot() {
                 <div className="flex flex-col sm:flex-row gap-3 pt-4">
                   <a
                     href="mailto:sidnov6@gmail.com"
+                    onClick={() => track('click', { link: 'pivot_email' })}
                     className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-[#FFD56B] text-[#1A1A18] font-bold text-sm hover:bg-[#FFE08C] transition-colors"
                   >
                     <Mail size={16} />
@@ -416,6 +418,7 @@ export default function Pivot() {
                     href="https://www.linkedin.com/in/siddharth-jain-b33394219/"
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => track('click', { link: 'pivot_linkedin' })}
                     className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-white/10 text-white font-bold text-sm border border-white/15 hover:bg-white/15 transition-colors"
                   >
                     <Linkedin size={16} />

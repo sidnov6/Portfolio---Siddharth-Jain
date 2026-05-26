@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { X, Send, Bot, User, Minimize2, Maximize2, Loader2, Sparkles } from 'lucide-react'
 import { useLang } from '@/lib/language-context'
+import { track } from '@/lib/track'
 
 type Message = { role: 'user' | 'assistant'; content: string; id: string }
 
@@ -86,9 +87,15 @@ export default function Chatbot({ isOpen, onClose }: { isOpen: boolean; onClose:
     }
   }, [messages, isOpen, minimized])
 
+  // Track chatbot opens (once per open)
+  useEffect(() => {
+    if (isOpen) track('chatbot_open')
+  }, [isOpen])
+
   const send = async (text?: string) => {
     const content = (text ?? input).trim()
     if (!content || loading) return
+    track('chatbot_message', { message: content.slice(0, 200), lang })
     const userMsg: Message = { id: Date.now().toString(), role: 'user', content }
     const next = [...messages, userMsg]
     setMessages(next)

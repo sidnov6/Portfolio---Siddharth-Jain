@@ -2,6 +2,7 @@
 import { useEffect, useState, useRef } from 'react'
 import { Github, Linkedin, Mail, ArrowDown, Download } from 'lucide-react'
 import { useLang } from '@/lib/language-context'
+import { track } from '@/lib/track'
 
 const roles = {
   en: ['Full Stack AI Engineer', 'Data Scientist', 'Gen AI Engineer', 'Data Engineer', 'Point Guard · Basketball'],
@@ -210,13 +211,26 @@ export default function Hero() {
 
         {/* CTAs */}
         <div className="reveal reveal-d4 flex flex-wrap gap-3 mb-16">
-          <a href="#journey" className="px-7 py-3.5 bg-[#1A3D2B] text-white font-semibold rounded-xl hover:bg-[#2D7A52] transition-all duration-200 shadow-lg shadow-[#1A3D2B]/20 hover:shadow-[#1A3D2B]/30 hover:-translate-y-0.5">
+          <a
+            href="#journey"
+            onClick={() => track('click', { link: 'hero_see_journey' })}
+            className="px-7 py-3.5 bg-[#1A3D2B] text-white font-semibold rounded-xl hover:bg-[#2D7A52] transition-all duration-200 shadow-lg shadow-[#1A3D2B]/20 hover:shadow-[#1A3D2B]/30 hover:-translate-y-0.5"
+          >
             {isDE ? 'Mein Werdegang' : 'See My Journey'}
           </a>
-          <a href="#contact" className="px-7 py-3.5 border-2 border-[#1A3D2B] text-[#1A3D2B] font-semibold rounded-xl hover:bg-[#1A3D2B] hover:text-white transition-all duration-200 hover:-translate-y-0.5">
+          <a
+            href="#contact"
+            onClick={() => track('click', { link: 'hero_get_in_touch' })}
+            className="px-7 py-3.5 border-2 border-[#1A3D2B] text-[#1A3D2B] font-semibold rounded-xl hover:bg-[#1A3D2B] hover:text-white transition-all duration-200 hover:-translate-y-0.5"
+          >
             {isDE ? 'Kontakt aufnehmen' : 'Get In Touch'}
           </a>
-          <a href="/resume.pdf" target="_blank" className="flex items-center gap-2 px-5 py-3.5 bg-white border border-[#E4E0D6] text-[#4A4A47] font-medium rounded-xl hover:border-[#1A3D2B]/30 hover:shadow-md transition-all duration-200">
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            onClick={() => track('resume_download')}
+            className="flex items-center gap-2 px-5 py-3.5 bg-white border border-[#E4E0D6] text-[#4A4A47] font-medium rounded-xl hover:border-[#1A3D2B]/30 hover:shadow-md transition-all duration-200"
+          >
             <Download size={16} />
             {isDE ? 'Lebenslauf' : 'Resume'}
           </a>
@@ -225,11 +239,12 @@ export default function Hero() {
         {/* Socials */}
         <div className="reveal flex items-center gap-6">
           {[
-            { href: 'https://github.com/sidnov6',                                Icon: Github,   label: 'GitHub',   color: '#1A1A18' },
-            { href: 'https://www.linkedin.com/in/siddharth-jain-b33394219/',     Icon: Linkedin, label: 'LinkedIn', color: '#0077B5' },
-            { href: 'mailto:sidnov6@gmail.com',                                   Icon: Mail,     label: 'Email',    color: '#1A3D2B' },
-          ].map(({ href, Icon, label, color }) => (
+            { href: 'https://github.com/sidnov6',                                Icon: Github,   label: 'GitHub',   color: '#1A1A18', trackAs: 'hero_github'   },
+            { href: 'https://www.linkedin.com/in/siddharth-jain-b33394219/',     Icon: Linkedin, label: 'LinkedIn', color: '#0077B5', trackAs: 'hero_linkedin' },
+            { href: 'mailto:sidnov6@gmail.com',                                   Icon: Mail,     label: 'Email',    color: '#1A3D2B', trackAs: 'hero_email'    },
+          ].map(({ href, Icon, label, color, trackAs }) => (
             <a key={href} href={href} target={href.startsWith('http') ? '_blank' : undefined}
+              onClick={() => track('click', { link: trackAs })}
               className="flex items-center gap-2 text-[#8A9280] hover:text-[#1A1A18] font-medium text-sm transition-colors group">
               <Icon size={18} className="group-hover:scale-110 transition-transform" style={{ color }} />
               <span className="hidden sm:block">{label}</span>

@@ -2,14 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Mail, Linkedin, Github, MapPin, Send, CheckCircle } from 'lucide-react'
 import { useLang } from '@/lib/language-context'
-
-function track(type: string, meta?: object) {
-  fetch('/api/track', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ type, meta }),
-  }).catch(() => {})
-}
+import { track } from '@/lib/track'
 
 export default function Contact() {
   const ref = useRef<HTMLElement>(null)

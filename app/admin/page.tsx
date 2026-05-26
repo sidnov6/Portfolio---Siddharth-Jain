@@ -5,12 +5,15 @@ interface Analytics {
   pageviews: number
   uniqueIPs: number
   formSubmits: number
+  chatbotOpens: number
+  chatbotMessages: number
+  resumeDownloads: number
   clickBreakdown: Record<string, number>
   daily: Record<string, number>
   recent: Array<{
     id: number
     type: string
-    meta: { link?: string }
+    meta: { link?: string; subject?: string; message?: string }
     timestamp: string
     ip: string
     ua: string
@@ -95,6 +98,9 @@ export default function AdminPage() {
     pageview: '👁',
     click: '🔗',
     form_submit: '📧',
+    chatbot_open: '🤖',
+    chatbot_message: '💬',
+    resume_download: '📄',
   }
 
   return (
@@ -113,11 +119,18 @@ export default function AdminPage() {
         </div>
 
         {/* Stats row */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
           <StatCard label="Total Pageviews" value={data.pageviews} color="#1A3D2B" />
           <StatCard label="Unique Visitors" value={data.uniqueIPs} color="#2D7A52" />
           <StatCard label="Form Submits" value={data.formSubmits} color="#003F88" />
           <StatCard label="Link Clicks" value={Object.values(data.clickBreakdown).reduce((a, b) => a + b, 0)} color="#F04E23" />
+        </div>
+
+        {/* Engagement row */}
+        <div className="grid grid-cols-3 gap-4 mb-8">
+          <StatCard label="Chatbot Opens"    value={data.chatbotOpens}    color="#7A2B8B" />
+          <StatCard label="Chatbot Messages" value={data.chatbotMessages} color="#3DAA72" />
+          <StatCard label="Resume Downloads" value={data.resumeDownloads} color="#C19A3D" />
         </div>
 
         <div className="grid lg:grid-cols-2 gap-6 mb-8">

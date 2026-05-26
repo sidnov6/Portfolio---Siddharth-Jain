@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
 import { useLang } from '@/lib/language-context'
+import { track } from '@/lib/track'
 
 const links = [
   { href: '#about',     en: 'About',     de: 'Über mich' },
@@ -60,6 +61,7 @@ export default function Navbar({ onChatOpen }: { onChatOpen: () => void }) {
               <a
                 key={href}
                 href={href}
+                onClick={() => track('click', { link: `nav_${href.replace('#', '')}` })}
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                   active === href
                     ? 'bg-[#1A3D2B] text-white'
@@ -109,7 +111,7 @@ export default function Navbar({ onChatOpen }: { onChatOpen: () => void }) {
                 <a
                   key={href}
                   href={href}
-                  onClick={() => setMenuOpen(false)}
+                  onClick={() => { track('click', { link: `nav_${href.replace('#', '')}` }); setMenuOpen(false) }}
                   className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                     active === href
                       ? 'bg-[#1A3D2B] text-white'
