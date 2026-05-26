@@ -78,7 +78,7 @@ export default function OG() {
               flexWrap: 'wrap',
             }}
           >
-            Full Stack AI Engineer · $4.8M impact at Suzlon ·
+            Full Stack AI Engineer · Production AI across manufacturing, healthcare, research ·
             <span style={{ color: '#003F88', fontWeight: 700, marginLeft: 8 }}>now pivoting into Finance × AI</span>
           </div>
         </div>

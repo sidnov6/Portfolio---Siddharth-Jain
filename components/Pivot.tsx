@@ -160,8 +160,8 @@ export default function Pivot() {
         </h2>
         <p className="reveal text-[#6E7A70] text-lg max-w-2xl leading-relaxed mb-16">
           {isDE
-            ? 'Ein Jahr und 4,8 Mio. $ Impact in der Fertigung haben mir gezeigt, was KI im Großmaßstab leisten kann. Jetzt — zurück an der Frankfurt School — nehme ich dieses Playbook in eine 50-Billionen-Dollar-Industrie mit: Finance.'
-            : 'One year and $4.8M of impact in manufacturing showed me what AI can do at scale. Now — back at Frankfurt School full-time — I am taking that playbook to a $50 trillion industry: finance.'}
+            ? 'Ein Jahr Fertigungs-KI im CEO-Büro hat mir gezeigt, was KI im Großmaßstab leisten kann. Jetzt — zurück an der Frankfurt School — nehme ich dieses Playbook in eine 50-Billionen-Dollar-Industrie mit: Finance.'
+            : 'One year of manufacturing AI at the CEO Office showed me what AI can do at scale. Now — back at Frankfurt School full-time — I am taking that playbook to a $50 trillion industry: finance.'}
         </p>
 
         {/* ── THE BRIDGE VISUAL ─────────────────────────── */}
@@ -499,8 +499,8 @@ function BridgeVisual({ isDE }: { isDE: boolean }) {
             </div>
             <div className="grid grid-cols-3 gap-2 mb-3">
               <div className="text-center p-2 rounded-lg bg-white border border-[#E4E0D6]">
-                <div className="font-display text-base font-black text-[#1A3D2B]">$4.8M</div>
-                <div className="text-[9px] text-[#8A9280] font-mono">{isDE ? 'Einsparung' : 'saved'}</div>
+                <div className="font-display text-base font-black text-[#1A3D2B]">14</div>
+                <div className="text-[9px] text-[#8A9280] font-mono">{isDE ? 'Dashboards' : 'dashboards'}</div>
               </div>
               <div className="text-center p-2 rounded-lg bg-white border border-[#E4E0D6]">
                 <div className="font-display text-base font-black text-[#1A3D2B]">10</div>

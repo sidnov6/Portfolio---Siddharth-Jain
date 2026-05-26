@@ -38,11 +38,12 @@ function JsonBlock({ lang }: { lang: 'en' | 'de' }) {
         <div className="pl-8"><C c="#E06C75">"{isDE ? 'studium' : 'studying'}"</C><C c="#ABB2BF">: </C><C c="#98C379">"MSc AI @ Frankfurt School"</C><C c="#ABB2BF">,</C></div>
         <div className="pl-8"><C c="#E06C75">"{isDE ? 'offen_fuer' : 'open_to'}"</C><C c="#ABB2BF">: </C><C c="#98C379">"{isDE ? 'neue Stellen' : 'new opportunities'}"</C></div>
         <div className="pl-4"><C c="#ABB2BF">{'}'}<C c="#ABB2BF">,</C></C></div>
-        <div className="pl-4 mt-1"><C c="#E06C75">"impact"</C><C c="#ABB2BF">: {'{'}</C></div>
-        <div className="pl-8"><C c="#E06C75">"{isDE ? 'kosteneinsparungen' : 'cost_savings'}"</C><C c="#ABB2BF">: </C><C c="#D19A66">"$4.8M"</C><C c="#ABB2BF">,</C></div>
-        <div className="pl-8"><C c="#E06C75">"{isDE ? 'unternehmensnutzer' : 'enterprise_users'}"</C><C c="#ABB2BF">: </C><C c="#D19A66">300</C><C c="#ABB2BF">,</C></div>
-        <div className="pl-8"><C c="#E06C75">"{isDE ? 'werke_skaliert' : 'plants_scaled'}"</C><C c="#ABB2BF">: </C><C c="#D19A66">10</C><C c="#ABB2BF">,</C></div>
-        <div className="pl-8"><C c="#E06C75">"{isDE ? 'chatbots' : 'chatbots_shipped'}"</C><C c="#ABB2BF">: </C><C c="#D19A66">7</C></div>
+        <div className="pl-4 mt-1"><C c="#E06C75">"{isDE ? 'ausgeliefert' : 'shipped'}"</C><C c="#ABB2BF">: {'{'}</C></div>
+        <div className="pl-8"><C c="#E06C75">"{isDE ? 'bi_dashboards' : 'bi_dashboards'}"</C><C c="#ABB2BF">: </C><C c="#D19A66">14</C><C c="#ABB2BF">,</C></div>
+        <div className="pl-8"><C c="#E06C75">"{isDE ? 'genai_bots' : 'genai_bots'}"</C><C c="#ABB2BF">: </C><C c="#D19A66">7</C><C c="#ABB2BF">,</C></div>
+        <div className="pl-8"><C c="#E06C75">"{isDE ? 'kpis_konsolidiert' : 'kpis_consolidated'}"</C><C c="#ABB2BF">: </C><C c="#D19A66">{'"250+"'}</C><C c="#ABB2BF">,</C></div>
+        <div className="pl-8"><C c="#E06C75">"{isDE ? 'unternehmensnutzer' : 'enterprise_users'}"</C><C c="#ABB2BF">: </C><C c="#D19A66">{'"300+"'}</C><C c="#ABB2BF">,</C></div>
+        <div className="pl-8"><C c="#E06C75">"{isDE ? 'werke' : 'plants'}"</C><C c="#ABB2BF">: </C><C c="#D19A66">10</C></div>
         <div className="pl-4"><C c="#ABB2BF">{'}'}<C c="#ABB2BF">,</C></C></div>
         <div className="pl-4 mt-1"><C c="#E06C75">"{isDE ? 'erfahrung' : 'experience'}"</C><C c="#ABB2BF">: [</C></div>
         {[

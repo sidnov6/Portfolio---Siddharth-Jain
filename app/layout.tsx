@@ -11,12 +11,12 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://portfolio-siddharth-jain.vercel.app'),
   title: 'Siddharth Jain — Full Stack AI Engineer · Finance × AI',
-  description: 'Full Stack AI Engineer. $4.8M in enterprise AI savings at Suzlon. Now pivoting into Finance × AI — MSc at Frankfurt School, CFA Level 1 in progress. Building agentic systems for fintech and banking.',
+  description: 'Full Stack AI Engineer. Shipped production AI across manufacturing, healthcare, and research — 14 BI dashboards and 7 GenAI bots at Suzlon. Now pivoting into Finance × AI — MSc at Frankfurt School, CFA Level 1 in progress. Building agentic systems for fintech and banking.',
   keywords: ['AI Engineer', 'Finance AI', 'Quant', 'Agentic AI', 'CFA', 'LangChain', 'Data Scientist', 'Gen AI', 'Data Engineering', 'Machine Learning', 'Frankfurt', 'Siddharth Jain', 'Fintech'],
   authors: [{ name: 'Siddharth Jain' }],
   openGraph: {
     title: 'Siddharth Jain — Full Stack AI Engineer · Finance × AI',
-    description: '$4.8M in enterprise AI savings at Suzlon. Now pivoting into Finance × AI. Building agentic systems for fintech and banking.',
+    description: 'Shipped production AI across manufacturing, healthcare, and research. Now pivoting into Finance × AI — building agentic systems for fintech and banking.',
     type: 'website',
     locale: 'en_US',
     siteName: 'Siddharth Jain · Portfolio',
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Siddharth Jain — Full Stack AI Engineer · Finance × AI',
-    description: '$4.8M in enterprise AI savings at Suzlon. Now pivoting into Finance × AI.',
+    description: 'Shipped production AI across manufacturing, healthcare, and research. Now pivoting into Finance × AI.',
   },
 }
 

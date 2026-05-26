@@ -112,8 +112,8 @@ const experiences = [
     photo: '/journey/suzlon-team.jpg',
     tag: { en: 'Full-time · India\'s leading wind-energy company', de: 'Vollzeit · Indiens führender Windenergie-Konzern' },
     headline: {
-      en: 'Owned the AI, BI, and data strategy for Suzlon\'s manufacturing organisation — 10 plants, 300+ users, $4.8M annualised impact.',
-      de: 'Verantwortlich für die KI-, BI- und Datenstrategie der Fertigungsorganisation von Suzlon — 10 Werke, 300+ Nutzer, 4,8 Mio.$ jährlicher Impact.',
+      en: 'Owned the AI, BI, and data strategy for Suzlon\'s manufacturing organisation — 10 plants across Asia and Europe, 300+ daily users, 14 BI dashboards, 7 production GenAI bots, 250+ KPIs.',
+      de: 'Verantwortlich für die KI-, BI- und Datenstrategie der Fertigungsorganisation von Suzlon — 10 Werke in Asien und Europa, 300+ tägliche Nutzer, 14 BI-Dashboards, 7 produktive GenAI-Bots, 250+ KPIs.',
     },
     points: {
       en: [
