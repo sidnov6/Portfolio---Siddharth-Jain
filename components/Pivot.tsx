@@ -149,7 +149,7 @@ export default function Pivot() {
       <div className="relative max-w-6xl mx-auto">
         {/* ── HEADER ─────────────────────────────────────── */}
         <p className="reveal text-xs font-mono uppercase tracking-[0.2em] text-[#3DAA72] mb-4">
-          {isDE ? '08 / Der nächste Schritt' : '08 / The Next Chapter'}
+          {isDE ? '06 / Der nächste Schritt' : '06 / The Next Chapter'}
         </p>
         <h2 className="reveal font-display text-[clamp(2.2rem,5.5vw,4.2rem)] font-black text-[#1A1A18] mb-5 leading-[1.02] max-w-4xl">
           {isDE ? (

@@ -5,16 +5,16 @@ import { useLang } from '@/lib/language-context'
 import { track } from '@/lib/track'
 
 const links = [
-  { href: '#about',     en: 'About',     de: 'Über mich' },
-  { href: '#journey',   en: 'Journey',   de: 'Werdegang' },
-  { href: '#skills',     en: 'Skills',     de: 'Fähigkeiten' },
-  { href: '#capability', en: 'Stack',      de: 'Stack' },
-  { href: '#projects',   en: 'Projects',   de: 'Projekte' },
-  { href: '#education', en: 'Education', de: 'Ausbildung' },
-  { href: '#beyond',     en: 'Life',       de: 'Leben' },
-  { href: '#pivot',      en: 'Next',       de: 'Nächstes' },
-  { href: '#writing',    en: 'Writing',    de: 'Blog' },
-  { href: '#contact',    en: 'Contact',    de: 'Kontakt' },
+  { href: '#about',       en: 'About',     de: 'Über mich' },
+  { href: '#journey',     en: 'Journey',   de: 'Werdegang' },
+  { href: '#skills',      en: 'Skills',    de: 'Fähigkeiten' },
+  { href: '#capability',  en: 'Stack',     de: 'Stack' },
+  { href: '#projects',    en: 'Projects',  de: 'Projekte' },
+  { href: '#pivot',       en: 'Next',      de: 'Nächstes' },
+  { href: '#writing',     en: 'Writing',   de: 'Blog' },
+  { href: '#beyond',      en: 'Life',      de: 'Leben' },
+  { href: '#giving-back', en: 'Giving',    de: 'Engagement' },
+  { href: '#contact',     en: 'Contact',   de: 'Kontakt' },
 ]
 
 export default function Navbar({ onChatOpen }: { onChatOpen: () => void }) {

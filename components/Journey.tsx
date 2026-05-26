@@ -96,70 +96,9 @@ function ShieldCircuitSVG() {
   )
 }
 
-function AISynapsesSVG() {
-  const nodes = [
-    { cx: 30, cy: 30 }, { cx: 90, cy: 20 }, { cx: 60, cy: 60 },
-    { cx: 20, cy: 80 }, { cx: 100, cy: 75 }, { cx: 60, cy: 100 },
-  ]
-  const edges = [[0,2],[1,2],[2,3],[2,4],[2,5],[3,5],[4,5],[0,1]]
-  return (
-    <svg viewBox="0 0 120 120" className="w-full h-full" aria-hidden>
-      {edges.map(([a, b], i) => (
-        <line key={i} x1={nodes[a].cx} y1={nodes[a].cy} x2={nodes[b].cx} y2={nodes[b].cy}
-          stroke="rgba(61,170,114,0.35)" strokeWidth="1.5"
-          style={{ animation: `pulseSoft ${1.5 + i * 0.2}s ease-in-out ${i * 0.15}s infinite` }} />
-      ))}
-      {nodes.map((n, i) => (
-        <circle key={i} cx={n.cx} cy={n.cy} r={i === 2 ? 9 : 5}
-          fill={i === 2 ? '#1A3D2B' : '#3DAA72'}
-          style={{ animation: `pulseSoft ${2 + i * 0.3}s ease-in-out ${i * 0.2}s infinite` }} />
-      ))}
-    </svg>
-  )
-}
-
-function BookSVG() {
-  return (
-    <svg viewBox="0 0 120 120" className="w-full h-full" aria-hidden>
-      {/* Book shape */}
-      <rect x="20" y="20" width="40" height="80" rx="4" fill="rgba(232,135,34,0.2)" stroke="#E87722" strokeWidth="2" />
-      <rect x="60" y="20" width="40" height="80" rx="4" fill="rgba(232,135,34,0.15)" stroke="#E87722" strokeWidth="2" />
-      <line x1="60" y1="20" x2="60" y2="100" stroke="#E87722" strokeWidth="2" />
-      {/* Lines (text) */}
-      {[35, 45, 55, 65, 75, 85].map((y, i) => (
-        <line key={i} x1={25 + (i % 2) * 2} y1={y} x2={55 - (i % 3)} y2={y}
-          stroke="rgba(232,135,34,0.5)" strokeWidth="1.5" strokeLinecap="round"
-          style={{ animation: `drawLine 1.5s ease-out ${0.2 + i * 0.1}s forwards`, strokeDasharray: 50, strokeDashoffset: 50 }} />
-      ))}
-      {/* Python logo hint */}
-      <circle cx="80" cy="55" r="15" fill="rgba(232,135,34,0.15)" stroke="#E87722" strokeWidth="1.5"
-        style={{ animation: 'pulseSoft 2s ease-in-out infinite' }} />
-      <text x="80" y="60" textAnchor="middle" fill="#E87722" fontSize="12" fontWeight="bold" fontFamily="monospace">Py</text>
-    </svg>
-  )
-}
-
-function MicSVG() {
-  return (
-    <svg viewBox="0 0 120 120" className="w-full h-full" aria-hidden>
-      {/* Mic body */}
-      <rect x="47" y="20" width="26" height="45" rx="13" fill="rgba(45,122,82,0.15)" stroke="#2D7A52" strokeWidth="2.5" />
-      {/* Mic stand */}
-      <path d="M30,65 Q30,95 60,95 Q90,95 90,65" fill="none" stroke="#2D7A52" strokeWidth="2.5" strokeLinecap="round" />
-      <line x1="60" y1="95" x2="60" y2="110" stroke="#2D7A52" strokeWidth="2.5" strokeLinecap="round" />
-      <line x1="45" y1="110" x2="75" y2="110" stroke="#2D7A52" strokeWidth="2.5" strokeLinecap="round" />
-      {/* Sound waves */}
-      {[1, 2].map(i => (
-        <path key={i} d={`M${95 + i * 8},42 Q${102 + i * 8},52 ${95 + i * 8},62`}
-          fill="none" stroke="#2D7A52" strokeWidth="2" strokeLinecap="round"
-          style={{ animation: `pulseSoft 1.5s ease-in-out ${i * 0.3}s infinite`, opacity: 0.6 - i * 0.15 }} />
-      ))}
-    </svg>
-  )
-}
 
 /* ── Experience data ─────────────────────────────────────────── */
-const VH_PER_PHOTO = 70
+const VH_PER_EXP = 100  // 1 viewport-height of scroll per experience
 
 const experiences = [
   {
@@ -170,26 +109,24 @@ const experiences = [
     sub: { en: 'Manufacturing AI, Data & Digitisation Strategy', de: 'Fertigungs-KI, Daten & Digitalisierungsstrategie' },
     period: 'Jun 2025 – Jun 2026', location: { en: 'Pune, India', de: 'Pune, Indien' },
     brand: '#F04E23', brandLight: 'rgba(240,78,35,0.08)',
-    photos: ['/journey/suzlon-3.jpg','/journey/suzlon-1.jpg','/journey/suzlon-2.jpg','/journey/suzlon-4.jpg','/journey/suzlon-6.jpg'],
-    tag: { en: 'Full-time · Fortune 500', de: 'Vollzeit · Fortune 500' },
+    photo: '/journey/suzlon-3.jpg',
+    tag: { en: 'Full-time · India\'s leading wind-energy company', de: 'Vollzeit · Indiens führender Windenergie-Konzern' },
     headline: {
-      en: 'Led enterprise AI transformation generating $4.8M in cost savings across 10 manufacturing plants in Asia and Europe.',
-      de: 'KI-Transformation im Unternehmen geleitet — 4,8 Mio.$ Kosteneinsparungen in 10 Fertigungswerken in Asien und Europa.',
+      en: 'Owned the AI, BI, and data strategy for Suzlon\'s manufacturing organisation — 10 plants, 300+ users, $4.8M annualised impact.',
+      de: 'Verantwortlich für die KI-, BI- und Datenstrategie der Fertigungsorganisation von Suzlon — 10 Werke, 300+ Nutzer, 4,8 Mio.$ jährlicher Impact.',
     },
     points: {
       en: [
-        'Built data pipelines integrating 50+ operational sources into a single analytics ecosystem',
-        'Deployed 14 enterprise dashboards and 7 AI/GenAI chatbots covering 250+ KPIs',
-        'Served 300+ business users across Safety, Quality, Productivity, Cost, Energy domains',
-        'Implemented predictive quality analytics across 40 production lines',
-        'Coordinated with 20+ CXO stakeholders; BRC ops → $4.8M cost savings',
+        'Delivered 14 enterprise BI dashboards and shipped 7 production GenAI bots (RAG + SQL agents) across Quality, Safety, Production, Energy, and HR — serving 300+ daily users across 10 manufacturing plants in Asia and Europe.',
+        'Led a 6-person engineering team to design and ship Suzlon\'s Manufacturing Control Tower — a unified executive cockpit consolidating 250+ KPIs across SQPDCME (Safety, Quality, Productivity, Delivery, Cost, Manpower, Environment) as a single source of truth for the Manufacturing CEO.',
+        'Re-engineered Suzlon\'s monthly Manufacturing Business Review Committee end-to-end — sourced and modelled data from 15+ operational systems, then deployed agentic AI that answers live CXO questions with on-the-fly charts. Retired manual dashboards and Excel reporting entirely.',
+        'Co-authored Suzlon\'s enterprise AI, Data & Digitisation strategy — defining the operating model, tooling stack, and roadmap that scaled across the organisation.',
       ],
       de: [
-        'Datenpipelines mit 50+ Betriebsquellen in ein einheitliches Analyse-Ökosystem integriert',
-        '14 Unternehmens-Dashboards und 7 KI/GenAI-Chatbots für 250+ KPIs entwickelt und deployed',
-        '300+ Geschäftsanwender in Bereichen Sicherheit, Qualität, Produktivität, Kosten, Energie betreut',
-        'Prädiktive Qualitätsanalytik für 40 Produktionslinien implementiert',
-        'Koordination mit 20+ CXO-Stakeholdern; BRC-Optimierung → 4,8 Mio.$ Kosteneinsparungen',
+        'Lieferte 14 Enterprise-BI-Dashboards und brachte 7 produktive GenAI-Bots (RAG + SQL-Agenten) in Betrieb für Qualität, Sicherheit, Produktion, Energie und HR — täglich genutzt von 300+ Anwendern an 10 Fertigungswerken in Asien und Europa.',
+        'Leitete ein 6-köpfiges Engineering-Team beim Aufbau von Suzlons Manufacturing Control Tower — einer einheitlichen Executive-Plattform, die 250+ KPIs in SQPDCME (Sicherheit, Qualität, Produktivität, Lieferung, Kosten, Personal, Umwelt) als zentrale Wahrheitsquelle für den Manufacturing CEO konsolidiert.',
+        'Gestaltete Suzlons monatliches Manufacturing Business Review Committee end-to-end neu — Aggregation und Modellierung von Daten aus 15+ operativen Systemen sowie agentenbasierte KI, die Live-CXO-Fragen mit dynamischen Charts beantwortet. Manuelle Dashboards und Excel-Reports vollständig ersetzt.',
+        'Mitverfasste Suzlons unternehmensweite Strategie für KI, Daten und Digitalisierung — Operating Model, Tooling-Stack und Roadmap, skaliert auf die gesamte Organisation.',
       ],
     },
     Anim: WindTurbineSVG,
@@ -203,7 +140,7 @@ const experiences = [
     sub: { en: 'Research Computing & Data — Healthcare Systems', de: 'Forschungsrechnen & Daten — Gesundheitssysteme' },
     period: 'May – Aug 2024', location: { en: 'Atlanta, USA', de: 'Atlanta, USA' },
     brand: '#B3A369', brandLight: 'rgba(179,163,105,0.08)',
-    photos: ['/journey/gt-1.jpg','/journey/gt-2.jpg','/journey/gt-3.jpg'],
+    photo: '/journey/gt-2.jpg',
     tag: { en: '1 of 10 Selected Nationally · 10,000+ Applicants', de: '1 von 10 national ausgewählt · 10.000+ Bewerber' },
     headline: {
       en: 'Built cybersecurity middleware that solved 50+ critical interoperability failures across US healthcare systems.',
@@ -230,32 +167,30 @@ const experiences = [
   },
   {
     id: 2, type: 'research',
-    company: 'Emory / Georgia Tech',
-    companyFull: 'Emory University & Georgia Tech',
+    company: 'Coulter BME (GT × Emory)',
+    companyFull: 'Wallace H. Coulter Department of Biomedical Engineering — Georgia Tech & Emory',
     role: { en: 'AI Research Intern — Medical Imaging', de: 'KI-Forschungspraktikant — Medizinische Bildgebung' },
     sub: { en: 'Automated Sarcopenia Assessment · Dr. Rakesh Shiradkar', de: 'Automatisierte Sarkopenie-Erkennung · Dr. Rakesh Shiradkar' },
     period: 'Jan – Sep 2024', location: { en: 'Atlanta, USA', de: 'Atlanta, USA' },
     brand: '#012169', brandLight: 'rgba(1,33,105,0.06)',
-    photos: ['/journey/emory-1.jpg','/journey/emory-2.jpg','/journey/emory-3.jpg'],
-    tag: { en: 'Deep Learning Research', de: 'Deep-Learning-Forschung' },
+    photo: '/journey/emory-2.jpg',
+    tag: { en: 'Joint GT + Emory · Top-3 US BME Programme', de: 'GT + Emory Joint · Top-3 US BME-Programm' },
     headline: {
-      en: 'Built a deep learning pipeline achieving 94% accuracy and <1 second inference on 1000+ CT scans.',
-      de: 'Deep-Learning-Pipeline entwickelt — 94% Genauigkeit und <1 Sekunde Inferenz bei 1000+ CT-Scans.',
+      en: 'Built a deep learning pipeline achieving 94% accuracy and <1 second inference on 1000+ CT scans at the joint Georgia Tech × Emory BME department.',
+      de: 'Deep-Learning-Pipeline an der gemeinsamen BME-Fakultät von Georgia Tech und Emory entwickelt — 94% Genauigkeit, <1 Sekunde Inferenz auf 1000+ CT-Scans.',
     },
     points: {
       en: [
-        'Automated sarcopenia detection from CT scans under Dr. Rakesh Shiradkar at Emory',
-        'Achieved 94% prediction accuracy with ~1mm human-level segmentation precision',
-        'Reduced CT scan analysis time from ~10 minutes manually to under 1 second',
-        'Processed 1000+ CT scans with deployable, production-ready inference pipeline',
-        'Contributed to translational AI research with direct clinical application potential',
+        'Joined the Wallace H. Coulter Department of Biomedical Engineering — a flagship joint programme between Georgia Tech\'s engineering school and Emory\'s medical school, consistently ranked Top-3 in the US.',
+        'Automated sarcopenia detection from CT scans under Dr. Rakesh Shiradkar — built a full deep learning pipeline from data prep to production inference.',
+        'Achieved 94% prediction accuracy with ~1mm human-level segmentation precision; reduced manual CT-scan analysis time from ~10 minutes to under 1 second.',
+        'Processed 1000+ CT scans with a deployable, production-ready inference pipeline used by the research group.',
       ],
       de: [
-        'Automatisierte Sarkopenie-Erkennung aus CT-Scans unter Dr. Rakesh Shiradkar an der Emory',
-        '94% Vorhersagegenauigkeit mit ~1mm Segmentierungspräzision auf menschlichem Niveau erreicht',
-        'CT-Scan-Analysezeit von ~10 Minuten manuell auf unter 1 Sekunde reduziert',
-        '1000+ CT-Scans mit produktionsreifer Inferenz-Pipeline verarbeitet',
-        'Zu translationaler KI-Forschung mit direktem klinischem Anwendungspotenzial beigetragen',
+        'Beitrat dem Wallace H. Coulter Department of Biomedical Engineering — einem führenden gemeinsamen Programm von Georgia Techs Ingenieurschule und Emorys medizinischer Fakultät, durchgängig in den US-Top-3.',
+        'Automatisierte Sarkopenie-Erkennung aus CT-Scans unter Dr. Rakesh Shiradkar — komplette Deep-Learning-Pipeline von Datenaufbereitung bis Produktions-Inferenz.',
+        '94% Vorhersagegenauigkeit mit ~1mm Segmentierungspräzision auf menschlichem Niveau; manuelle CT-Scan-Analysezeit von ~10 Minuten auf unter 1 Sekunde reduziert.',
+        '1000+ CT-Scans mit produktionsreifer Inferenz-Pipeline für die Forschungsgruppe verarbeitet.',
       ],
     },
     Anim: HeartbeatSVG,
@@ -269,7 +204,7 @@ const experiences = [
     sub: { en: 'Containerized IDS/IPS · Dr. Samaresh Bera', de: 'Containerisiertes IDS/IPS · Dr. Samaresh Bera' },
     period: 'Oct – Dec 2023', location: { en: 'Jammu, India', de: 'Jammu, Indien' },
     brand: '#003F88', brandLight: 'rgba(0,63,136,0.06)',
-    photos: ['/journey/iitj-1.jpg','/journey/iitj-2.jpg','/journey/iitj-3.jpg','/journey/iitj-4.jpg'],
+    photo: '/journey/iitj-1.jpg',
     tag: { en: 'Network Security Research', de: 'Netzwerksicherheitsforschung' },
     headline: {
       en: 'Improved 5G network throughput by 19% under peak loads via containerized IDS/IPS architecture.',
@@ -296,90 +231,13 @@ const experiences = [
   },
 ]
 
-const totalPhotos = experiences.reduce((s, e) => s + e.photos.length, 0)
-
-const volunteering = [
-  {
-    id: 'v0',
-    org: 'Suzlon Energy CSR',
-    role: { en: 'Volunteer Educator', de: 'Ehrenamtlicher Lehrer' },
-    sub: { en: 'AI Literacy & Digital Inclusion', de: 'KI-Bildung & Digitale Inklusion' },
-    period: 'Jun 2025 – Jun 2026',
-    location: { en: 'Pune, India', de: 'Pune, Indien' },
-    brand: '#F04E23',
-    icon: AISynapsesSVG,
-    points: {
-      en: [
-        'Weekly AI literacy sessions for children of plant staff and underserved communities',
-        'Taught foundational AI, digital literacy, and logical problem-solving to 50+ students',
-        'Simplified complex ML concepts into accessible, beginner-friendly modules',
-        'Contributed to CSR-driven technology education for underrepresented groups',
-      ],
-      de: [
-        'Wöchentliche KI-Bildungssitzungen für Kinder von Werkmitarbeitern und benachteiligte Gemeinschaften',
-        'Grundlagen-KI, digitale Kompetenz und logisches Problemlösen für 50+ Schüler gelehrt',
-        'Komplexe ML-Konzepte in zugängliche, anfängerfreundliche Module vereinfacht',
-        'Zu CSR-gesteuerter Technologiebildung für unterrepräsentierte Gruppen beigetragen',
-      ],
-    },
-  },
-  {
-    id: 'v1',
-    org: 'Becoming I Foundation',
-    role: { en: 'Volunteer Educator', de: 'Ehrenamtlicher Lehrer' },
-    sub: { en: 'Python & Mathematics — 4 Government Schools', de: 'Python & Mathematik — 4 staatliche Schulen' },
-    period: 'Mar 2022 – Aug 2024',
-    location: { en: 'Vellore, India', de: 'Vellore, Indien' },
-    brand: '#E87722',
-    icon: BookSVG,
-    points: {
-      en: [
-        'Taught Python programming and Mathematics to ~200 students across 4 government schools',
-        'Designed beginner-friendly curriculum for students with no prior computer exposure',
-        'Bridged technology accessibility gaps for underserved communities in Tamil Nadu',
-        'Developed long-term mentoring and public speaking skills through grassroots teaching',
-      ],
-      de: [
-        'Python-Programmierung und Mathematik für ~200 Schüler an 4 staatlichen Schulen gelehrt',
-        'Anfängerfreundlichen Lehrplan für Schüler ohne Vorerfahrung mit Computern entwickelt',
-        'Technologiezugangslücken für benachteiligte Gemeinschaften in Tamil Nadu überbrückt',
-        'Langfristige Mentoring- und Redefähigkeiten durch Basisunterricht entwickelt',
-      ],
-    },
-  },
-  {
-    id: 'v2',
-    org: 'ACM Student Chapter — VIT',
-    role: { en: 'Operations & Marketing Head', de: 'Leiter für Betrieb & Marketing' },
-    sub: { en: 'Association for Computing Machinery', de: 'Association for Computing Machinery' },
-    period: 'Mar 2022 – Aug 2024',
-    location: { en: 'VIT Vellore', de: 'VIT Vellore' },
-    brand: '#1C6AC9',
-    icon: MicSVG,
-    points: {
-      en: [
-        'Raised ~$11,000 in sponsorship through 200+ cold calls and corporate outreach',
-        'Managed end-to-end operations for multi-day events with 500+ participants',
-        'Led cross-functional student teams across operations, marketing, design, and tech',
-        'Ran hackathons and ideathons as part of one of India\'s top ACM student chapters',
-      ],
-      de: [
-        'Rund 11.000 $ Sponsoring durch 200+ Kaltakquise-Anrufe und Unternehmenskontakte eingeworben',
-        'End-to-End-Betrieb für mehrtägige Veranstaltungen mit 500+ Teilnehmern verwaltet',
-        'Funktionsübergreifende Studententeams in Betrieb, Marketing, Design und Technik geleitet',
-        'Hackathons und Ideathons als Teil eines der besten ACM-Studentenkapitel Indiens durchgeführt',
-      ],
-    },
-  },
-]
+const numExperiences = experiences.length
 
 /* ── Main component ──────────────────────────────────────────── */
 export default function Journey() {
   const containerRef  = useRef<HTMLDivElement>(null)
   const [activeIdx, setActiveIdx]         = useState(0)
-  const [photoIdx, setPhotoIdx]           = useState(0)
   const [innerProgress, setInnerProgress] = useState(0)
-  const volRef = useRef<HTMLDivElement>(null)
   const { lang } = useLang()
   const isDE = lang === 'de'
 
@@ -389,22 +247,10 @@ export default function Journey() {
     const total    = rect.height - window.innerHeight
     const scrolled = Math.max(0, -rect.top)
     const progress = Math.min(1, scrolled / total)
-    const sectionF  = progress * totalPhotos
-    const sectionIdx = Math.min(Math.floor(sectionF), totalPhotos - 1)
-    let newExpIdx = 0, newPhotoIdx = 0, cumSections = 0
-    for (let i = 0; i < experiences.length; i++) {
-      if (sectionIdx < cumSections + experiences[i].photos.length) {
-        newExpIdx = i
-        newPhotoIdx = sectionIdx - cumSections
-        break
-      }
-      cumSections += experiences[i].photos.length
-    }
-    const newInnerProgress = Math.max(0, Math.min(1,
-      (sectionF - cumSections) / experiences[newExpIdx].photos.length
-    ))
+    const sectionF  = progress * numExperiences
+    const newExpIdx = Math.min(Math.floor(sectionF), numExperiences - 1)
+    const newInnerProgress = Math.max(0, Math.min(1, sectionF - newExpIdx))
     setActiveIdx(newExpIdx)
-    setPhotoIdx(newPhotoIdx)
     setInnerProgress(newInnerProgress)
   }, [])
 
@@ -414,16 +260,6 @@ export default function Journey() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [handleScroll])
 
-  // Reveal volunteering cards
-  useEffect(() => {
-    const io = new IntersectionObserver(
-      entries => entries.forEach(e => e.isIntersecting && e.target.classList.add('visible')),
-      { threshold: 0.15 }
-    )
-    volRef.current?.querySelectorAll('.reveal').forEach(el => io.observe(el))
-    return () => io.disconnect()
-  }, [])
-
   const exp = experiences[activeIdx]
 
   return (
@@ -431,31 +267,29 @@ export default function Journey() {
       {/* ── Sticky scroll experience ───────────────────────────── */}
       <div
         ref={containerRef}
-        style={{ height: `${totalPhotos * VH_PER_PHOTO}vh` }}
+        style={{ height: `${numExperiences * VH_PER_EXP}vh` }}
         className="relative"
       >
         <div className="sticky top-0 h-screen overflow-hidden">
 
-          {/* Background photo layers — one per photo, cross-fade on scroll */}
-          {experiences.flatMap((e, ei) =>
-            e.photos.map((photo, pi) => {
-              const isActive = ei === activeIdx && pi === photoIdx
-              return (
-                <div
-                  key={`${ei}-${pi}`}
-                  className="journey-bg-image"
-                  style={{
-                    backgroundImage: `url(${photo})`,
-                    backgroundColor: e.brandLight,
-                    opacity: isActive ? 1 : 0,
-                    filter: isActive ? 'blur(0px) brightness(1.05)' : 'blur(12px)',
-                    transform: isActive ? 'scale(1)' : 'scale(1.05)',
-                    transition: 'opacity 0.7s ease, filter 0.7s ease, transform 0.7s ease',
-                  }}
-                />
-              )
-            })
-          )}
+          {/* Background photo layers — one per experience, cross-fade on scroll */}
+          {experiences.map((e, ei) => {
+            const isActive = ei === activeIdx
+            return (
+              <div
+                key={ei}
+                className="journey-bg-image"
+                style={{
+                  backgroundImage: `url(${e.photo})`,
+                  backgroundColor: e.brandLight,
+                  opacity: isActive ? 1 : 0,
+                  filter: isActive ? 'blur(0px) brightness(1.05)' : 'blur(12px)',
+                  transform: isActive ? 'scale(1)' : 'scale(1.05)',
+                  transition: 'opacity 0.7s ease, filter 0.7s ease, transform 0.7s ease',
+                }}
+              />
+            )
+          })}
 
           {/* Vignette: cream at left/right edges (where text lives), transparent in the center so the photo shows */}
           <div className="absolute inset-0" style={{
@@ -473,7 +307,6 @@ export default function Journey() {
               {/* Progress dots */}
               <div className="flex items-center gap-2">
                 {experiences.map((_, i) => {
-                  const cumBefore = experiences.slice(0, i).reduce((s, x) => s + x.photos.length, 0)
                   return (
                     <button
                       key={i}
@@ -481,7 +314,7 @@ export default function Journey() {
                         const target = containerRef.current
                         if (!target) return
                         const totalScroll = target.offsetHeight - window.innerHeight
-                        const scrollTo = target.offsetTop + (cumBefore / totalPhotos) * totalScroll
+                        const scrollTo = target.offsetTop + (i / numExperiences) * totalScroll
                         window.scrollTo({ top: scrollTo, behavior: 'smooth' })
                       }}
                       className="rounded-full transition-all duration-300"
@@ -588,60 +421,6 @@ export default function Journey() {
         </div>
       </div>
 
-      {/* ── Volunteering & Extracurriculars ─────────────────────── */}
-      <div ref={volRef} className="bg-white py-24 px-6">
-        <div className="max-w-6xl mx-auto">
-          <p className="reveal text-xs font-mono uppercase tracking-[0.2em] text-[#3DAA72] mb-4">
-            {isDE ? '02b / Engagement' : '02b / Beyond Work'}
-          </p>
-          <h2 className="reveal font-display text-[clamp(2rem,4vw,3rem)] font-black text-[#1A1A18] mb-3 leading-tight">
-            {isDE
-              ? <>{`Zurückgeben & `}<em className="text-[#1A3D2B]">Führen</em></>
-              : <>Giving Back &amp; <em className="text-[#1A3D2B]">Leading</em></>}
-          </h2>
-          <p className="reveal text-[#6E7A70] text-lg max-w-xl mb-12 leading-relaxed">
-            {isDE
-              ? 'Unterrichten von 250+ Schülern in staatlichen Schulen und im Suzlon-CSR-Programm, während 11.000 $ Sponsoring als ACM-Betriebsleiter eingeworben wurden.'
-              : 'Teaching 250+ students across government schools and Suzlon CSR, while raising $11,000 in sponsorships as ACM Operations Head.'}
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {volunteering.map((v, i) => {
-              const Icon = v.icon
-              return (
-                <div
-                  key={v.id}
-                  className={`reveal reveal-d${i + 1} bg-[#F8F5EE] border border-[#E4E0D6] rounded-2xl p-6 card-lift`}
-                >
-                  {/* Header */}
-                  <div className="flex items-start gap-4 mb-5">
-                    <div
-                      className="w-14 h-14 rounded-xl flex-shrink-0 p-2"
-                      style={{ background: `${v.brand}12`, border: `1.5px solid ${v.brand}25` }}
-                    >
-                      <Icon />
-                    </div>
-                    <div>
-                      <p className="font-bold text-[#1A1A18] text-sm leading-tight">{isDE ? v.role.de : v.role.en}</p>
-                      <p className="text-xs font-semibold mt-0.5" style={{ color: v.brand }}>{v.org}</p>
-                      <p className="text-[10px] text-[#8A9280] font-mono mt-0.5">{v.period} · {isDE ? v.location.de : v.location.en}</p>
-                    </div>
-                  </div>
-                  <p className="text-xs text-[#8A9280] font-mono mb-3">{isDE ? v.sub.de : v.sub.en}</p>
-                  <ul className="space-y-2">
-                    {(isDE ? v.points.de : v.points.en).map((p, j) => (
-                      <li key={j} className="flex items-start gap-2 text-xs text-[#6E7A70] leading-relaxed">
-                        <span className="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style={{ background: v.brand }} />
-                        {p}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </div>
     </section>
   )
 }

@@ -187,7 +187,7 @@ export default function Projects() {
           Things I've <em className="text-[#1A3D2B]">Built</em>
         </h2>
         <p className="reveal text-[#6E7A70] text-lg max-w-2xl mb-10 leading-relaxed">
-          Production systems at Fortune 500 scale, not just demos. Most are enterprise and private — the impact is the proof.
+          Production systems at enterprise scale, not just demos. Most are private — the impact is the proof.
         </p>
 
         {/* Filter */}

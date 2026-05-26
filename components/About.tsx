@@ -48,7 +48,7 @@ function JsonBlock({ lang }: { lang: 'en' | 'de' }) {
         {[
           '"Suzlon Energy (AI Eng)"',
           '"Georgia Tech (Cybersec)"',
-          '"Emory Univ. (Medical AI)"',
+          '"Coulter BME, GT × Emory"',
           '"IIT Jammu (5G Research)"',
         ].map((item, i, arr) => (
           <div key={i} className="pl-8"><C c="#98C379">{item}</C>{i < arr.length - 1 && <C c="#ABB2BF">,</C>}</div>
@@ -99,8 +99,8 @@ export default function About() {
             </h2>
             <p className="reveal reveal-d2 text-[#6E7A70] text-lg leading-relaxed mb-5">
               {isDE
-                ? 'Ich bin Full-Stack-KI-Ingenieur und habe KI-Transformationen auf CEO-Ebene geleitet, medizinische Bildgebungsforschung an der Emory University durchgeführt und Cybersecurity-Projekte am Georgia Tech umgesetzt — alles noch vor Abschluss meines Masterstudiums.'
-                : "I'm a Full Stack AI Engineer who's led enterprise AI transformation at CEO level, conducted medical imaging research at Emory, and done cybersecurity work at Georgia Tech — all before finishing my master's degree."}
+                ? 'Ich bin Full-Stack-KI-Ingenieur und habe KI-Transformationen auf CEO-Ebene geleitet, medizinische Bildgebungsforschung an der Coulter-BME-Fakultät (Georgia Tech × Emory) durchgeführt und Cybersecurity-Projekte am Georgia Tech umgesetzt — alles noch vor Abschluss meines Masterstudiums.'
+                : "I'm a Full Stack AI Engineer who's led enterprise AI transformation at CEO level, conducted medical-imaging research at the Coulter BME department (Georgia Tech × Emory), and done cybersecurity work at Georgia Tech — all before finishing my master's degree."}
             </p>
             <p className="reveal reveal-d3 text-[#6E7A70] text-lg leading-relaxed mb-8">
               {isDE

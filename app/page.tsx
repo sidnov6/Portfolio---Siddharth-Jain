@@ -12,6 +12,7 @@ import Education from '@/components/Education'
 import BeyondCode from '@/components/BeyondCode'
 import Pivot from '@/components/Pivot'
 import BlogPreview from '@/components/BlogPreview'
+import GivingBack from '@/components/GivingBack'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 import Chatbot from '@/components/Chatbot'
@@ -29,10 +30,11 @@ function PageContent() {
       <Skills />
       <Capability />
       <Projects />
-      <Education />
-      <BeyondCode />
       <Pivot />
+      <Education />
       <BlogPreview />
+      <BeyondCode />
+      <GivingBack />
       <Contact />
       <Footer />
 
