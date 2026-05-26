@@ -6,11 +6,13 @@ import { useLang } from '@/lib/language-context'
 const links = [
   { href: '#about',     en: 'About',     de: 'Über mich' },
   { href: '#journey',   en: 'Journey',   de: 'Werdegang' },
-  { href: '#skills',    en: 'Skills',    de: 'Fähigkeiten' },
-  { href: '#projects',  en: 'Projects',  de: 'Projekte' },
+  { href: '#skills',     en: 'Skills',     de: 'Fähigkeiten' },
+  { href: '#capability', en: 'Stack',      de: 'Stack' },
+  { href: '#projects',   en: 'Projects',   de: 'Projekte' },
   { href: '#education', en: 'Education', de: 'Ausbildung' },
-  { href: '#beyond',    en: 'Life',      de: 'Leben' },
-  { href: '#contact',   en: 'Contact',   de: 'Kontakt' },
+  { href: '#beyond',     en: 'Life',       de: 'Leben' },
+  { href: '#pivot',      en: 'Next',       de: 'Nächstes' },
+  { href: '#contact',    en: 'Contact',    de: 'Kontakt' },
 ]
 
 export default function Navbar({ onChatOpen }: { onChatOpen: () => void }) {

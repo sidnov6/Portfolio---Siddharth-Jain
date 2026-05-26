@@ -304,7 +304,7 @@ const volunteering = [
     org: 'Suzlon Energy CSR',
     role: { en: 'Volunteer Educator', de: 'Ehrenamtlicher Lehrer' },
     sub: { en: 'AI Literacy & Digital Inclusion', de: 'KI-Bildung & Digitale Inklusion' },
-    period: 'Jun 2025 – Present',
+    period: 'Jun 2025 – Jun 2026',
     location: { en: 'Pune, India', de: 'Pune, Indien' },
     brand: '#F04E23',
     icon: AISynapsesSVG,

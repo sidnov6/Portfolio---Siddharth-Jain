@@ -291,6 +291,12 @@ body {
   to   { transform: rotate(360deg); }
 }
 
+/* ── Gold shimmer (capability lakehouse) ───────── */
+@keyframes shimmerGold {
+  0%, 100% { transform: translateX(-100%); }
+  50%       { transform: translateX(100%); }
+}
+
 /* ── Marquee ───────────────────────────────────── */
 .marquee-track {
   animation: marquee 25s linear infinite;

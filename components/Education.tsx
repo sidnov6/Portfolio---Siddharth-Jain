@@ -84,7 +84,7 @@ export default function Education() {
     <section id="education" ref={ref} className="py-28 px-6 bg-[#F8F5EE] section-grain">
       <div className="max-w-6xl mx-auto">
         <p className="reveal text-xs font-mono uppercase tracking-[0.2em] text-[#3DAA72] mb-4">
-          {isDE ? '05 / Ausbildung' : '05 / Education'}
+          {isDE ? '06 / Ausbildung' : '06 / Education'}
         </p>
         <h2 className="reveal font-display text-[clamp(2.2rem,5vw,3.8rem)] font-black text-[#1A1A18] mb-3 leading-tight">
           {isDE ? <>Akademische <em className="text-[#1A3D2B]">Grundlagen</em></> : <>Academic <em className="text-[#1A3D2B]">Foundations</em></>}

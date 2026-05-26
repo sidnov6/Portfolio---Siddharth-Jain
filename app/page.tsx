@@ -6,9 +6,11 @@ import Hero from '@/components/Hero'
 import About from '@/components/About'
 import Journey from '@/components/Journey'
 import Skills from '@/components/Skills'
+import Capability from '@/components/Capability'
 import Projects from '@/components/Projects'
 import Education from '@/components/Education'
 import BeyondCode from '@/components/BeyondCode'
+import Pivot from '@/components/Pivot'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 import Chatbot from '@/components/Chatbot'
@@ -24,9 +26,11 @@ function PageContent() {
       <About />
       <Journey />
       <Skills />
+      <Capability />
       <Projects />
       <Education />
       <BeyondCode />
+      <Pivot />
       <Contact />
       <Footer />
 
