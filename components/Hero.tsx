@@ -220,8 +220,8 @@ export default function Hero() {
         {/* Tagline */}
         <p className="reveal reveal-d3 text-[#3D3D3A] text-base sm:text-xl max-w-xl leading-relaxed mb-10">
           {isDE
-            ? <>Ich entwickle Unternehmens-KI, die messbare Ergebnisse liefert —<strong className="text-[#1A3D2B] font-semibold"> 4,8 Mio. $ Einsparungen</strong> bei Suzlon. Forscher am Georgia Tech. Student an der Frankfurt School. Nationaler Basketballspieler.</>
-            : <>I build enterprise AI that moves needles —<strong className="text-[#1A3D2B] font-semibold"> $4.8M in savings</strong> at Suzlon. Georgia Tech researcher. Frankfurt School student. National basketball player.</>
+            ? <>Habe Unternehmens-KI gebaut, die messbar wirkt —<strong className="text-[#1A3D2B] font-semibold"> 4,8 Mio. $ Einsparungen</strong> bei Suzlon. Jetzt der Sprung in <strong className="text-[#003F88] font-semibold">Finance × KI</strong> — MSc an der Frankfurt School, CFA Level 1 in Vorbereitung, Bau agentenbasierter Systeme für Fintech und Banking.</>
+            : <>Built enterprise AI that moved needles —<strong className="text-[#1A3D2B] font-semibold"> $4.8M in savings</strong> at Suzlon. Now leaping into <strong className="text-[#003F88] font-semibold">Finance × AI</strong> — MSc at Frankfurt School, CFA Level 1 in progress, building agentic systems for fintech and banking.</>
           }
         </p>
 

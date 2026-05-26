@@ -28,7 +28,7 @@ function JsonBlock({ lang }: { lang: 'en' | 'de' }) {
         <span className="ml-3 text-[#6E7A70] text-xs font-mono">siddharth.json</span>
       </div>
       {/* Code */}
-      <div className="bg-[#1A1A1A] p-5 font-mono text-[12px] leading-relaxed overflow-x-auto">
+      <div className="bg-[#1A1A1A] p-4 sm:p-5 font-mono text-[10px] sm:text-[12px] leading-relaxed overflow-x-auto">
         <div><C c="#ABB2BF">{'{'}</C></div>
         <div className="pl-4"><C c="#E06C75">"name"</C><C c="#ABB2BF">: </C><C c="#98C379">"Siddharth Jain"</C><C c="#ABB2BF">,</C></div>
         <div className="pl-4"><C c="#E06C75">"age"</C><C c="#ABB2BF">: </C><C c="#D19A66">22</C><C c="#ABB2BF">,</C></div>

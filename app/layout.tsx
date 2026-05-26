@@ -9,14 +9,22 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  title: 'Siddharth Jain — Full Stack AI Engineer',
-  description: 'Full Stack AI Engineer, Data Scientist, Gen AI Engineer. MSc AI & Data Science at Frankfurt School. Built enterprise AI generating $4.8M in savings at Suzlon Energy. National basketball player. Manchester United fan.',
-  keywords: ['AI Engineer', 'Data Scientist', 'Gen AI', 'Data Engineering', 'Machine Learning', 'Portfolio', 'Siddharth Jain', 'Frankfurt'],
+  metadataBase: new URL('https://portfolio-siddharth-jain.vercel.app'),
+  title: 'Siddharth Jain — Full Stack AI Engineer · Finance × AI',
+  description: 'Full Stack AI Engineer. $4.8M in enterprise AI savings at Suzlon. Now pivoting into Finance × AI — MSc at Frankfurt School, CFA Level 1 in progress. Building agentic systems for fintech and banking.',
+  keywords: ['AI Engineer', 'Finance AI', 'Quant', 'Agentic AI', 'CFA', 'LangChain', 'Data Scientist', 'Gen AI', 'Data Engineering', 'Machine Learning', 'Frankfurt', 'Siddharth Jain', 'Fintech'],
   authors: [{ name: 'Siddharth Jain' }],
   openGraph: {
-    title: 'Siddharth Jain — Full Stack AI Engineer',
-    description: 'Enterprise AI engineer with $4.8M impact, Georgia Tech researcher, national basketball player.',
+    title: 'Siddharth Jain — Full Stack AI Engineer · Finance × AI',
+    description: '$4.8M in enterprise AI savings at Suzlon. Now pivoting into Finance × AI. Building agentic systems for fintech and banking.',
     type: 'website',
+    locale: 'en_US',
+    siteName: 'Siddharth Jain · Portfolio',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Siddharth Jain — Full Stack AI Engineer · Finance × AI',
+    description: '$4.8M in enterprise AI savings at Suzlon. Now pivoting into Finance × AI.',
   },
 }
 

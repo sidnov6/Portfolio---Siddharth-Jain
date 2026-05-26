@@ -1,7 +1,8 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import { useLang } from '@/lib/language-context'
-import { BarChart3, MessageSquare, Brain, TrendingUp, Database, Workflow, Layers } from 'lucide-react'
+import { BarChart3, MessageSquare, Brain, TrendingUp, Database, Workflow, Layers, ArrowDown } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 
 /* ─────────────────────────────────────────────────────────
    DATA DEFINITIONS
@@ -199,8 +200,8 @@ export default function Capability() {
               ))}
             </div>
 
-            {/* Diagram canvas: keeps a strict 1200x540 viewbox */}
-            <div className="relative w-full" style={{ aspectRatio: '1200/540' }}>
+            {/* Diagram canvas: keeps a strict 1200x540 viewbox — DESKTOP ONLY */}
+            <div className="relative w-full hidden md:block" style={{ aspectRatio: '1200/540' }}>
               {/* SVG layer for flow lines + particles */}
               <svg
                 viewBox="0 0 1200 540"
@@ -452,6 +453,11 @@ export default function Capability() {
               </div>
             </div>
 
+            {/* MOBILE ALTERNATIVE — vertical stack with arrows */}
+            <div className="md:hidden">
+              <MobileStack isDE={isDE} sources={sources} outputs={outputs} />
+            </div>
+
             {/* Footer caption */}
             <div className="mt-6 pt-5 border-t border-[#E4E0D6] flex items-center justify-between flex-wrap gap-3">
               <p className="text-[11px] font-mono text-[#8A9280] tracking-wider">
@@ -518,6 +524,117 @@ export default function Capability() {
         </div>
       </div>
     </section>
+  )
+}
+
+/* ─────────────────────────────────────────────────────────
+   MOBILE STACK — Vertical, scrollable alternative to the
+   horizontal diagram (shown only on screens < md)
+   ───────────────────────────────────────────────────────── */
+type SourceItem = { initials: string; name: string; sub_en: string; sub_de: string; color: string; bg: string }
+type OutputItem = { icon: LucideIcon; name_en: string; name_de: string; sub_en: string; sub_de: string; color: string; bg: string }
+
+function MobileStack({ isDE, sources, outputs }: { isDE: boolean; sources: SourceItem[]; outputs: OutputItem[] }) {
+  return (
+    <div className="space-y-4">
+      {/* SOURCES */}
+      <div>
+        <p className="text-[10px] font-mono tracking-[0.25em] text-[#3DAA72] mb-2 text-center">
+          {isDE ? 'QUELLEN' : 'SOURCES'}
+        </p>
+        <div className="grid grid-cols-1 gap-2">
+          {sources.map(s => (
+            <div key={s.name} className="flex items-center gap-3 rounded-xl bg-white border border-[#E4E0D6] py-2.5 px-3 shadow-sm">
+              <div
+                className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center font-mono font-bold text-[12px]"
+                style={{ background: s.bg, color: s.color }}
+              >
+                {s.initials}
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-[13px] font-bold text-[#1A1A18] leading-tight">{s.name}</p>
+                <p className="text-[10px] text-[#8A9280] leading-tight font-mono">{isDE ? s.sub_de : s.sub_en}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <ArrowConnector />
+
+      {/* TRANSFORM */}
+      <div>
+        <p className="text-[10px] font-mono tracking-[0.25em] text-[#3DAA72] mb-2 text-center">
+          {isDE ? 'TRANSFORM' : 'TRANSFORM'}
+        </p>
+        <div className="rounded-2xl bg-gradient-to-br from-[#1A3D2B] to-[#0F2A1C] text-white p-5 flex items-center gap-4 shadow-lg border border-[#3DAA72]/20">
+          <div className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur flex items-center justify-center flex-shrink-0">
+            <Workflow size={22} className="text-[#3DAA72]" />
+          </div>
+          <div>
+            <p className="text-sm font-bold">Pipeline</p>
+            <p className="text-[11px] text-white/65 font-mono">ETL · ELT · Real-time + Batch</p>
+            <p className="text-[10px] text-white/45 font-mono mt-1">Spark · dbt · Airflow</p>
+          </div>
+        </div>
+      </div>
+
+      <ArrowConnector />
+
+      {/* LAKEHOUSE */}
+      <div>
+        <p className="text-[10px] font-mono tracking-[0.25em] text-[#3DAA72] mb-2 text-center">
+          {isDE ? 'LAKEHOUSE' : 'LAKEHOUSE'}
+        </p>
+        <div className="rounded-2xl bg-white border border-[#E4E0D6] overflow-hidden shadow-sm">
+          <div className="bg-[#1A1A18] px-3 py-2 flex items-center gap-2">
+            <Layers size={11} className="text-[#3DAA72]" />
+            <span className="text-[10px] font-mono text-white/80 tracking-wider">LAKEHOUSE</span>
+          </div>
+          <div className="p-3 space-y-2 bg-gradient-to-b from-[#FBFAF6] to-white">
+            <MedallionLayer tier="BRONZE" label={isDE ? 'Roh' : 'Raw'} gradient="linear-gradient(135deg, #B87333 0%, #8C5421 100%)" />
+            <MedallionLayer tier="SILVER" label={isDE ? 'Bereinigt' : 'Cleaned'} gradient="linear-gradient(135deg, #C0C0C0 0%, #8A8A8A 100%)" />
+            <MedallionLayer tier="GOLD" label={isDE ? 'Business' : 'Business-ready'} gradient="linear-gradient(135deg, #E3B341 0%, #B8860B 100%)" highlight />
+          </div>
+          <p className="text-[10px] font-mono text-[#8A9280] text-center py-2 border-t border-[#E4E0D6]">Snowflake · Databricks</p>
+        </div>
+      </div>
+
+      <ArrowConnector />
+
+      {/* OUTPUTS */}
+      <div>
+        <p className="text-[10px] font-mono tracking-[0.25em] text-[#3DAA72] mb-2 text-center">
+          {isDE ? 'KI / BI' : 'AI / BI'}
+        </p>
+        <div className="grid grid-cols-1 gap-2">
+          {outputs.map(o => {
+            const Icon = o.icon
+            return (
+              <div key={o.name_en} className="flex items-center gap-3 rounded-xl bg-white border border-[#E4E0D6] py-2.5 px-3 shadow-sm">
+                <div className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: o.bg }}>
+                  <Icon size={18} style={{ color: o.color }} />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-[13px] font-bold text-[#1A1A18] leading-tight">{isDE ? o.name_de : o.name_en}</p>
+                  <p className="text-[10px] text-[#8A9280] leading-tight font-mono">{isDE ? o.sub_de : o.sub_en}</p>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function ArrowConnector() {
+  return (
+    <div className="flex justify-center py-1">
+      <div className="w-9 h-9 rounded-full bg-[#E8F5EE] flex items-center justify-center">
+        <ArrowDown size={16} className="text-[#1A3D2B]" />
+      </div>
+    </div>
   )
 }
 
