@@ -30,8 +30,8 @@ function PageContent() {
       <Skills />
       <Capability />
       <Projects />
-      <Pivot />
       <Education />
+      <Pivot />
       <BlogPreview />
       <BeyondCode />
       <GivingBack />
