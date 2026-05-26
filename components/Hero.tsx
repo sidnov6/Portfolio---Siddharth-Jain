@@ -12,16 +12,16 @@ const roles = {
 
 const stats = {
   en: [
-    { value: '$4.8M', label: 'Cost Savings' },
-    { value: '10+',   label: 'Plants Scaled' },
-    { value: '300+',  label: 'Daily Users' },
-    { value: '3',     label: 'Countries' },
+    { value: '14',    label: 'BI Dashboards Shipped' },
+    { value: '7',     label: 'GenAI Bots in Production' },
+    { value: '300+',  label: 'Daily Enterprise Users' },
+    { value: '3',     label: 'Countries Worked In' },
   ],
   de: [
-    { value: '$4.8M', label: 'Kosteneinsparungen' },
-    { value: '10+',   label: 'Skalierte Anlagen' },
-    { value: '300+',  label: 'Tägliche Nutzer' },
-    { value: '3',     label: 'Länder' },
+    { value: '14',    label: 'Ausgelieferte BI-Dashboards' },
+    { value: '7',     label: 'GenAI-Bots in Produktion' },
+    { value: '300+',  label: 'Tägliche Unternehmensnutzer' },
+    { value: '3',     label: 'Länder gearbeitet' },
   ],
 }
 
