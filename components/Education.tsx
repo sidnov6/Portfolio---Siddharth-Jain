@@ -123,6 +123,8 @@ export default function Education() {
                   <img
                     src={s.photo}
                     alt={s.name}
+                    loading="lazy"
+                    decoding="async"
                     className="photo-reveal active absolute inset-0 w-full h-full object-cover"
                     onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
                   />

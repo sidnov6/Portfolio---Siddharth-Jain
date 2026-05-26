@@ -235,7 +235,7 @@ export default function BeyondCode() {
 
                   {p.id === 'basketball' ? (
                     <>
-                      <img src="/beyond/basketball-2.jpg" alt="Basketball team lineup"
+                      <img src="/beyond/basketball-2.jpg" alt="Basketball team lineup" loading="lazy" decoding="async"
                         className="absolute inset-0 w-full h-full object-cover object-center grayscale" />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A10]/60 via-transparent to-transparent" />
                       <div className="absolute bottom-4 left-0 right-0 flex justify-center">
@@ -246,7 +246,7 @@ export default function BeyondCode() {
                     </>
                   ) : p.id === 'manutd' ? (
                     <>
-                      <img src="/beyond/manutd-squad.jpg" alt="Manchester United"
+                      <img src="/beyond/manutd-squad.jpg" alt="Manchester United" loading="lazy" decoding="async"
                         className="absolute inset-0 w-full h-full object-cover object-top"
                         onError={e => { (e.target as HTMLImageElement).style.display = 'none' }} />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#1A0000]/60 via-transparent to-transparent" />
@@ -256,7 +256,7 @@ export default function BeyondCode() {
                     </>
                   ) : p.id === 'geopolitics' ? (
                     <>
-                      <img src="/beyond/geo-politics.jpg" alt="Geopolitics"
+                      <img src="/beyond/geo-politics.jpg" alt="Geopolitics" loading="lazy" decoding="async"
                         className="absolute inset-0 w-full h-full object-cover object-center"
                         onError={e => { (e.target as HTMLImageElement).style.display = 'none' }} />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#1A3D2B]/50 via-transparent to-transparent" />
@@ -268,7 +268,7 @@ export default function BeyondCode() {
                     </>
                   ) : p.id === 'debate' ? (
                     <>
-                      <img src={p.photos[0]} alt="Debate"
+                      <img src={p.photos[0]} alt="Debate" loading="lazy" decoding="async"
                         className="absolute inset-0 w-full h-full object-cover object-top"
                         onError={e => { (e.target as HTMLImageElement).style.display = 'none' }} />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#1A3D2B]/40 via-transparent to-transparent" />

@@ -208,10 +208,8 @@ export default function Projects() {
         <div className="reveal grid md:grid-cols-2 xl:grid-cols-3 gap-5">
           {shown.map(p => (
             <div key={p.id} className="group bg-[#F8F5EE] border border-[#E4E0D6] rounded-2xl overflow-hidden card-lift flex flex-col">
-              {/* Top color band + photo slot */}
+              {/* Top color band */}
               <div className="relative h-36 flex items-center justify-center overflow-hidden" style={{ background: p.bg }}>
-                <img src={`/projects/project-${p.id}.jpg`} alt="" className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-20 transition-opacity duration-500"
-                  onError={() => {}} />
                 {/* Category pill */}
                 <div className="relative z-10 flex flex-col items-center gap-2">
                   <span className="text-xs font-bold font-mono uppercase tracking-widest px-3 py-1 rounded-full"

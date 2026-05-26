@@ -146,6 +146,8 @@ export default function About() {
                 <img
                   src={p.src}
                   alt={p.caption}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
                   style={{ minHeight: i === 0 ? '100%' : undefined }}
                   onError={e => { (e.target as HTMLImageElement).style.display = 'none' }}
