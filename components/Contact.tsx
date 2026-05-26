@@ -49,7 +49,7 @@ export default function Contact() {
     <section id="contact" ref={ref} className="py-28 px-6 bg-[#F8F5EE] section-grain">
       <div className="max-w-6xl mx-auto">
         <p className="reveal text-xs font-mono uppercase tracking-[0.2em] text-[#3DAA72] mb-4">
-          {isDE ? '09 / Kontakt' : '09 / Contact'}
+          {isDE ? '10 / Kontakt' : '10 / Contact'}
         </p>
         <h2 className="reveal font-display text-[clamp(2.2rem,5vw,3.8rem)] font-black text-[#1A1A18] mb-3 leading-tight">
           {isDE ? <>Lass uns <em className="text-[#1A3D2B]">verbinden</em></> : <>Let's <em className="text-[#1A3D2B]">Connect</em></>}

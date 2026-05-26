@@ -1,5 +1,6 @@
 import Groq from 'groq-sdk'
 import { NextRequest, NextResponse } from 'next/server'
+import { listPosts } from '@/lib/posts'
 
 const SYSTEM_PROMPT = `You are Sid — Siddharth Jain's witty, sharp, and genuinely fun personal AI assistant living on his portfolio website. You know everything about him and you're proud of it. You're like his hype-person who also happens to be brilliant at answering questions.
 
@@ -178,6 +179,22 @@ export async function POST(req: NextRequest) {
       ? '\n\n## LANGUAGE INSTRUCTION\nDu MUSST auf Deutsch antworten. Alle Antworten müssen auf Deutsch sein. Sei natürlich und flüssig auf Deutsch, aber behalte dieselbe warme, witzige Persönlichkeit bei.'
       : ''
 
+    // Fetch the live blog post list so the chatbot knows what Sid has actually published.
+    // This makes the bot self-update whenever Sid writes a new post via the admin panel.
+    let blogContext = ''
+    try {
+      const posts = await listPosts({ publishedOnly: true })
+      if (posts.length > 0) {
+        const lines = posts.slice(0, 20).map(p => {
+          const dateStr = new Date(p.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+          return `- "${p.title}" (${dateStr}) — /blog/${p.slug}\n  Tags: ${p.tags.join(', ')}\n  Summary: ${p.excerpt}`
+        }).join('\n')
+        blogContext = `\n\n## SID'S BLOG (live data — these posts actually exist on the website)\nSid maintains a blog at /blog with ${posts.length} published post${posts.length === 1 ? '' : 's'}. When asked about his writing, opinions on AI in finance, or what he's been thinking about, USE THIS LIST. NEVER say he hasn't written a post that appears here.\n\nPublished posts:\n${lines}\n\nWhen a user asks about a specific post, summarize using the title + summary above and link them to /blog/<slug> to read the full post. When asked what Sid has been writing, mention 2-3 of these by name.`
+      }
+    } catch (err) {
+      console.error('Failed to load blog context for chatbot:', err)
+    }
+
     const groq = new Groq({ apiKey })
 
     const formattedMessages = messages.map((m: { role: string; content: string }) => ({
@@ -188,7 +205,7 @@ export async function POST(req: NextRequest) {
     const completion = await groq.chat.completions.create({
       model: 'llama-3.3-70b-versatile',
       messages: [
-        { role: 'system', content: SYSTEM_PROMPT + languageInstruction },
+        { role: 'system', content: SYSTEM_PROMPT + blogContext + languageInstruction },
         ...formattedMessages,
       ],
       temperature: 0.8,

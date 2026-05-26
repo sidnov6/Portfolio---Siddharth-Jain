@@ -13,7 +13,7 @@ const links = [
   { href: '#education', en: 'Education', de: 'Ausbildung' },
   { href: '#beyond',     en: 'Life',       de: 'Leben' },
   { href: '#pivot',      en: 'Next',       de: 'Nächstes' },
-  { href: '/blog',       en: 'Blog',       de: 'Blog' },
+  { href: '#writing',    en: 'Writing',    de: 'Blog' },
   { href: '#contact',    en: 'Contact',    de: 'Kontakt' },
 ]
 
