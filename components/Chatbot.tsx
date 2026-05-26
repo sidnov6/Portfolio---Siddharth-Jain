@@ -9,19 +9,19 @@ type Message = { role: 'user' | 'assistant'; content: string; id: string }
 const starters = {
   en: [
     'What did Siddharth build at Suzlon?',
-    'Tell me about his Georgia Tech work',
+    'Why hire him over a finance PhD?',
+    'Tell me about his finance pivot',
     'What is his tech stack?',
-    'Is he available for hiring?',
-    'Tell me about his basketball career',
-    'What are his research publications?',
+    'Is he open to roles right now?',
+    'What has he been writing about?',
   ],
   de: [
     'Was hat Siddharth bei Suzlon gebaut?',
-    'Erzähl mir von seiner Arbeit am Georgia Tech',
+    'Warum ihn statt eines Finance-PhDs einstellen?',
+    'Erzähl mir von seinem Finance-Pivot',
     'Was ist sein Tech-Stack?',
-    'Ist er für Jobs verfügbar?',
-    'Erzähl mir von seiner Basketball-Karriere',
-    'Was sind seine Forschungspublikationen?',
+    'Ist er aktuell offen für Stellen?',
+    'Worüber hat er zuletzt geschrieben?',
   ],
 }
 
