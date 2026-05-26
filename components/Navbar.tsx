@@ -35,6 +35,8 @@ export default function Navbar({ onChatOpen }: { onChatOpen: () => void }) {
       { threshold: 0.4 }
     )
     links.forEach(({ href }) => {
+      // Only hash links map to in-page sections — skip URL links like /blog
+      if (!href.startsWith('#')) return
       const el = document.querySelector(href)
       if (el) io.observe(el)
     })
