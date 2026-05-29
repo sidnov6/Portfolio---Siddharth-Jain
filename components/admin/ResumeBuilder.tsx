@@ -1,25 +1,28 @@
 'use client'
 import { useEffect, useState } from 'react'
-import type { Resume, ResumeExperience, ResumeEducation, ResumeCertification, ResumeProject } from '@/lib/resume'
+import type { Resume, ResumeExperience, ResumeEducation, ResumeCertification, ResumeProject, SkillGroup } from '@/lib/resume'
 
-const blankExperience = (): ResumeExperience => ({ title: '', company: '', location: '', start: '', end: '', bullets: [''] })
-const blankEducation  = (): ResumeEducation  => ({ degree: '', school: '', location: '', graduation: '', extra: '' })
+const blankExperience = (): ResumeExperience    => ({ title: '', company: '', location: '', start: '', end: '', bullets: [''] })
+const blankEducation  = (): ResumeEducation     => ({ degree: '', school: '', location: '', graduation: '', extra: '' })
 const blankCert       = (): ResumeCertification => ({ name: '', issuer: '', year: '' })
-const blankProject    = (): ResumeProject     => ({ name: '', description: '' })
+const blankProject    = (): ResumeProject       => ({ name: '', description: '' })
+const blankSkillGroup = (): SkillGroup          => ({ category: '', items: [] })
 
 export default function ResumeBuilder({ pwd }: { pwd: string }) {
   const [resume, setResume] = useState<Resume | null>(null)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [savedAt, setSavedAt] = useState<string | null>(null)
-  const [skillsText, setSkillsText] = useState('')
+  /** Keep skills as comma-joined strings per group while editing so the user
+      can type freely without us splitting on every keystroke.                 */
+  const [skillDraft, setSkillDraft] = useState<Array<{ category: string; itemsText: string }>>([])
 
   useEffect(() => {
     fetch('/api/resume')
       .then(r => r.json())
       .then(d => {
         setResume(d.resume)
-        setSkillsText((d.resume.skills as string[]).join(', '))
+        setSkillDraft((d.resume.skills as SkillGroup[]).map(g => ({ category: g.category, itemsText: g.items.join(', ') })))
         setLoading(false)
       })
       .catch(() => setLoading(false))
@@ -36,7 +39,9 @@ export default function ResumeBuilder({ pwd }: { pwd: string }) {
   const save = async () => {
     if (!resume) return
     setSaving(true)
-    const skills = skillsText.split(',').map(s => s.trim()).filter(Boolean)
+    const skills: SkillGroup[] = skillDraft
+      .map(g => ({ category: g.category.trim(), items: g.itemsText.split(',').map(s => s.trim()).filter(Boolean) }))
+      .filter(g => g.category && g.items.length > 0)
     const payload: Resume = { ...resume, skills }
     const res = await fetch(`/api/resume?pwd=${encodeURIComponent(pwd)}`, {
       method: 'POST',
@@ -50,7 +55,7 @@ export default function ResumeBuilder({ pwd }: { pwd: string }) {
     }
     const j = await res.json()
     setResume(j.resume)
-    setSkillsText((j.resume.skills as string[]).join(', '))
+    setSkillDraft((j.resume.skills as SkillGroup[]).map(g => ({ category: g.category, itemsText: g.items.join(', ') })))
     setSavedAt(new Date().toLocaleTimeString())
     setSaving(false)
   }
@@ -61,9 +66,15 @@ export default function ResumeBuilder({ pwd }: { pwd: string }) {
     if (!res.ok) { alert('Reset failed'); return }
     const j = await res.json()
     setResume(j.resume)
-    setSkillsText((j.resume.skills as string[]).join(', '))
+    setSkillDraft((j.resume.skills as SkillGroup[]).map(g => ({ category: g.category, itemsText: g.items.join(', ') })))
     setSavedAt(new Date().toLocaleTimeString())
   }
+
+  /* skill group helpers */
+  const addSkillGroup    = () => setSkillDraft(prev => [...prev, { category: blankSkillGroup().category, itemsText: '' }])
+  const removeSkillGroup = (idx: number) => setSkillDraft(prev => prev.filter((_, i) => i !== idx))
+  const setSkillCategory = (idx: number, value: string) => setSkillDraft(prev => prev.map((g, i) => i === idx ? { ...g, category: value } : g))
+  const setSkillItems    = (idx: number, value: string) => setSkillDraft(prev => prev.map((g, i) => i === idx ? { ...g, itemsText: value } : g))
 
   /* helpers for list editing */
   const setExperience = (idx: number, patch: Partial<ResumeExperience>) =>
@@ -127,8 +138,24 @@ export default function ResumeBuilder({ pwd }: { pwd: string }) {
         <TextArea rows={5} value={resume.summary} onChange={v => update({ summary: v })} />
       </Card>
 
-      <Card title="Skills" hint="Comma-separated. Mix hard skills and tools. Pull keywords directly from target job descriptions.">
-        <TextArea rows={5} value={skillsText} onChange={setSkillsText} />
+      <Card
+        title="Skills"
+        hint="Grouped by domain. Each group shows as a line on the resume: Category: item, item, item."
+        right={<button onClick={addSkillGroup} className="text-xs font-semibold text-[#1A3D2B] hover:underline">+ Add group</button>}
+      >
+        <div className="space-y-3">
+          {skillDraft.map((g, i) => (
+            <div key={i} className="grid grid-cols-1 sm:grid-cols-[200px_1fr_40px] gap-2 items-end">
+              <Input label="Category"
+                value={g.category}
+                onChange={v => setSkillCategory(i, v)} />
+              <Input label="Items (comma-separated)"
+                value={g.itemsText}
+                onChange={v => setSkillItems(i, v)} />
+              <button onClick={() => removeSkillGroup(i)} className="h-10 text-[#C03810] hover:bg-[#FEF2EE] rounded-lg text-sm">×</button>
+            </div>
+          ))}
+        </div>
       </Card>
 
       <Card

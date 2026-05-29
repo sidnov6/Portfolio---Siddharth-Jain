@@ -36,11 +36,13 @@ export type ResumeEducation = {
 
 export type ResumeCertification = { name: string; issuer: string; year: string }
 export type ResumeProject       = { name: string; description: string }
+export type SkillGroup          = { category: string; items: string[] }
 
 export type Resume = {
   header: ResumeHeader
   summary: string
-  skills: string[]
+  /** Ordered groups. Legacy flat string[] payloads are normalised on read. */
+  skills: SkillGroup[]
   experience: ResumeExperience[]
   education: ResumeEducation[]
   certifications: ResumeCertification[]
@@ -48,13 +50,28 @@ export type Resume = {
   updatedAt: string
 }
 
+/** Accept legacy `string[]` payloads coming back from Redis and convert them
+    into a single "Skills" group so the renderer never crashes. */
+function normaliseSkills(raw: unknown): SkillGroup[] {
+  if (Array.isArray(raw) && raw.length > 0 && typeof raw[0] === 'string') {
+    return [{ category: 'Skills', items: raw as string[] }]
+  }
+  if (Array.isArray(raw)) return raw as SkillGroup[]
+  return []
+}
+
 export async function getResume(): Promise<Resume | null> {
   const raw = await redis.get(RESUME_KEY)
   if (!raw) return null
+  let parsed: Resume | null = null
   if (typeof raw === 'string') {
-    try { return JSON.parse(raw) as Resume } catch { return null }
+    try { parsed = JSON.parse(raw) as Resume } catch { return null }
+  } else {
+    parsed = raw as Resume
   }
-  return raw as Resume
+  if (!parsed) return null
+  parsed.skills = normaliseSkills(parsed.skills)
+  return parsed
 }
 
 export async function saveResume(r: Resume): Promise<void> {
@@ -74,13 +91,13 @@ export const defaultResume: Resume = {
   summary:
     'Full Stack AI Engineer with production experience shipping enterprise GenAI and BI systems at CEO-office scale. Delivered 14 BI dashboards and 7 production GenAI chatbots serving 300+ daily users across 10 manufacturing plants. Now pivoting into Finance AI — MSc at Frankfurt School of Finance & Management, CFA Level 1 in progress, building agentic systems in LangChain/LangGraph for fintech and banking.',
   skills: [
-    'Python', 'SQL', 'LangChain', 'LangGraph', 'RAG', 'MCP',
-    'Vector DBs (Pinecone, ChromaDB, Weaviate, Qdrant)',
-    'PyTorch', 'TensorFlow', 'scikit-learn', 'XGBoost',
-    'Apache Spark', 'Kafka', 'Airflow', 'dbt', 'Snowflake', 'Databricks', 'Delta Lake',
-    'AWS', 'Azure', 'Docker', 'Kubernetes', 'Terraform', 'GitHub Actions',
-    'Power BI', 'Tableau', 'Looker', 'FastAPI', 'Streamlit',
-    'OpenAI / Anthropic / Gemini / Groq APIs',
+    { category: 'Languages',          items: ['Python', 'SQL'] },
+    { category: 'Generative AI',      items: ['LangChain', 'LangGraph', 'RAG', 'MCP', 'Pinecone', 'ChromaDB', 'Weaviate', 'Qdrant', 'OpenAI', 'Anthropic', 'Gemini', 'Groq APIs'] },
+    { category: 'Data Science / ML',  items: ['PyTorch', 'TensorFlow', 'scikit-learn', 'XGBoost'] },
+    { category: 'Data Engineering',   items: ['Apache Spark', 'Kafka', 'Airflow', 'dbt', 'Snowflake', 'Databricks', 'Delta Lake'] },
+    { category: 'Cloud / DevOps',     items: ['AWS', 'Azure', 'Docker', 'Kubernetes', 'Terraform', 'GitHub Actions'] },
+    { category: 'BI / Analytics',     items: ['Power BI', 'Tableau', 'Looker'] },
+    { category: 'Web / API',          items: ['FastAPI', 'Streamlit'] },
   ],
   experience: [
     {
