@@ -2,82 +2,159 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLang } from '@/lib/language-context'
 import { CodeBracketsSVG } from '@/components/Decorations'
-import { Database, BarChart3, Brain, Bot } from 'lucide-react'
+import {
+  Database, BarChart3, Brain, Bot,
+  Code2, Cloud, GitBranch, Container, Terminal,
+  Sparkles, ArrowUpRight,
+} from 'lucide-react'
 
 /* ─────────────────────────────────────────────────────────
-   4 DOMAINS  +  full skill atlas
+   Interactive Capability Spotlight
+   - Tab through 4 domains (or click an overlap to cross-jump)
+   - One elegant stage that morphs in place
    ───────────────────────────────────────────────────────── */
 
 type Domain = {
   id: 'de' | 'ds' | 'da' | 'ga'
   Icon: typeof Database
+  num: string
   label_en: string
   label_de: string
+  short_en: string
+  short_de: string
   tagline_en: string
   tagline_de: string
   color: string
+  colorDark: string
   bgRing: string
-  /** Skills that ONLY live in this domain */
-  unique: string[]
-  /** Tools/frameworks I use daily here */
-  tools: string[]
+  ships_en: string[]
+  ships_de: string[]
+  stack: string[]
+  stat_en: string
+  stat_de: string
 }
 
 const DOMAINS: Domain[] = [
   {
     id: 'de',
     Icon: Database,
+    num: '01',
     label_en: 'Data Engineer',
     label_de: 'Data Engineer',
-    tagline_en: 'Pipelines, lakehouses, real-time ingestion at scale.',
-    tagline_de: 'Pipelines, Lakehouses und Echtzeit-Ingest im Großmaßstab.',
+    short_en: 'Data Eng',
+    short_de: 'Data Eng',
+    tagline_en: 'Pipelines & lakehouses at scale.',
+    tagline_de: 'Pipelines & Lakehouses im Großmaßstab.',
     color: '#003F88',
-    bgRing: 'rgba(0,63,136,0.16)',
-    unique: ['Apache Spark', 'Kafka', 'Airflow', 'dbt', 'Snowflake', 'Databricks', 'Delta Lake', 'Iceberg', 'Hadoop'],
-    tools: ['PySpark', 'AWS Glue', 'Azure Data Factory', 'BigQuery', 'Redshift', 'Fivetran', 'Apache Beam'],
+    colorDark: '#002A5C',
+    bgRing: 'rgba(0,63,136,0.08)',
+    ships_en: [
+      'Production pipelines moving TB-scale data daily',
+      'Bronze → Silver → Gold lakehouse layers',
+      'Real-time ingestion with Kafka + Spark Streaming',
+    ],
+    ships_de: [
+      'Produktionspipelines mit TB-Daten täglich',
+      'Bronze → Silver → Gold Lakehouse-Schichten',
+      'Echtzeit-Ingest mit Kafka + Spark Streaming',
+    ],
+    stack: ['Spark', 'Kafka', 'Airflow', 'dbt', 'Snowflake', 'Databricks', 'AWS Glue'],
+    stat_en: '50+ tables fed downstream',
+    stat_de: '50+ Tabellen versorgt',
   },
   {
     id: 'ds',
     Icon: Brain,
+    num: '02',
     label_en: 'Data Scientist',
     label_de: 'Data Scientist',
-    tagline_en: 'ML, deep learning, statistical modelling, experimentation.',
-    tagline_de: 'ML, Deep Learning, statistische Modellierung, Experimente.',
+    short_en: 'Data Sci',
+    short_de: 'Data Sci',
+    tagline_en: 'Models that change decisions.',
+    tagline_de: 'Modelle, die Entscheidungen verändern.',
     color: '#7A2B8B',
-    bgRing: 'rgba(122,43,139,0.16)',
-    unique: ['PyTorch', 'TensorFlow', 'Scikit-learn', 'XGBoost', 'LightGBM', 'Keras', 'Statsmodels', 'CV / NLP'],
-    tools: ['NumPy', 'Pandas', 'Jupyter', 'MLflow', 'Weights & Biases', 'Optuna', 'Hugging Face'],
+    colorDark: '#54195E',
+    bgRing: 'rgba(122,43,139,0.08)',
+    ships_en: [
+      'Forecast & risk models in production',
+      'Deep learning across tabular, vision, NLP',
+      'Rigorous A/B tests and causal analysis',
+    ],
+    ships_de: [
+      'Prognose- & Risikomodelle in Produktion',
+      'Deep Learning für Tabellen, Vision, NLP',
+      'A/B-Tests und kausale Analyse',
+    ],
+    stack: ['PyTorch', 'TensorFlow', 'Scikit-learn', 'XGBoost', 'MLflow', 'Statsmodels', 'Optuna'],
+    stat_en: 'Decision latency cut 40%+',
+    stat_de: 'Entscheidungslatenz −40 %',
   },
   {
     id: 'da',
     Icon: BarChart3,
+    num: '03',
     label_en: 'Data Analyst',
     label_de: 'Datenanalyst',
-    tagline_en: 'Dashboards, storytelling, executive insight at scale.',
-    tagline_de: 'Dashboards, Storytelling, Insights für Führungskräfte.',
+    short_en: 'Analyst',
+    short_de: 'Analyst',
+    tagline_en: 'Insight that lands with the C-suite.',
+    tagline_de: 'Insights, die im Vorstand ankommen.',
     color: '#1A3D2B',
-    bgRing: 'rgba(26,61,43,0.16)',
-    unique: ['Power BI', 'Tableau', 'Looker', 'Excel', 'DAX', 'Storytelling', 'Stakeholder Mgmt'],
-    tools: ['Google Sheets', 'Data Studio', 'Mode', 'Sigma', 'Metabase', 'Plotly'],
+    colorDark: '#0F2A1C',
+    bgRing: 'rgba(26,61,43,0.08)',
+    ships_en: [
+      'Executive dashboards driving daily ops',
+      'Stakeholder-facing storytelling decks',
+      'Self-serve BI for non-technical teams',
+    ],
+    ships_de: [
+      'Executive-Dashboards für den Tagesbetrieb',
+      'Storytelling-Decks für Stakeholder',
+      'Self-Service-BI für nicht-technische Teams',
+    ],
+    stack: ['Power BI', 'Tableau', 'Looker', 'DAX', 'Excel', 'Metabase', 'Plotly'],
+    stat_en: '14 dashboards live at Suzlon',
+    stat_de: '14 Dashboards live bei Suzlon',
   },
   {
     id: 'ga',
     Icon: Bot,
+    num: '04',
     label_en: 'GenAI Engineer',
     label_de: 'GenAI Engineer',
-    tagline_en: 'LLMs, RAG, agents, evaluation — production-grade.',
-    tagline_de: 'LLMs, RAG, Agenten, Evaluierung — produktionstauglich.',
+    short_en: 'GenAI',
+    short_de: 'GenAI',
+    tagline_en: 'LLMs, agents & RAG — production-grade.',
+    tagline_de: 'LLMs, Agenten & RAG — produktionsreif.',
     color: '#C19A3D',
-    bgRing: 'rgba(193,154,61,0.20)',
-    unique: ['LangChain', 'LangGraph', 'RAG', 'Vector DBs', 'MCP', 'Prompt Eng.', 'Agentic AI', 'LLM Eval'],
-    tools: ['ChromaDB', 'Pinecone', 'Weaviate', 'Qdrant', 'OpenAI', 'Anthropic Claude', 'Groq', 'Gemini', 'LlamaIndex', 'LangSmith'],
+    colorDark: '#8A6E26',
+    bgRing: 'rgba(193,154,61,0.10)',
+    ships_en: [
+      'RAG systems answering real user queries',
+      'Multi-agent LangGraph workflows in prod',
+      'Eval frameworks for LLM quality & drift',
+    ],
+    ships_de: [
+      'RAG-Systeme für echte Nutzeranfragen',
+      'Multi-Agent LangGraph-Workflows in Prod',
+      'Eval-Frameworks für LLM-Qualität & Drift',
+    ],
+    stack: ['LangChain', 'LangGraph', 'RAG', 'Pinecone', 'ChromaDB', 'OpenAI', 'Claude'],
+    stat_en: '7 GenAI bots in production',
+    stat_de: '7 GenAI-Bots in Produktion',
   },
 ]
 
-/** Skills used in every domain — the foundation layer */
-const CORE_SKILLS = ['Python', 'SQL', 'AWS', 'Azure', 'Git · CI/CD', 'Docker', 'Linux']
+const CORE = [
+  { name: 'Python', Icon: Code2 },
+  { name: 'SQL', Icon: Database },
+  { name: 'AWS', Icon: Cloud },
+  { name: 'Azure', Icon: Cloud },
+  { name: 'Docker', Icon: Container },
+  { name: 'Git · CI/CD', Icon: GitBranch },
+  { name: 'Linux', Icon: Terminal },
+]
 
-/** Pairwise overlaps (where two domains share specific skills) */
 type Pair = { id: string; a: Domain['id']; b: Domain['id']; skills: string[] }
 const PAIR_OVERLAPS: Pair[] = [
   { id: 'de-ds', a: 'de', b: 'ds', skills: ['MLOps', 'Feature Stores', 'PySpark MLlib'] },
@@ -95,11 +172,10 @@ const FRAMEWORKS_TOOLS = [
 ]
 
 /* ─────────────────────────────────────────────────────────
-   COMPONENT
+   MAIN
    ───────────────────────────────────────────────────────── */
 export default function Skills() {
   const ref = useRef<HTMLElement>(null)
-  const [hovered, setHovered] = useState<Domain['id'] | null>(null)
   const { lang } = useLang()
   const isDE = lang === 'de'
 
@@ -112,11 +188,8 @@ export default function Skills() {
     return () => io.disconnect()
   }, [])
 
-  const isDimmed = (id: Domain['id']) => hovered !== null && hovered !== id
-
   return (
     <section id="skills" ref={ref} className="relative py-28 px-6 bg-[#F8F5EE] section-grain overflow-hidden">
-      {/* Background code brackets */}
       <div className="pointer-events-none absolute hidden lg:block opacity-[0.07] float-slow" style={{ right: '60px', top: '120px' }}>
         <CodeBracketsSVG size={130} color="#1A3D2B" />
       </div>
@@ -130,138 +203,24 @@ export default function Skills() {
           {isDE ? '03 / Fähigkeiten' : '03 / Skills'}
         </p>
         <h2 className="reveal font-display text-[clamp(2.2rem,5vw,3.8rem)] font-black text-[#1A1A18] mb-3 leading-tight">
-          {isDE ? <>Vier Domänen. <em className="text-[#1A3D2B]">Ein Stack.</em></> : <>Four domains. <em className="text-[#1A3D2B]">One stack.</em></>}
+          {isDE
+            ? <>Vier Domänen. <em className="text-[#1A3D2B]">Ein Stack.</em></>
+            : <>Four domains. <em className="text-[#1A3D2B]">One stack.</em></>}
         </h2>
         <p className="reveal text-[#6E7A70] text-lg max-w-2xl mb-12 leading-relaxed">
           {isDE
-            ? 'Ich arbeite über alle vier Datendisziplinen hinweg — als Data Engineer, Data Scientist, Datenanalyst und GenAI Engineer. Unten siehst du, wo sich die Domänen überschneiden und wo jede einzigartig ist.'
-            : 'I work across all four data disciplines — Data Engineer, Data Scientist, Data Analyst, and GenAI Engineer. Below: where the domains overlap and what is unique to each.'}
+            ? 'Wähle eine Rolle — sieh, was ich liefere, womit ich es liefere und wo sie sich mit den anderen überschneidet.'
+            : 'Pick a role — see what I ship, what I ship it with, and where it overlaps with the others.'}
         </p>
 
-        {/* ── VENN DIAGRAM ─────────────────────────────────── */}
-        <div className="reveal mb-12">
-          <VennDiagramFull domains={DOMAINS} hovered={hovered} setHovered={setHovered} />
+        {/* ── INTERACTIVE SPOTLIGHT ───────────────────────── */}
+        <div className="reveal mb-16">
+          <Spotlight />
         </div>
 
-        {/* ── 4 DOMAIN DETAIL CARDS ───────────────────────── */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-          {DOMAINS.map(d => {
-            const Icon = d.Icon
-            return (
-              <div
-                key={d.id}
-                onMouseEnter={() => setHovered(d.id)}
-                onMouseLeave={() => setHovered(null)}
-                className={`reveal bg-white border-2 rounded-2xl p-5 transition-all duration-300 cursor-default ${isDimmed(d.id) ? 'opacity-40' : 'opacity-100'}`}
-                style={{
-                  borderColor: hovered === d.id ? d.color : '#E4E0D6',
-                  boxShadow: hovered === d.id ? `0 12px 28px -8px ${d.color}33` : undefined,
-                }}
-              >
-                <div className="flex items-center gap-2.5 mb-3">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: d.bgRing }}>
-                    <Icon size={20} style={{ color: d.color }} />
-                  </div>
-                  <p className="font-bold text-sm text-[#1A1A18] leading-tight">{isDE ? d.label_de : d.label_en}</p>
-                </div>
-                <p className="text-[11px] text-[#6E7A70] leading-relaxed mb-3 italic">{isDE ? d.tagline_de : d.tagline_en}</p>
-
-                <p className="text-[9px] font-mono uppercase tracking-wider text-[#8A9280] mb-1.5">
-                  {isDE ? 'Kern-Skills' : 'Core skills'}
-                </p>
-                <div className="flex flex-wrap gap-1 mb-3">
-                  {d.unique.map(s => (
-                    <span
-                      key={s}
-                      className="text-[10px] font-medium px-2 py-0.5 rounded-full"
-                      style={{ background: d.bgRing, color: d.color }}
-                    >
-                      {s}
-                    </span>
-                  ))}
-                </div>
-
-                <p className="text-[9px] font-mono uppercase tracking-wider text-[#8A9280] mb-1.5">
-                  {isDE ? 'Tools & Frameworks' : 'Tools & frameworks'}
-                </p>
-                <div className="flex flex-wrap gap-1">
-                  {d.tools.map(s => (
-                    <span
-                      key={s}
-                      className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-[#F0EDE4] text-[#4A4A47]"
-                    >
-                      {s}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )
-          })}
-        </div>
-
-        {/* ── CORE + PAIRWISE OVERLAPS ────────────────────── */}
-        <div className="grid md:grid-cols-2 gap-5 mb-10">
-          {/* Core (all 4) */}
-          <div className="reveal bg-gradient-to-br from-[#1A3D2B] to-[#0F2A1C] text-white rounded-2xl p-6 shadow-xl">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-2 h-2 rounded-full bg-[#3DAA72] animate-pulse" />
-              <p className="text-[10px] font-mono tracking-[0.25em] text-[#3DAA72]">
-                {isDE ? 'KERN · ALLE 4 DOMÄNEN' : 'CORE · ALL 4 DOMAINS'}
-              </p>
-            </div>
-            <h3 className="font-display text-xl font-black mb-4">
-              {isDE ? 'Das Fundament' : 'The foundation'}
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {CORE_SKILLS.map(s => (
-                <span key={s} className="text-xs font-mono font-semibold px-3 py-1.5 rounded-full bg-white/10 backdrop-blur border border-white/15">
-                  {s}
-                </span>
-              ))}
-            </div>
-            <p className="text-xs text-white/60 mt-4 leading-relaxed">
-              {isDE
-                ? 'Diese Skills nutze ich in jedem Projekt — egal in welcher Rolle.'
-                : 'These show up in every project — every role, every domain.'}
-            </p>
-          </div>
-
-          {/* Pairwise overlaps */}
-          <div className="reveal bg-white border border-[#E4E0D6] rounded-2xl p-6">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-2 h-2 rounded-full bg-[#3DAA72]" />
-              <p className="text-[10px] font-mono tracking-[0.25em] text-[#3DAA72]">
-                {isDE ? 'PAARWEISE ÜBERSCHNEIDUNGEN' : 'PAIRWISE OVERLAPS'}
-              </p>
-            </div>
-            <h3 className="font-display text-xl font-black text-[#1A1A18] mb-4">
-              {isDE ? 'Wo Domänen sich treffen' : 'Where domains meet'}
-            </h3>
-            <div className="space-y-2.5">
-              {PAIR_OVERLAPS.map(po => {
-                const a = DOMAINS.find(d => d.id === po.a)!
-                const b = DOMAINS.find(d => d.id === po.b)!
-                return (
-                  <div key={po.id} className="flex items-center gap-3 text-xs">
-                    <div className="flex items-center gap-1 flex-shrink-0 w-36">
-                      <span className="w-2 h-2 rounded-full" style={{ background: a.color }} />
-                      <span className="w-2 h-2 rounded-full -ml-0.5" style={{ background: b.color }} />
-                      <span className="text-[#6E7A70] font-mono text-[10px] ml-1 truncate">
-                        {(isDE ? a.label_de : a.label_en).split(' ')[0]} × {(isDE ? b.label_de : b.label_en).split(' ')[0]}
-                      </span>
-                    </div>
-                    <div className="flex flex-wrap gap-1 flex-1">
-                      {po.skills.map(s => (
-                        <span key={s} className="text-[10px] px-2 py-0.5 rounded-full bg-[#F0EDE4] text-[#1A1A18] font-medium">
-                          {s}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
+        {/* ── FOUNDATION STRIP ────────────────────────────── */}
+        <div className="reveal mb-14">
+          <FoundationStrip />
         </div>
 
         {/* ── FRAMEWORKS MARQUEE ──────────────────────────── */}
@@ -286,164 +245,455 @@ export default function Skills() {
 }
 
 /* ─────────────────────────────────────────────────────────
-   VENN DIAGRAM  — SVG backdrop + HTML skill chips placed
-   in each region so we get text wrapping + many skills.
+   SPOTLIGHT — the interactive heart of the section
    ───────────────────────────────────────────────────────── */
-function VennDiagramFull({
-  domains,
-  hovered,
-  setHovered,
-}: {
-  domains: Domain[]
-  hovered: Domain['id'] | null
-  setHovered: (id: Domain['id'] | null) => void
-}) {
+function Spotlight() {
   const { lang } = useLang()
   const isDE = lang === 'de'
-  // Clover layout: Top DE, Right DS, Bottom GA, Left DA
-  // SVG positions:
-  const positions: Record<Domain['id'], { cx: number; cy: number }> = {
-    de: { cx: 400, cy: 260 },
-    ds: { cx: 530, cy: 400 },
-    ga: { cx: 400, cy: 540 },
-    da: { cx: 270, cy: 400 },
-  }
-  const R = 200
-
-  // HTML zones (% of container) where each region's skill chips live
-  // Each "wedge" sits outside the dense center
-  const ZONES: Record<Domain['id'] | 'core', { label_en: string; label_de: string; color: string; chips: string[]; style: React.CSSProperties }> = {
-    de: {
-      label_en: 'Data Engineer', label_de: 'Data Engineer', color: '#003F88',
-      chips: ['Apache Spark', 'Kafka', 'Airflow', 'dbt', 'Snowflake', 'Databricks', 'Delta Lake', 'Iceberg'],
-      style: { top: '4%', left: '50%', transform: 'translateX(-50%)', width: '46%', textAlign: 'center' as const },
-    },
-    ds: {
-      label_en: 'Data Scientist', label_de: 'Data Scientist', color: '#7A2B8B',
-      chips: ['PyTorch', 'TensorFlow', 'Scikit-learn', 'XGBoost', 'Keras', 'MLflow', 'Statsmodels'],
-      style: { top: '50%', right: '0%', transform: 'translateY(-50%)', width: '24%', textAlign: 'right' as const },
-    },
-    ga: {
-      label_en: 'GenAI Engineer', label_de: 'GenAI Engineer', color: '#C19A3D',
-      chips: ['LangChain', 'LangGraph', 'RAG', 'MCP', 'ChromaDB', 'Pinecone', 'LLM Eval', 'Agents', 'Prompt Eng.'],
-      style: { bottom: '4%', left: '50%', transform: 'translateX(-50%)', width: '46%', textAlign: 'center' as const },
-    },
-    da: {
-      label_en: 'Data Analyst', label_de: 'Datenanalyst', color: '#1A3D2B',
-      chips: ['Power BI', 'Tableau', 'Looker', 'Excel', 'DAX', 'Storytelling', 'Stakeholders'],
-      style: { top: '50%', left: '0%', transform: 'translateY(-50%)', width: '24%', textAlign: 'left' as const },
-    },
-    core: {
-      label_en: 'CORE', label_de: 'KERN', color: '#1A3D2B',
-      chips: ['Python', 'SQL'],
-      style: { top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 'auto' },
-    },
-  }
-
-  const isHoveredOrAll = (id: Domain['id']) => hovered === null || hovered === id
+  const [active, setActive] = useState<Domain['id']>('de')
+  const d = DOMAINS.find(x => x.id === active)!
+  const Icon = d.Icon
+  const overlaps = PAIR_OVERLAPS.filter(p => p.a === active || p.b === active)
 
   return (
-    <div className="relative w-full mx-auto" style={{ maxWidth: '880px', aspectRatio: '1/1' }}>
-      <svg viewBox="0 0 800 800" className="absolute inset-0 w-full h-full">
-        <defs>
-          {domains.map(d => (
-            <radialGradient key={d.id} id={`grad-${d.id}`}>
-              <stop offset="0%" stopColor={d.color} stopOpacity="0.32" />
-              <stop offset="100%" stopColor={d.color} stopOpacity="0.05" />
-            </radialGradient>
-          ))}
-        </defs>
-
-        {/* Outer dashed ring */}
-        <circle cx="400" cy="400" r="370" fill="none" stroke="#E4E0D6" strokeWidth="1" strokeDasharray="2 5" />
-
-        {/* 4 circles */}
-        {domains.map(d => {
-          const pos = positions[d.id]
-          const active = isHoveredOrAll(d.id)
+    <div>
+      {/* Tabs */}
+      <div className="flex flex-wrap gap-2 justify-center mb-4">
+        {DOMAINS.map(t => {
+          const isActive = active === t.id
+          const TabIcon = t.Icon
           return (
-            <g
-              key={d.id}
-              style={{ cursor: 'pointer', transition: 'opacity 0.3s' }}
-              opacity={active ? 1 : 0.2}
-              onMouseEnter={() => setHovered(d.id)}
-              onMouseLeave={() => setHovered(null)}
+            <button
+              key={t.id}
+              onClick={() => setActive(t.id)}
+              className="group flex items-center gap-2.5 px-4 py-2.5 rounded-full border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#F8F5EE]"
+              style={{
+                background: isActive ? t.color : 'white',
+                borderColor: isActive ? t.color : '#E4E0D6',
+                color: isActive ? 'white' : '#3A3A35',
+                boxShadow: isActive
+                  ? `0 12px 28px -12px ${t.color}80`
+                  : '0 1px 2px rgba(0,0,0,0.03)',
+                transform: isActive ? 'translateY(-1px)' : 'translateY(0)',
+                transition: 'background 0.35s, border-color 0.35s, color 0.35s, box-shadow 0.35s, transform 0.35s',
+                ['--tw-ring-color' as any]: t.color,
+              }}
             >
-              <circle
-                cx={pos.cx}
-                cy={pos.cy}
-                r={R}
-                fill={`url(#grad-${d.id})`}
-                stroke={d.color}
-                strokeWidth={hovered === d.id ? 3 : 1.5}
-                strokeOpacity={0.7}
-                style={{ transition: 'stroke-width 0.3s' }}
-              />
-            </g>
+              <TabIcon size={14} className={isActive ? 'opacity-90' : 'opacity-70'} />
+              <span className="font-mono text-[10px] opacity-50">{t.num}</span>
+              <span className="font-semibold text-[13px]">{isDE ? t.label_de : t.label_en}</span>
+            </button>
           )
         })}
-      </svg>
+      </div>
 
-      {/* HTML skill zones layered on top */}
-      <div className="absolute inset-0 pointer-events-none">
-        {(['de', 'ds', 'ga', 'da'] as const).map(id => {
-          const zone = ZONES[id]
-          const active = isHoveredOrAll(id)
-          return (
+      {/* Progress indicator */}
+      <div className="flex gap-1.5 justify-center mb-8">
+        {DOMAINS.map(t => (
+          <div
+            key={t.id}
+            className="h-[3px] rounded-full"
+            style={{
+              width: active === t.id ? '36px' : '8px',
+              background: active === t.id ? t.color : '#E4E0D6',
+              transition: 'width 0.5s cubic-bezier(0.16,1,0.3,1), background 0.5s',
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Stage */}
+      <div
+        className="bg-white rounded-3xl border border-[#E4E0D6] overflow-hidden"
+        style={{
+          boxShadow: `0 32px 64px -28px ${d.color}40, 0 1px 2px rgba(0,0,0,0.04)`,
+          transition: 'box-shadow 0.6s ease',
+        }}
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-[440px_1fr]">
+          {/* LEFT — gradient hero */}
+          <div
+            className="relative p-9 md:p-11 overflow-hidden flex flex-col min-h-[420px] lg:min-h-[520px]"
+            style={{
+              background: `linear-gradient(155deg, ${d.color} 0%, ${d.colorDark} 100%)`,
+              transition: 'background 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+            }}
+          >
+            {/* dot pattern */}
+            <div className="absolute inset-0 opacity-[0.10] pointer-events-none">
+              <svg width="100%" height="100%">
+                <defs>
+                  <pattern id={`dots-${d.id}`} width="22" height="22" patternUnits="userSpaceOnUse">
+                    <circle cx="2" cy="2" r="1" fill="white" />
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill={`url(#dots-${d.id})`} />
+              </svg>
+            </div>
+
+            {/* soft glow */}
             <div
-              key={id}
-              className="absolute transition-opacity duration-300"
-              style={{ ...zone.style, opacity: active ? 1 : 0.25 }}
+              className="absolute -right-16 -top-16 w-56 h-56 rounded-full opacity-20 blur-3xl pointer-events-none"
+              style={{ background: 'white' }}
+            />
+
+            {/* Signature animation per domain */}
+            <div
+              key={`anim-${d.id}`}
+              className="absolute top-6 right-6 w-[220px] h-[150px] pointer-events-none spot-fade"
+              style={{ opacity: 0.42 }}
             >
-              <p
-                className="font-display font-black italic text-base sm:text-lg lg:text-xl mb-2"
-                style={{ color: zone.color }}
-              >
-                {isDE ? ZONES[id].label_de : ZONES[id].label_en}
+              <DomainAnim id={d.id} />
+            </div>
+
+            {/* Content (re-keyed for fade) */}
+            <div key={d.id} className="relative flex flex-col h-full spot-fade">
+              <p className="font-mono text-[10px] tracking-[0.3em] text-white/55 mb-4">
+                {d.num} / 04
               </p>
-              <div className={`flex flex-wrap gap-1 ${zone.style.textAlign === 'center' ? 'justify-center' : zone.style.textAlign === 'right' ? 'justify-end' : 'justify-start'}`}>
-                {zone.chips.map(s => (
+              <div
+                className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 border border-white/25"
+                style={{ background: 'rgba(255,255,255,0.14)' }}
+              >
+                <Icon size={26} className="text-white" />
+              </div>
+
+              <h3 className="font-display italic font-black text-white leading-[0.95] mb-3 text-[clamp(2rem,4.5vw,2.75rem)]">
+                {isDE ? d.label_de : d.label_en}
+              </h3>
+              <p className="text-white/75 text-[15px] leading-relaxed font-medium max-w-[300px]">
+                {isDE ? d.tagline_de : d.tagline_en}
+              </p>
+
+              {/* signature stat */}
+              <div className="mt-auto pt-6 flex items-center gap-2 border-t border-white/15">
+                <Sparkles size={14} className="text-white/80 flex-shrink-0" />
+                <p className="text-[13px] text-white font-semibold tracking-tight">
+                  {isDE ? d.stat_de : d.stat_en}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT — content */}
+          <div className="p-8 md:p-11 flex flex-col">
+            <div key={`r-${d.id}`} className="spot-fade flex flex-col h-full">
+              {/* What I ship */}
+              <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#8A9280] mb-4">
+                {isDE ? 'Was ich liefere' : 'What I ship'}
+              </p>
+              <ul className="space-y-3 mb-7">
+                {(isDE ? d.ships_de : d.ships_en).map((s, i) => (
+                  <li key={i} className="flex gap-3 text-[14px] leading-relaxed text-[#1A1A18]">
+                    <span
+                      className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-[1px] text-[9.5px] font-mono font-bold"
+                      style={{ background: d.bgRing, color: d.colorDark }}
+                    >
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span className="pt-[2px]">{s}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="border-t border-dashed border-[#E4E0D6] mb-6" />
+
+              {/* Stack */}
+              <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#8A9280] mb-3">
+                {isDE ? 'Stack' : 'Stack'}
+              </p>
+              <div className="flex flex-wrap gap-1.5 mb-7">
+                {d.stack.map(s => (
                   <span
                     key={s}
-                    className="text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full font-mono font-semibold whitespace-nowrap"
-                    style={{ background: 'white', color: zone.color, border: `1px solid ${zone.color}30` }}
+                    className="text-[11.5px] font-semibold font-mono px-2.5 py-1 rounded-full"
+                    style={{
+                      background: d.bgRing,
+                      color: d.colorDark,
+                      border: `1px solid ${d.color}25`,
+                    }}
                   >
                     {s}
                   </span>
                 ))}
               </div>
-            </div>
-          )
-        })}
 
-        {/* CORE hub at the center */}
-        <div
-          className="absolute flex flex-col items-center justify-center rounded-full text-white shadow-[0_8px_28px_-4px_rgba(26,61,43,0.45)]"
-          style={{
-            top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
-            width: '110px', height: '110px',
-            background: 'linear-gradient(135deg, #1A3D2B 0%, #0F2A1C 100%)',
-          }}
-        >
-          <span className="text-[9px] font-mono font-bold tracking-[0.2em] text-[#3DAA72]">CORE</span>
-          <div className="mt-1 text-center leading-tight">
-            <p className="font-display text-[13px] italic font-black">Python</p>
-            <p className="font-display text-[13px] italic font-black">SQL</p>
+              <div className="border-t border-dashed border-[#E4E0D6] mb-6" />
+
+              {/* Overlaps (clickable cross-links) */}
+              <p className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#8A9280] mb-3">
+                {isDE ? 'Überschneidet sich mit' : 'Overlaps with'}
+              </p>
+              <div className="space-y-2 mt-auto">
+                {overlaps.map(p => {
+                  const other = (p.a === active ? DOMAINS.find(x => x.id === p.b) : DOMAINS.find(x => x.id === p.a))!
+                  return (
+                    <button
+                      key={p.id}
+                      onClick={() => setActive(other.id)}
+                      className="w-full text-left flex items-center gap-3 px-3.5 py-2.5 rounded-xl border border-[#E4E0D6] bg-[#FAF8F2] hover:bg-white hover:border-[#3DAA72]/50 hover:shadow-sm transition-all group"
+                    >
+                      <div className="flex -space-x-1.5 flex-shrink-0">
+                        <span className="w-3.5 h-3.5 rounded-full border-2 border-white" style={{ background: d.color }} />
+                        <span className="w-3.5 h-3.5 rounded-full border-2 border-white" style={{ background: other.color }} />
+                      </div>
+                      <p className="text-[11px] font-mono uppercase tracking-wider text-[#3A3A35] font-semibold flex-shrink-0 w-16">
+                        {isDE ? other.short_de : other.short_en}
+                      </p>
+                      <div className="flex flex-wrap gap-1 flex-1 justify-end">
+                        {p.skills.map(s => (
+                          <span
+                            key={s}
+                            className="text-[10.5px] px-2 py-0.5 rounded-full bg-white text-[#1A1A18] font-medium border border-[#E4E0D6] whitespace-nowrap"
+                          >
+                            {s}
+                          </span>
+                        ))}
+                      </div>
+                      <ArrowUpRight
+                        size={14}
+                        className="text-[#B0A898] group-hover:text-[#3DAA72] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all flex-shrink-0"
+                      />
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Hint */}
-      <HoverHint />
+      <p className="text-center text-[10px] font-mono text-[#B0A898] tracking-wider mt-5">
+        {isDE
+          ? 'Tippe auf eine Rolle oder klicke einen Schnittpunkt'
+          : 'Tap a role above — or click an overlap to jump'}
+      </p>
     </div>
   )
 }
 
-function HoverHint() {
-  const { lang } = useLang()
+/* ─────────────────────────────────────────────────────────
+   DOMAIN ANIMATIONS — signature looped SVG per role
+   ───────────────────────────────────────────────────────── */
+function DomainAnim({ id }: { id: Domain['id'] }) {
+  if (id === 'de') return <PipelineAnim />
+  if (id === 'ds') return <NeuralAnim />
+  if (id === 'da') return <ChartAnim />
+  return <OrbitAnim />
+}
+
+/* Data Engineer — pipeline with flowing dots */
+function PipelineAnim() {
   return (
-    <p className="absolute -bottom-6 left-0 right-0 text-center text-[10px] font-mono text-[#B0A898] tracking-wider">
-      {lang === 'de' ? 'Bewege den Cursor auf eine Domäne' : 'Hover a domain to focus'}
-    </p>
+    <svg viewBox="0 0 220 150" className="w-full h-full" aria-hidden>
+      {/* nodes */}
+      <g fill="white" fillOpacity="0.92">
+        <rect x="6" y="65" width="22" height="22" rx="4" />
+        <rect x="98" y="22" width="22" height="22" rx="4" />
+        <rect x="98" y="108" width="22" height="22" rx="4" />
+        <rect x="190" y="65" width="22" height="22" rx="4" />
+      </g>
+      {/* lines */}
+      <g stroke="white" strokeOpacity="0.45" strokeWidth="1.2" fill="none">
+        <path d="M 28 76 Q 60 76 98 33" />
+        <path d="M 28 76 Q 60 76 98 119" />
+        <path d="M 120 33 Q 158 33 190 76" />
+        <path d="M 120 119 Q 158 119 190 76" />
+      </g>
+      {/* flowing data packets */}
+      <g fill="white">
+        <circle r="2.8">
+          <animateMotion dur="2.6s" repeatCount="indefinite" path="M 28 76 Q 60 76 98 33 Q 158 33 190 76" />
+        </circle>
+        <circle r="2.4" opacity="0.85">
+          <animateMotion dur="3.2s" begin="0.7s" repeatCount="indefinite" path="M 28 76 Q 60 76 98 119 Q 158 119 190 76" />
+        </circle>
+        <circle r="2.2" opacity="0.75">
+          <animateMotion dur="3s" begin="1.5s" repeatCount="indefinite" path="M 28 76 Q 60 76 98 33 Q 158 33 190 76" />
+        </circle>
+      </g>
+    </svg>
+  )
+}
+
+/* Data Scientist — neural net with firing connections */
+function NeuralAnim() {
+  const L1 = [38, 76, 112]
+  const L2 = [22, 56, 92, 126]
+  const L3 = [56, 92]
+  const x1 = 28, x2 = 110, x3 = 192
+  return (
+    <svg viewBox="0 0 220 150" className="w-full h-full" aria-hidden>
+      {/* all connections (faint) */}
+      <g stroke="white" strokeOpacity="0.18" strokeWidth="0.7" fill="none">
+        {L1.flatMap(y1 => L2.map(y2 => <line key={`a-${y1}-${y2}`} x1={x1} y1={y1} x2={x2} y2={y2} />))}
+        {L2.flatMap(y2 => L3.map(y3 => <line key={`b-${y2}-${y3}`} x1={x2} y1={y2} x2={x3} y2={y3} />))}
+      </g>
+      {/* firing connections */}
+      <g stroke="white" strokeWidth="1.6" fill="none">
+        <line x1={x1} y1={76} x2={x2} y2={56}>
+          <animate attributeName="stroke-opacity" values="0;1;0" dur="2.4s" repeatCount="indefinite" />
+        </line>
+        <line x1={x2} y1={56} x2={x3} y2={56}>
+          <animate attributeName="stroke-opacity" values="0;1;0" dur="2.4s" begin="0.5s" repeatCount="indefinite" />
+        </line>
+        <line x1={x1} y1={38} x2={x2} y2={92}>
+          <animate attributeName="stroke-opacity" values="0;1;0" dur="2.6s" begin="1s" repeatCount="indefinite" />
+        </line>
+        <line x1={x2} y1={92} x2={x3} y2={92}>
+          <animate attributeName="stroke-opacity" values="0;1;0" dur="2.6s" begin="1.5s" repeatCount="indefinite" />
+        </line>
+        <line x1={x1} y1={112} x2={x2} y2={126}>
+          <animate attributeName="stroke-opacity" values="0;1;0" dur="2.2s" begin="0.8s" repeatCount="indefinite" />
+        </line>
+      </g>
+      {/* nodes */}
+      <g fill="white">
+        {L1.map(y => <circle key={`n1-${y}`} cx={x1} cy={y} r="5" />)}
+        {L2.map(y => <circle key={`n2-${y}`} cx={x2} cy={y} r="5" />)}
+        {L3.map(y => <circle key={`n3-${y}`} cx={x3} cy={y} r="6" />)}
+      </g>
+    </svg>
+  )
+}
+
+/* Data Analyst — bars growing in sequence */
+function ChartAnim() {
+  const heights = [48, 78, 60, 100, 72, 110]
+  return (
+    <svg viewBox="0 0 220 150" className="w-full h-full" aria-hidden>
+      <g fill="white">
+        {heights.map((h, i) => {
+          const x = 14 + i * 33
+          return (
+            <rect key={i} x={x} y={140 - h} width="22" height={h} rx="2.5">
+              <animate
+                attributeName="height"
+                values={`4;${h};${h};4`}
+                keyTimes="0;0.35;0.7;1"
+                dur="3.6s"
+                begin={`${i * 0.18}s`}
+                repeatCount="indefinite"
+              />
+              <animate
+                attributeName="y"
+                values={`136;${140 - h};${140 - h};136`}
+                keyTimes="0;0.35;0.7;1"
+                dur="3.6s"
+                begin={`${i * 0.18}s`}
+                repeatCount="indefinite"
+              />
+            </rect>
+          )
+        })}
+      </g>
+      <line x1="0" y1="143" x2="220" y2="143" stroke="white" strokeOpacity="0.55" strokeWidth="1" />
+    </svg>
+  )
+}
+
+/* GenAI Engineer — orbiting tokens around a glowing core */
+function OrbitAnim() {
+  return (
+    <svg viewBox="0 0 220 150" className="w-full h-full" aria-hidden>
+      {/* orbit rings */}
+      <g stroke="white" strokeOpacity="0.22" fill="none">
+        <circle cx="110" cy="75" r="32" strokeDasharray="2 4" />
+        <circle cx="110" cy="75" r="52" strokeDasharray="2 4" />
+        <circle cx="110" cy="75" r="68" strokeDasharray="2 4" />
+      </g>
+      {/* core glow */}
+      <circle cx="110" cy="75" r="15" fill="white" fillOpacity="0.22">
+        <animate attributeName="r" values="15;22;15" dur="2.2s" repeatCount="indefinite" />
+        <animate attributeName="fill-opacity" values="0.22;0.10;0.22" dur="2.2s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="110" cy="75" r="9" fill="white">
+        <animate attributeName="r" values="9;11;9" dur="2.2s" repeatCount="indefinite" />
+      </circle>
+      {/* orbit 1 — clockwise */}
+      <g>
+        <animateTransform attributeName="transform" type="rotate" from="0 110 75" to="360 110 75" dur="6s" repeatCount="indefinite" />
+        <circle cx="142" cy="75" r="3.5" fill="white" />
+      </g>
+      {/* orbit 2 — counter-clockwise, 2 tokens */}
+      <g>
+        <animateTransform attributeName="transform" type="rotate" from="360 110 75" to="0 110 75" dur="9s" repeatCount="indefinite" />
+        <circle cx="162" cy="75" r="3" fill="white" />
+        <circle cx="58" cy="75" r="2.5" fill="white" opacity="0.85" />
+      </g>
+      {/* orbit 3 — slow */}
+      <g>
+        <animateTransform attributeName="transform" type="rotate" from="0 110 75" to="360 110 75" dur="13s" repeatCount="indefinite" />
+        <circle cx="178" cy="75" r="2.5" fill="white" />
+        <circle cx="42" cy="75" r="2" fill="white" opacity="0.8" />
+      </g>
+    </svg>
+  )
+}
+
+/* ─────────────────────────────────────────────────────────
+   FOUNDATION STRIP — dark band, shared across all domains
+   ───────────────────────────────────────────────────────── */
+function FoundationStrip() {
+  const { lang } = useLang()
+  const isDE = lang === 'de'
+
+  return (
+    <div className="relative bg-gradient-to-br from-[#1A3D2B] via-[#143222] to-[#0B1F14] rounded-3xl overflow-hidden shadow-[0_24px_56px_-20px_rgba(15,42,28,0.55)]">
+      <div className="absolute inset-0 opacity-[0.06] pointer-events-none">
+        <svg width="100%" height="100%">
+          <defs>
+            <pattern id="foundation-grid" width="44" height="44" patternUnits="userSpaceOnUse">
+              <path d="M 44 0 L 0 0 0 44" fill="none" stroke="white" strokeWidth="0.5" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#foundation-grid)" />
+        </svg>
+      </div>
+
+      <div className="absolute -left-20 -top-20 w-72 h-72 rounded-full opacity-30 blur-3xl pointer-events-none" style={{ background: '#3DAA72' }} />
+      <div className="absolute -right-20 -bottom-20 w-72 h-72 rounded-full opacity-20 blur-3xl pointer-events-none" style={{ background: '#3DAA72' }} />
+
+      <div className="relative p-8 md:p-10">
+        <div className="grid md:grid-cols-[280px_1fr] gap-8 md:gap-10 items-center">
+          <div>
+            <div className="flex items-center gap-2 mb-3">
+              <div className="w-2 h-2 rounded-full bg-[#3DAA72] animate-pulse" />
+              <p className="text-[10px] font-mono tracking-[0.3em] text-[#3DAA72]">
+                {isDE ? 'FUNDAMENT' : 'FOUNDATION'}
+              </p>
+            </div>
+            <h3 className="font-display italic text-2xl md:text-[1.9rem] font-black text-white leading-tight mb-3">
+              {isDE
+                ? <>In jedem <em className="text-[#3DAA72] not-italic">einzelnen</em> Projekt.</>
+                : <>In every <em className="text-[#3DAA72] not-italic">single</em> project.</>}
+            </h3>
+            <p className="text-white/65 text-sm leading-relaxed">
+              {isDE
+                ? 'Diese sieben Skills tragen alles oben drüber — egal welche Rolle, egal welches Team.'
+                : 'These seven carry everything above — whichever role I step into, whichever team I join.'}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-2.5">
+            {CORE.map(({ name, Icon }) => (
+              <div
+                key={name}
+                className="flex flex-col items-center justify-center gap-2 py-4 px-2 rounded-2xl border"
+                style={{ background: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.10)' }}
+              >
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'rgba(61,170,114,0.14)' }}>
+                  <Icon size={18} className="text-[#3DAA72]" />
+                </div>
+                <p className="text-[10px] font-mono font-semibold text-white/90 text-center leading-tight">
+                  {name}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
