@@ -135,8 +135,8 @@ export async function POST(req: NextRequest) {
     // Override the head of the chain with CHAT_MODEL env var if needed.
     const modelChain: string[] = [
       process.env.CHAT_MODEL,
-      'llama-3.3-70b-versatile',
       'llama-3.1-8b-instant',
+      'llama-3.3-70b-versatile',
       'gemma2-9b-it',
     ].filter(Boolean) as string[]
 
