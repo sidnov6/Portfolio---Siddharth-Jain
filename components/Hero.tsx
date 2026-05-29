@@ -207,7 +207,7 @@ export default function Hero({ onAskChat }: { onAskChat?: (q?: string) => void }
       <div className="relative z-10 max-w-6xl mx-auto px-6 pt-20 sm:pt-28 pb-16 sm:pb-20">
 
         {/* Status row — recruiter scan line */}
-        <div className="reveal mb-8 flex flex-wrap items-center gap-2">
+        <div className="reveal mb-8 flex flex-wrap items-center justify-center gap-2">
           <span className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-white border border-[#3DAA72]/30 rounded-full shadow-sm">
             <span className="w-2 h-2 rounded-full bg-[#3DAA72] animate-pulse" />
             <span className="text-[13px] font-semibold text-[#1A3D2B]">
@@ -229,13 +229,13 @@ export default function Hero({ onAskChat }: { onAskChat?: (q?: string) => void }
         </div>
 
         {/* Headline */}
-        <h1 className="reveal reveal-d1 font-display text-[clamp(3rem,9vw,7rem)] font-black leading-[0.95] tracking-tight text-[#1A1A18] mb-6">
+        <h1 className="reveal reveal-d1 font-display text-[clamp(3rem,9vw,7rem)] font-black leading-[0.95] tracking-tight text-[#1A1A18] mb-6 text-center">
           Siddharth<br />
           <em className="not-italic text-[#1A3D2B]">Jain.</em>
         </h1>
 
         {/* Typing role */}
-        <div className="reveal reveal-d2 h-10 flex items-center mb-6">
+        <div className="reveal reveal-d2 h-10 flex items-center justify-center mb-6">
           <span className="text-2xl sm:text-3xl font-bold text-[#1A3D2B]">
             {displayed}
             <span className="text-[#3DAA72] font-light animate-pulse">|</span>
@@ -243,7 +243,7 @@ export default function Hero({ onAskChat }: { onAskChat?: (q?: string) => void }
         </div>
 
         {/* Tagline */}
-        <p className="reveal reveal-d3 text-[#3D3D3A] text-base sm:text-xl max-w-xl leading-relaxed mb-10">
+        <p className="reveal reveal-d3 text-[#3D3D3A] text-base sm:text-xl max-w-xl mx-auto text-center leading-relaxed mb-10">
           {isDE
             ? <>Produktions-KI in <strong className="text-[#1A3D2B] font-semibold">Fertigung, Gesundheitswesen und Forschung</strong> gebaut. Jetzt der Sprung in <strong className="text-[#003F88] font-semibold">Finanzen × KI</strong> — MSc an der Frankfurt School, CFA Level 1 in Vorbereitung, Bau agentenbasierter Systeme für Fintech und Banking.</>
             : <>Built production AI across <strong className="text-[#1A3D2B] font-semibold">manufacturing, healthcare, and research</strong>. Now leaping into <strong className="text-[#003F88] font-semibold">Finance × AI</strong> — MSc at Frankfurt School, CFA Level 1 in progress, building agentic systems for fintech and banking.</>
@@ -251,7 +251,7 @@ export default function Hero({ onAskChat }: { onAskChat?: (q?: string) => void }
         </p>
 
         {/* CTAs */}
-        <div className="reveal reveal-d4 flex flex-wrap gap-3 mb-16">
+        <div className="reveal reveal-d4 flex flex-wrap justify-center gap-3 mb-16">
           <a
             href="#projects"
             onClick={() => track('click', { link: 'hero_see_projects' })}
@@ -278,7 +278,7 @@ export default function Hero({ onAskChat }: { onAskChat?: (q?: string) => void }
         </div>
 
         {/* Socials */}
-        <div className="reveal flex items-center gap-6">
+        <div className="reveal flex items-center justify-center gap-6">
           {[
             { href: 'https://github.com/sidnov6',                                Icon: Github,   label: 'GitHub',   color: '#1A1A18', trackAs: 'hero_github'   },
             { href: 'https://www.linkedin.com/in/siddharth-jain-b33394219/',     Icon: Linkedin, label: 'LinkedIn', color: '#0077B5', trackAs: 'hero_linkedin' },
