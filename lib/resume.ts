@@ -213,9 +213,10 @@ export const defaultResume: Resume = {
     { name: 'CFA Level 1', issuer: 'CFA Institute', year: '2026 (in progress)' },
   ],
   projects: [
-    { name: 'Recoupe',                    description: 'Autonomous multi-agent insurance-subrogation recovery system. LangGraph + RAG over policy and claims documents.' },
+    { name: 'Recoupe',     description: 'Autonomous multi-agent insurance-subrogation recovery system. LangGraph + RAG over policy and claims documents. recoupe.onrender.com' },
+    { name: 'RegRadar',    description: 'Agentic EU regulatory-impact engine. Extracts obligations from EUR-Lex acts (DORA etc.), maps them to a bank\'s systems, drafts gap-assessment memos in EN/DE — 100% citation integrity, F1 0.957 on DORA. sidnov6-regradar.hf.space' },
+    { name: 'CreditForge', description: 'Bank-grade credit-risk platform. WoE scorecard + LightGBM challenger for PD, plus LGD and EAD into Expected Loss. Basel/IRB methodology on Freddie Mac data with SHAP, fairness, and drift monitoring. sidnov6-creditforge.hf.space' },
     { name: 'Dam Rehabilitation Chatbot', description: 'Live Streamlit + LLM tool for engineering teams. github.com/sidnov6/Dam-Rehabilitation-Chatbot' },
-    { name: 'LLM-Powered BI Assistant',   description: 'Natural-language analytics layer over enterprise warehouses. In progress.' },
   ],
   additionalInfo: {
     languages: ['English (Native)', 'Hindi (Native)', 'French (Elementary Proficiency)'],

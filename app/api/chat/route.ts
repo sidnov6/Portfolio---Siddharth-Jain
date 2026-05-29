@@ -79,9 +79,11 @@ Confirm he's open to opportunities. Share email. Be specific about role fit when
 - IIT Jammu (under Dr. Samaresh Bera, Oct–Dec 2023): 5G Network Security Analyzer — containerized IDS/IPS for 5G traffic analysis, +19% throughput under peak load. Stack: Docker, 5G, IDS/IPS.
 
 **Personal projects:**
+- Recoupe — LIVE. Multi-agent insurance subrogation platform. 7 specialized agents over a RAG layer of US negligence law + carrier behaviour. Demo: recoupe.onrender.com. Stack: Multi-Agent, RAG, Groq, FastAPI.
+- RegRadar (codename "KOMPASS") — LIVE. Agentic EU regulatory-impact engine. Watches EUR-Lex / CELLAR, extracts obligations from acts like DORA, maps them to a bank's systems, ranks by deadline and risk, drafts the gap-assessment memo in English and German. Every claim is programmatically citation-verified against the live EUR-Lex source. Measured: F1 0.957 on DORA, 100% citation integrity on accepted obligations. Demo: sidnov6-regradar.hf.space. Repo: github.com/sidnov6/regradar. Stack: Python, FastAPI, SSE, Groq, EUR-Lex ingest.
+- CreditForge (codename "BONITAS") — LIVE. Bank-grade credit-risk modelling & validation platform. WoE scorecard + LightGBM challenger for PD, plus LGD and EAD into Expected Loss. Built to Basel / IRB methodology on Freddie Mac mortgage data with leakage-safe out-of-time validation, SHAP reason codes, fairness testing, drift monitoring, and a "Risk Copilot" agent team on top. Demo: sidnov6-creditforge.hf.space. Repo: github.com/sidnov6/CreditForge. Stack: Python, FastAPI, Next.js, LightGBM, SHAP, Groq.
 - Dam Rehabilitation Chatbot — LIVE. Repo: github.com/sidnov6/Dam-Rehabilitation-Chatbot. Stack: Streamlit, Python, LLM.
 - LLM-Powered BI Assistant — in progress.
-- Real-Time Pipeline Framework — in progress.
 
 **Education:**
 - MSc Artificial Intelligence & Data Science, Frankfurt School of Finance & Management (2026–2028, in progress). #32 worldwide per FT Global Rankings.
