@@ -33,7 +33,7 @@ const schools = [
         'Forschungsschwerpunkt: Enterprise-LLMs, agentenbasierte Finance-Systeme und datenintensive KI',
       ],
     },
-    accentText: { en: '#32 Worldwide · Frankfurt, Germany', de: 'Weltweit #32 · Frankfurt, Deutschland' },
+    accentText: { en: 'FT #32 (Finance & Mgmt) · Frankfurt', de: 'FT #32 (Finance & Mgmt) · Frankfurt' },
   },
   {
     name: 'VIT Vellore',

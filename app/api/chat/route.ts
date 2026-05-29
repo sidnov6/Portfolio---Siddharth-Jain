@@ -131,23 +131,59 @@ export async function POST(req: NextRequest) {
       content: m.content,
     }))
 
-    const completion = await groq.chat.completions.create({
-      model: 'llama-3.3-70b-versatile',
-      messages: [
-        { role: 'system', content: SYSTEM_PROMPT + blogContext + languageInstruction },
-        ...formattedMessages,
-      ],
-      temperature: 0.4,
-      max_tokens: 280,
-    })
+    // Try a chain of models — if one is deprecated/rate-limited, fall through.
+    // Override the head of the chain with CHAT_MODEL env var if needed.
+    const modelChain: string[] = [
+      process.env.CHAT_MODEL,
+      'llama-3.3-70b-versatile',
+      'llama-3.1-8b-instant',
+      'gemma2-9b-it',
+    ].filter(Boolean) as string[]
 
-    const text = completion.choices[0]?.message?.content ?? 'Sorry, I had trouble responding. Try again!'
+    let lastError: unknown = null
+    for (const model of modelChain) {
+      try {
+        const completion = await groq.chat.completions.create({
+          model,
+          messages: [
+            { role: 'system', content: SYSTEM_PROMPT + blogContext + languageInstruction },
+            ...formattedMessages,
+          ],
+          temperature: 0.4,
+          max_tokens: 280,
+        })
+        const text = completion.choices[0]?.message?.content ?? 'Sorry, I had trouble responding. Try again!'
+        return NextResponse.json({ message: text, model })
+      } catch (err) {
+        lastError = err
+        const msg = err instanceof Error ? err.message : String(err)
+        console.error(`Chat API model "${model}" failed:`, msg)
+        // Only fall through on errors that look like model/decommission issues.
+        // For auth or quota errors, no other model will save us.
+        if (/api[-_ ]?key|unauthorized|forbidden|401|403|rate.?limit|quota/i.test(msg)) {
+          break
+        }
+      }
+    }
 
-    return NextResponse.json({ message: text })
+    const errMsg = lastError instanceof Error ? lastError.message : String(lastError)
+    const isAuth = /api[-_ ]?key|unauthorized|forbidden|401|403/i.test(errMsg)
+    const isQuota = /rate.?limit|quota|too.?many/i.test(errMsg)
+
+    return NextResponse.json(
+      {
+        error: isAuth
+          ? 'AI is offline — auth issue. Sid has been notified. Try emailing sidnov6@gmail.com instead.'
+          : isQuota
+            ? 'AI is at its rate limit for the moment. Try again in a minute, or email sidnov6@gmail.com.'
+            : 'AI is temporarily unreachable. Try again in a minute, or email sidnov6@gmail.com.',
+      },
+      { status: 503 }
+    )
   } catch (error) {
     console.error('Chat API error:', error)
     return NextResponse.json(
-      { error: 'Failed to get response. Please try again.' },
+      { error: 'AI is temporarily unreachable. Try again in a minute, or email sidnov6@gmail.com.' },
       { status: 500 }
     )
   }

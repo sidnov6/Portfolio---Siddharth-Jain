@@ -6,8 +6,8 @@ import { track } from '@/lib/track'
 import { BasketballMiniSVG, GlobeSVG, StockLineSVG } from '@/components/Decorations'
 
 const roles = {
-  en: ['Full Stack AI Engineer', 'Data Scientist', 'Gen AI Engineer', 'Data Engineer', 'Point Guard · Basketball'],
-  de: ['Full-Stack-KI-Ingenieur', 'Datenwissenschaftler', 'Generative-KI-Ingenieur', 'Dateningenieur', 'Point Guard · Basketball'],
+  en: ['Full Stack AI Engineer', 'Data Scientist', 'Gen AI Engineer', 'Data Engineer'],
+  de: ['Full-Stack-KI-Ingenieur', 'Datenwissenschaftler', 'Generative-KI-Ingenieur', 'Dateningenieur'],
 }
 
 const stats = {
@@ -43,9 +43,10 @@ function WindTurbine({ className = '', size = 120 }: { className?: string; size?
 }
 
 /* Polaroid component with pointer-events + hover scale */
-function Polaroid({ src, caption, rotate, style }: {
-  src: string; caption: string; rotate: string; style?: React.CSSProperties
+function Polaroid({ src, caption, captionDe, lang, rotate, style }: {
+  src: string; caption: string; captionDe?: string; lang?: 'en' | 'de'; rotate: string; style?: React.CSSProperties
 }) {
+  const shown = lang === 'de' && captionDe ? captionDe : caption
   return (
     <div
       className="absolute pointer-events-auto group cursor-default"
@@ -56,7 +57,7 @@ function Polaroid({ src, caption, rotate, style }: {
         style={{ width: '185px' }}
       >
         <img src={src} alt="" className="w-full h-[135px] object-cover object-top" onError={e => { (e.target as HTMLImageElement).style.display = 'none' }} />
-        <p className="text-center text-[10px] font-mono text-[#8A9280] mt-2.5 tracking-wide">{caption}</p>
+        <p className="text-center text-[10px] font-mono text-[#8A9280] mt-2.5 tracking-wide">{shown}</p>
       </div>
     </div>
   )
@@ -138,13 +139,17 @@ export default function Hero({ onAskChat }: { onAskChat?: (q?: string) => void }
       <div className="pointer-events-none absolute left-0 top-0 h-full hidden xl:block" style={{ width: '320px' }}>
         <Polaroid
           src="/beyond/IMG_0401.jpg"
-          caption="exploring cities"
+          caption="out exploring"
+          captionDe="auf Entdeckungstour"
+          lang={lang}
           rotate="rotate(3deg)"
           style={{ top: '22%', left: '20px', ...parallax(0.05, 0.04) }}
         />
         <Polaroid
           src="/beyond/D7C0B623-1A94-4E4A-8AD9-5E481D34C990.JPG"
           caption="adventure mode"
+          captionDe="Abenteuermodus"
+          lang={lang}
           rotate="rotate(-2.5deg)"
           style={{ top: '52%', left: '50px', ...parallax(0.04, 0.06) }}
         />
@@ -155,18 +160,24 @@ export default function Hero({ onAskChat }: { onAskChat?: (q?: string) => void }
         <Polaroid
           src="/beyond/IMG_5397.jpg"
           caption="Georgia Tech '24"
+          captionDe="Georgia Tech '24"
+          lang={lang}
           rotate="rotate(-4deg)"
           style={{ top: '14%', right: '50px', ...parallax(0.06, 0.04) }}
         />
         <Polaroid
           src="/beyond/IMG_0242.jpg"
           caption="Kashmir, India"
+          captionDe="Kaschmir, Indien"
+          lang={lang}
           rotate="rotate(3deg)"
           style={{ top: '42%', right: '18px', ...parallax(0.04, 0.06) }}
         />
         <Polaroid
           src="/beyond/IMG_9023.jpg"
           caption="good times"
+          captionDe="gute Zeiten"
+          lang={lang}
           rotate="rotate(-2deg)"
           style={{ top: '68%', right: '60px', ...parallax(0.05, 0.03) }}
         />
@@ -234,7 +245,7 @@ export default function Hero({ onAskChat }: { onAskChat?: (q?: string) => void }
         {/* Tagline */}
         <p className="reveal reveal-d3 text-[#3D3D3A] text-base sm:text-xl max-w-xl leading-relaxed mb-10">
           {isDE
-            ? <>Produktions-KI in <strong className="text-[#1A3D2B] font-semibold">Fertigung, Healthcare und Forschung</strong> gebaut. Jetzt der Sprung in <strong className="text-[#003F88] font-semibold">Finance × KI</strong> — MSc an der Frankfurt School, CFA Level 1 in Vorbereitung, Bau agentenbasierter Systeme für Fintech und Banking.</>
+            ? <>Produktions-KI in <strong className="text-[#1A3D2B] font-semibold">Fertigung, Gesundheitswesen und Forschung</strong> gebaut. Jetzt der Sprung in <strong className="text-[#003F88] font-semibold">Finanzen × KI</strong> — MSc an der Frankfurt School, CFA Level 1 in Vorbereitung, Bau agentenbasierter Systeme für Fintech und Banking.</>
             : <>Built production AI across <strong className="text-[#1A3D2B] font-semibold">manufacturing, healthcare, and research</strong>. Now leaping into <strong className="text-[#003F88] font-semibold">Finance × AI</strong> — MSc at Frankfurt School, CFA Level 1 in progress, building agentic systems for fintech and banking.</>
           }
         </p>

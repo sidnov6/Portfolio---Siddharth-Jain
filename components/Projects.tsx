@@ -224,7 +224,7 @@ export default function Projects() {
     <section id="projects" ref={ref} className="py-28 px-6 bg-white">
       <div className="max-w-6xl mx-auto">
         <p className="reveal text-xs font-mono uppercase tracking-[0.2em] text-[#3DAA72] mb-4">
-          {isDE ? '02 / Projekte' : '02 / Projects'}
+          {isDE ? '03 / Projekte' : '03 / Projects'}
         </p>
         <h2 className="reveal font-display text-[clamp(2.2rem,5vw,3.8rem)] font-black text-[#1A1A18] mb-3 leading-tight">
           {isDE

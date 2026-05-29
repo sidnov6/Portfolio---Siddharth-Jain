@@ -7,7 +7,7 @@ const photos = [
   { src: '/beyond/IMG_0952.jpg',   caption: 'with the squad',           caption_de: 'mit Freunden',               span: 'col-span-1' },
   { src: '/beyond/IMG_9023.jpg',   caption: 'good times',               caption_de: 'gute Zeiten',                span: 'col-span-1' },
   { src: '/beyond/IMG_0242.jpg',   caption: 'Kashmir, India',           caption_de: 'Kaschmir, Indien',           span: 'col-span-1' },
-  { src: '/beyond/IMG_0401.jpg',   caption: 'exploring the city',       caption_de: 'die Stadt erkunden',         span: 'col-span-1' },
+  { src: '/beyond/IMG_0401.jpg',   caption: 'out exploring',            caption_de: 'auf Entdeckungstour',        span: 'col-span-1' },
   { src: '/beyond/D7C0B623-1A94-4E4A-8AD9-5E481D34C990.JPG', caption: 'adventure mode', caption_de: 'Abenteuermodus', span: 'col-span-1' },
   { src: '/beyond/80a06d6b-6acb-470c-907c-448b1f0aa6ae.JPG', caption: 'family first',   caption_de: 'Familie zuerst',  span: 'col-span-1' },
   { src: '/beyond/IMG_1008.jpg',   caption: 'somewhere in the world',   caption_de: 'irgendwo auf der Welt',      span: 'col-span-1' },
@@ -93,7 +93,7 @@ export default function About() {
           {/* Left — editorial intro */}
           <div>
             <p className="reveal text-xs font-mono uppercase tracking-[0.2em] text-[#3DAA72] mb-5">
-              {isDE ? '04 / Über mich' : '04 / About'}
+              {isDE ? '01 / Über mich' : '01 / About'}
             </p>
             <h2 className="reveal reveal-d1 font-display text-[clamp(2.2rem,5vw,3.8rem)] font-black leading-[1.05] text-[#1A1A18] mb-6">
               {isDE ? <>Mehr als ein<br /><em className="text-[#1A3D2B]">Lebenslauf.</em></> : <>More than a<br /><em className="text-[#1A3D2B]">resume.</em></>}

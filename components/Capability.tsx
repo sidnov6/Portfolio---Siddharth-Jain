@@ -158,7 +158,7 @@ export default function Capability() {
       <div className="max-w-6xl mx-auto relative">
         {/* Header */}
         <p className="reveal text-xs font-mono uppercase tracking-[0.2em] text-[#3DAA72] mb-4">
-          {isDE ? '03 / Stack' : '03 / Stack'}
+          {isDE ? '04 / Stack' : '04 / Stack'}
         </p>
         <h2 className="reveal font-display text-[clamp(2.2rem,5vw,3.8rem)] font-black text-[#1A1A18] mb-5 leading-[1.05] max-w-3xl">
           {isDE ? (
@@ -181,7 +181,7 @@ export default function Capability() {
             {/* Column header labels */}
             <div className="hidden md:grid grid-cols-4 gap-3 mb-6 px-2">
               {[
-                { en: 'SOURCES',    de: 'QUELLEN',     hint_en: '5 systems',           hint_de: '5 Systeme' },
+                { en: 'SOURCES',    de: 'QUELLEN',     hint_en: '50+ enterprise systems', hint_de: '50+ Unternehmenssysteme' },
                 { en: 'TRANSFORM',  de: 'TRANSFORM',   hint_en: 'Spark · dbt · Airflow', hint_de: 'Spark · dbt · Airflow' },
                 { en: 'LAKEHOUSE',  de: 'LAKEHOUSE',   hint_en: 'Bronze · Silver · Gold', hint_de: 'Bronze · Silber · Gold' },
                 { en: 'AI / BI',    de: 'KI / BI',     hint_en: 'Dashboards · GenAI · ML', hint_de: 'Dashboards · GenAI · ML' },

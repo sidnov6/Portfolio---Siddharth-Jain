@@ -36,7 +36,7 @@ export default function Footer() {
         </div>
 
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-white/30 text-xs font-mono">© 2025 Siddharth Jain. {isDE ? 'Alle Rechte vorbehalten.' : 'All rights reserved.'}</p>
+          <p className="text-white/30 text-xs font-mono">© {new Date().getFullYear()} Siddharth Jain. {isDE ? 'Alle Rechte vorbehalten.' : 'All rights reserved.'}</p>
           {/* Man Utd easter egg */}
           <p className="text-white/20 text-[10px] font-mono hover:text-[#DA291C] transition-colors cursor-default select-none">
             Glory Glory Man United 🔴

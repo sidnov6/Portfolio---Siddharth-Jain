@@ -114,10 +114,17 @@ export default function Chatbot({ isOpen, onClose, initialQuestion }: { isOpen: 
     setLoading(true)
     try {
       const res  = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: next, lang }) })
-      const data = await res.json()
-      setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: 'assistant', content: data.message ?? data.error ?? 'Sorry, try again!' }])
+      const data = await res.json().catch(() => ({}))
+      const reply = data.message
+        ?? data.error
+        ?? (isDE
+          ? 'KI ist gerade nicht erreichbar. Schreib Siddharth direkt: sidnov6@gmail.com'
+          : 'AI is temporarily unreachable. Email Siddharth directly: sidnov6@gmail.com')
+      setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: 'assistant', content: reply }])
     } catch {
-      setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: 'assistant', content: '⚠️ Connection error. Please try again!' }])
+      setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: 'assistant', content: isDE
+        ? 'Verbindungsfehler. Schreib Siddharth direkt: sidnov6@gmail.com'
+        : 'Connection error. Email Siddharth directly: sidnov6@gmail.com' }])
     } finally {
       setLoading(false)
     }

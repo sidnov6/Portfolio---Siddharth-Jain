@@ -208,8 +208,8 @@ export default function BeyondCode() {
         </h2>
         <p className="reveal text-[#6E7A70] text-lg max-w-2xl mb-4 leading-relaxed">
           {isDE
-            ? 'Die besten Ingenieure sind neugierig auf alles. Hier ist, was mich menschlich macht.'
-            : "The best engineers are curious about everything. Here's what makes me human."}
+            ? 'Was passiert, wenn das Terminal zu ist.'
+            : "What happens when the terminal is closed."}
         </p>
 
         {/* Journey path */}

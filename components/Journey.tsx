@@ -119,13 +119,13 @@ const experiences = [
       en: [
         'Delivered 14 enterprise BI dashboards and shipped 7 production GenAI bots (RAG + SQL agents) across Quality, Safety, Production, Energy, and HR — serving 300+ daily users across 10 manufacturing plants in Asia and Europe.',
         'Led a 6-person engineering team to design and ship Suzlon\'s Manufacturing Control Tower — a unified executive cockpit consolidating 250+ KPIs across SQPDCME (Safety, Quality, Productivity, Delivery, Cost, Manpower, Environment) as a single source of truth for the Manufacturing CEO.',
-        'Re-engineered Suzlon\'s monthly Manufacturing Business Review Committee end-to-end — sourced and modelled data from 15+ operational systems, then deployed agentic AI that answers live CXO questions with on-the-fly charts. Retired manual dashboards and Excel reporting entirely.',
+        'Re-engineered Suzlon\'s monthly Manufacturing Business Review Committee end-to-end — sourced and modelled data from 50+ operational systems, then deployed agentic AI that answers live CXO questions with on-the-fly charts. Retired manual dashboards and Excel reporting entirely.',
         'Co-authored Suzlon\'s enterprise AI, Data & Digitisation strategy — defining the operating model, tooling stack, and roadmap that scaled across the organisation.',
       ],
       de: [
         'Lieferte 14 Enterprise-BI-Dashboards und brachte 7 produktive GenAI-Bots (RAG + SQL-Agenten) in Betrieb für Qualität, Sicherheit, Produktion, Energie und HR — täglich genutzt von 300+ Anwendern an 10 Fertigungswerken in Asien und Europa.',
         'Leitete ein 6-köpfiges Engineering-Team beim Aufbau von Suzlons Manufacturing Control Tower — einer einheitlichen Executive-Plattform, die 250+ KPIs in SQPDCME (Sicherheit, Qualität, Produktivität, Lieferung, Kosten, Personal, Umwelt) als zentrale Wahrheitsquelle für den Manufacturing CEO konsolidiert.',
-        'Gestaltete Suzlons monatliches Manufacturing Business Review Committee end-to-end neu — Aggregation und Modellierung von Daten aus 15+ operativen Systemen sowie agentenbasierte KI, die Live-CXO-Fragen mit dynamischen Charts beantwortet. Manuelle Dashboards und Excel-Reports vollständig ersetzt.',
+        'Gestaltete Suzlons monatliches Manufacturing Business Review Committee end-to-end neu — Aggregation und Modellierung von Daten aus 50+ operativen Systemen sowie agentenbasierte KI, die Live-CXO-Fragen mit dynamischen Charts beantwortet. Manuelle Dashboards und Excel-Reports vollständig ersetzt.',
         'Mitverfasste Suzlons unternehmensweite Strategie für KI, Daten und Digitalisierung — Operating Model, Tooling-Stack und Roadmap, skaliert auf die gesamte Organisation.',
       ],
     },

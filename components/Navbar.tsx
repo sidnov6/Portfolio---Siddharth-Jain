@@ -5,10 +5,10 @@ import { useLang } from '@/lib/language-context'
 import { track } from '@/lib/track'
 
 const links = [
+  { href: '#about',       en: 'About',      de: 'Über mich' },
   { href: '#skills',      en: 'Skills',     de: 'Fähigkeiten' },
   { href: '#projects',    en: 'Projects',   de: 'Projekte' },
   { href: '#capability',  en: 'Stack',      de: 'Stack' },
-  { href: '#about',       en: 'About',      de: 'Über mich' },
   { href: '#journey',     en: 'Journey',    de: 'Werdegang' },
   { href: '#education',   en: 'Education',  de: 'Ausbildung' },
   { href: '#beyond',      en: 'Life',       de: 'Leben' },

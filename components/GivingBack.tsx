@@ -126,19 +126,6 @@ const volunteering = [
 
 const learning = [
   {
-    id: 'cfa',
-    title_en: 'CFA Level 1',
-    title_de: 'CFA Level 1',
-    sub_en: '2026 sitting · currently studying',
-    sub_de: 'Prüfung 2026 · aktuell am Lernen',
-    body_en: 'Pursuing the Chartered Financial Analyst Level 1 to pair AI engineering depth with finance fluency — the language I need to build AI for capital markets. Not yet cleared.',
-    body_de: 'Verfolge den Chartered Financial Analyst Level 1, um KI-Engineering-Tiefe mit Finanz-Fluenz zu paaren — die Sprache, die ich brauche, um KI für Kapitalmärkte zu bauen. Noch nicht bestanden.',
-    Icon: GraduationCap,
-    color: '#003F88',
-    bgRing: 'rgba(0,63,136,0.10)',
-    progress: 35,
-  },
-  {
     id: 'ai',
     title_en: 'Agentic AI Systems',
     title_de: 'Agentenbasierte KI-Systeme',

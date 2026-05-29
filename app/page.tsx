@@ -36,10 +36,10 @@ function PageContent() {
     <main className="bg-[#F8F5EE]">
       <Navbar onChatOpen={() => openChat()} />
       <Hero onAskChat={openChat} />
+      <About />
       <Skills />
       <Projects />
       <Capability />
-      <About />
       <Journey />
       <Pivot />
       <Education />
