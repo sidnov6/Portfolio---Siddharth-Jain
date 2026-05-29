@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useRef } from 'react'
 import { useLang } from '@/lib/language-context'
+import ResumeEmbed from '@/components/ResumeEmbed'
 
 const photos = [
   { src: '/beyond/IMG_5397.jpg',   caption: 'Georgia Tech, Atlanta',    caption_de: 'Georgia Tech, Atlanta',      span: 'col-span-1 row-span-2' },
@@ -128,6 +129,19 @@ export default function About() {
           <div className="reveal-right">
             <JsonBlock lang={lang} />
           </div>
+        </div>
+
+        {/* Embedded resume — auto-syncs from admin Resume Builder */}
+        <div className="reveal mb-20">
+          <div className="flex items-baseline justify-between mb-6 flex-wrap gap-2">
+            <p className="text-xs font-mono uppercase tracking-[0.2em] text-[#3DAA72]">
+              {isDE ? 'Lebenslauf · live' : 'Resume · live'}
+            </p>
+            <p className="text-xs text-[#8A9280]">
+              {isDE ? 'ATS-konform · einspaltig · stets aktuell' : 'ATS-friendly · single column · always current'}
+            </p>
+          </div>
+          <ResumeEmbed />
         </div>
 
         {/* Photo collage — full width */}
