@@ -158,7 +158,7 @@ export default function Capability() {
       <div className="max-w-6xl mx-auto relative">
         {/* Header */}
         <p className="reveal text-xs font-mono uppercase tracking-[0.2em] text-[#3DAA72] mb-4">
-          {isDE ? '04 / End-to-End-Fähigkeit' : '04 / End-to-End Capability'}
+          {isDE ? '03 / Stack' : '03 / Stack'}
         </p>
         <h2 className="reveal font-display text-[clamp(2.2rem,5vw,3.8rem)] font-black text-[#1A1A18] mb-5 leading-[1.05] max-w-3xl">
           {isDE ? (

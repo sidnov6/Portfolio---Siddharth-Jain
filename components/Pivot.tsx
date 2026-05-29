@@ -116,7 +116,7 @@ export default function Pivot() {
     <section
       id="pivot"
       ref={ref}
-      className="relative py-28 px-6 bg-white overflow-hidden"
+      className="relative pt-10 pb-28 px-6 bg-white overflow-hidden"
     >
       {/* Background subtle ticker pattern */}
       <div
@@ -147,9 +147,10 @@ export default function Pivot() {
       </div>
 
       <div className="relative max-w-6xl mx-auto">
-        {/* ── HEADER ─────────────────────────────────────── */}
-        <p className="reveal text-xs font-mono uppercase tracking-[0.2em] text-[#3DAA72] mb-4">
-          {isDE ? '07 / Der nächste Schritt' : '07 / The Next Chapter'}
+        {/* ── HEADER (continued from Journey) ───────────── */}
+        <p className="reveal text-xs font-mono uppercase tracking-[0.2em] text-[#003F88] mb-4 flex items-center gap-2">
+          <span className="inline-block w-6 h-px bg-[#003F88]" />
+          {isDE ? '05 → Der Pivot' : '05 → The Pivot'}
         </p>
         <h2 className="reveal font-display text-[clamp(2.2rem,5.5vw,4.2rem)] font-black text-[#1A1A18] mb-5 leading-[1.02] max-w-4xl">
           {isDE ? (

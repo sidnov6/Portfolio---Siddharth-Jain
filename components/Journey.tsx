@@ -302,7 +302,7 @@ export default function Journey() {
             {/* Section label */}
             <div className="pt-16 lg:pt-24 px-4 lg:px-16 pb-4 flex items-center justify-between">
               <p className="text-xs font-mono uppercase tracking-[0.2em] text-[#1A3D2B] font-semibold">
-                {isDE ? '02 / Beruflicher Werdegang' : '02 / Professional Journey'}
+                {isDE ? '05 / Werdegang' : '05 / Journey'}
               </p>
               {/* Progress dots */}
               <div className="flex items-center gap-2">

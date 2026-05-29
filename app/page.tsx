@@ -20,27 +20,38 @@ import { MessageCircle } from 'lucide-react'
 
 function PageContent() {
   const [chatOpen, setChatOpen] = useState(false)
+  const [seedQuestion, setSeedQuestion] = useState<string | undefined>(undefined)
   const { lang } = useLang()
+
+  const openChat = (question?: string) => {
+    setSeedQuestion(question)
+    setChatOpen(true)
+  }
+  const closeChat = () => {
+    setChatOpen(false)
+    setSeedQuestion(undefined)
+  }
+
   return (
     <main className="bg-[#F8F5EE]">
-      <Navbar onChatOpen={() => setChatOpen(true)} />
-      <Hero />
+      <Navbar onChatOpen={() => openChat()} />
+      <Hero onAskChat={openChat} />
+      <Skills />
+      <Projects />
+      <Capability />
       <About />
       <Journey />
-      <Skills />
-      <Capability />
-      <Projects />
-      <Education />
       <Pivot />
-      <BlogPreview />
+      <Education />
       <BeyondCode />
       <GivingBack />
+      <BlogPreview />
       <Contact />
       <Footer />
 
       {!chatOpen && (
         <button
-          onClick={() => setChatOpen(true)}
+          onClick={() => openChat()}
           className="fixed bottom-6 right-6 z-40 flex items-center gap-2.5 px-5 py-3 rounded-2xl bg-[#1A3D2B] text-white font-semibold text-sm shadow-xl hover:bg-[#2D7A52] hover:-translate-y-0.5 transition-all duration-200 group"
           style={{ boxShadow: '0 8px 32px rgba(26,61,43,0.35)' }}
         >
@@ -49,7 +60,7 @@ function PageContent() {
           <span className="w-2 h-2 rounded-full bg-[#3DAA72] animate-pulse" />
         </button>
       )}
-      <Chatbot isOpen={chatOpen} onClose={() => setChatOpen(false)} />
+      <Chatbot isOpen={chatOpen} onClose={closeChat} initialQuestion={seedQuestion} />
     </main>
   )
 }

@@ -8,20 +8,20 @@ type Message = { role: 'user' | 'assistant'; content: string; id: string }
 
 const starters = {
   en: [
-    'What did Siddharth build at Suzlon?',
-    'Why hire him over a finance PhD?',
-    'Tell me about his finance pivot',
+    'What has he shipped to production?',
+    'Why should I hire him?',
     'What is his tech stack?',
-    'Is he open to roles right now?',
-    'What has he been writing about?',
+    'Is he available right now?',
+    'Tell me about his finance pivot',
+    'What did he build at Suzlon?',
   ],
   de: [
-    'Was hat Siddharth bei Suzlon gebaut?',
-    'Warum ihn statt eines Finance-PhDs einstellen?',
-    'Erzähl mir von seinem Finance-Pivot',
+    'Was hat er produktiv ausgeliefert?',
+    'Warum sollte ich ihn einstellen?',
     'Was ist sein Tech-Stack?',
-    'Ist er aktuell offen für Stellen?',
-    'Worüber hat er zuletzt geschrieben?',
+    'Ist er aktuell verfügbar?',
+    'Erzähl mir von seinem Finance-Pivot',
+    'Was hat er bei Suzlon gebaut?',
   ],
 }
 
@@ -65,7 +65,7 @@ function Typing() {
   )
 }
 
-export default function Chatbot({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+export default function Chatbot({ isOpen, onClose, initialQuestion }: { isOpen: boolean; onClose: () => void; initialQuestion?: string }) {
   const { lang } = useLang()
   const isDE = lang === 'de'
   const [messages, setMessages] = useState<Message[]>([{
@@ -91,6 +91,17 @@ export default function Chatbot({ isOpen, onClose }: { isOpen: boolean; onClose:
   useEffect(() => {
     if (isOpen) track('chatbot_open')
   }, [isOpen])
+
+  // Auto-send seed question when one is provided on open
+  const sentQuestionRef = useRef<string | null>(null)
+  useEffect(() => {
+    if (isOpen && initialQuestion && sentQuestionRef.current !== initialQuestion) {
+      sentQuestionRef.current = initialQuestion
+      send(initialQuestion)
+    }
+    if (!isOpen) sentQuestionRef.current = null
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, initialQuestion])
 
   const send = async (text?: string) => {
     const content = (text ?? input).trim()

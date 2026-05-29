@@ -184,7 +184,7 @@ export default function GivingBack() {
     <section
       id="giving-back"
       ref={ref}
-      className="relative py-28 px-6 bg-white overflow-hidden"
+      className="relative pt-10 pb-28 px-6 bg-white overflow-hidden"
     >
       {/* Background decorations */}
       <div className="pointer-events-none absolute hidden lg:block opacity-[0.06] float-slow" style={{ left: '40px', top: '120px' }}>
@@ -195,9 +195,10 @@ export default function GivingBack() {
       </div>
 
       <div className="max-w-6xl mx-auto relative">
-        {/* Header */}
-        <p className="reveal text-xs font-mono uppercase tracking-[0.2em] text-[#3DAA72] mb-4">
-          {isDE ? '10 / Zurückgeben & Lernen' : '10 / Giving Back & Learning'}
+        {/* Header (continued from Life) */}
+        <p className="reveal text-xs font-mono uppercase tracking-[0.2em] text-[#1A3D2B] mb-4 flex items-center gap-2">
+          <span className="inline-block w-6 h-px bg-[#1A3D2B]" />
+          {isDE ? '07 → Zurückgeben & Lernen' : '07 → Giving Back & Learning'}
         </p>
         <h2 className="reveal font-display text-[clamp(2.2rem,5vw,3.8rem)] font-black text-[#1A1A18] mb-3 leading-tight">
           {isDE

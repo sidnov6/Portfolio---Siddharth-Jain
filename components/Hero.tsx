@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState, useRef } from 'react'
-import { Github, Linkedin, Mail, ArrowDown, Download } from 'lucide-react'
+import { Github, Linkedin, Mail, ArrowDown, Download, MapPin, ShieldCheck, Sparkles, Zap } from 'lucide-react'
 import { useLang } from '@/lib/language-context'
 import { track } from '@/lib/track'
 import { BasketballMiniSVG, GlobeSVG, StockLineSVG } from '@/components/Decorations'
@@ -62,7 +62,7 @@ function Polaroid({ src, caption, rotate, style }: {
   )
 }
 
-export default function Hero() {
+export default function Hero({ onAskChat }: { onAskChat?: (q?: string) => void }) {
   const [roleIdx, setRoleIdx] = useState(0)
   const [displayed, setDisplayed] = useState('')
   const [deleting, setDeleting] = useState(false)
@@ -195,11 +195,25 @@ export default function Hero() {
       {/* Main content */}
       <div className="relative z-10 max-w-6xl mx-auto px-6 pt-20 sm:pt-28 pb-16 sm:pb-20">
 
-        {/* Availability chip */}
-        <div className="reveal mb-8 inline-flex items-center gap-2.5 px-4 py-2 bg-white border border-[#D6EDE2] rounded-full shadow-sm">
-          <span className="w-2 h-2 rounded-full bg-[#3DAA72] animate-pulse" />
-          <span className="text-sm font-medium text-[#1A3D2B]">
-            {isDE ? 'Offen für Chancen · Frankfurt, Deutschland' : 'Open to opportunities · Frankfurt, Germany'}
+        {/* Status row — recruiter scan line */}
+        <div className="reveal mb-8 flex flex-wrap items-center gap-2">
+          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-white border border-[#3DAA72]/30 rounded-full shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-[#3DAA72] animate-pulse" />
+            <span className="text-[13px] font-semibold text-[#1A3D2B]">
+              {isDE ? 'Offen für Rollen · ab sofort' : 'Open to roles · available now'}
+            </span>
+          </span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-[#E4E0D6] rounded-full text-[12px] font-medium text-[#3A3A35]">
+            <MapPin size={12} className="text-[#1A3D2B]" />
+            {isDE ? 'Frankfurt + Remote DACH' : 'Frankfurt + Remote DACH'}
+          </span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-[#E4E0D6] rounded-full text-[12px] font-medium text-[#3A3A35]">
+            <ShieldCheck size={12} className="text-[#1A3D2B]" />
+            {isDE ? 'EU-arbeitsberechtigt' : 'EU work-authorized'}
+          </span>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-[#E4E0D6] rounded-full text-[12px] font-medium text-[#3A3A35]">
+            <Sparkles size={12} className="text-[#1A3D2B]" />
+            {isDE ? 'Full Stack KI · Data · GenAI' : 'Full Stack AI · Data · GenAI'}
           </span>
         </div>
 
@@ -228,11 +242,11 @@ export default function Hero() {
         {/* CTAs */}
         <div className="reveal reveal-d4 flex flex-wrap gap-3 mb-16">
           <a
-            href="#journey"
-            onClick={() => track('click', { link: 'hero_see_journey' })}
+            href="#projects"
+            onClick={() => track('click', { link: 'hero_see_projects' })}
             className="px-7 py-3.5 bg-[#1A3D2B] text-white font-semibold rounded-xl hover:bg-[#2D7A52] transition-all duration-200 shadow-lg shadow-[#1A3D2B]/20 hover:shadow-[#1A3D2B]/30 hover:-translate-y-0.5"
           >
-            {isDE ? 'Mein Werdegang' : 'See My Journey'}
+            {isDE ? 'Was ich gebaut habe' : 'See What I’ve Built'}
           </a>
           <a
             href="#contact"
@@ -277,6 +291,75 @@ export default function Hero() {
               <div className="text-xs text-[#8A9280] mt-1 font-medium">{s.label}</div>
             </div>
           ))}
+        </div>
+
+        {/* Recruiter Mode panel — skim the whole story by asking */}
+        <div className="reveal mt-8 sm:mt-10 relative bg-gradient-to-br from-[#1A3D2B] via-[#163525] to-[#0F2A1C] rounded-2xl overflow-hidden shadow-xl">
+          {/* grid texture */}
+          <div className="absolute inset-0 opacity-[0.06] pointer-events-none">
+            <svg width="100%" height="100%">
+              <defs>
+                <pattern id="recruiter-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="0.5" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#recruiter-grid)" />
+            </svg>
+          </div>
+          <div className="absolute -right-16 -top-16 w-56 h-56 rounded-full opacity-25 blur-3xl pointer-events-none" style={{ background: '#3DAA72' }} />
+
+          <div className="relative p-5 sm:p-6 flex flex-col md:flex-row md:items-center gap-5">
+            <div className="md:max-w-[280px] flex-shrink-0">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-7 h-7 rounded-lg bg-[#3DAA72]/20 border border-[#3DAA72]/30 flex items-center justify-center">
+                  <Zap size={14} className="text-[#3DAA72]" />
+                </div>
+                <p className="text-[10px] font-mono tracking-[0.25em] text-[#3DAA72] font-bold">
+                  {isDE ? 'RECRUITER-MODUS' : 'RECRUITER MODE'}
+                </p>
+              </div>
+              <p className="font-display italic text-lg sm:text-xl font-black text-white leading-tight mb-1">
+                {isDE ? 'Zu lange zum Lesen?' : 'Too long to read?'}
+              </p>
+              <p className="text-white/70 text-[12.5px] leading-snug">
+                {isDE
+                  ? 'Frag meine KI alles — bekomme die ganze Geschichte in 60 Sekunden.'
+                  : 'Skip the scroll. Ask my AI anything — get the whole story in 60 seconds.'}
+              </p>
+            </div>
+
+            <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-2">
+              {(isDE
+                ? [
+                    'Was hat Siddharth in Produktion gebracht?',
+                    'Warum sollte ich ihn einstellen?',
+                    'Was ist sein Tech-Stack?',
+                  ]
+                : [
+                    'What has Siddharth shipped to production?',
+                    'Why should I hire him?',
+                    'What is his tech stack?',
+                  ]
+              ).map((q, i) => (
+                <button
+                  key={i}
+                  onClick={() => {
+                    track('hero_recruiter_seed', { idx: i })
+                    onAskChat?.(q)
+                  }}
+                  className="group text-left px-3.5 py-3 rounded-xl bg-white/5 backdrop-blur border border-white/10 hover:bg-white/10 hover:border-[#3DAA72]/50 transition-all"
+                >
+                  <p className="text-[12.5px] font-semibold text-white leading-snug mb-1.5">
+                    {q}
+                  </p>
+                  <p className="text-[10px] font-mono text-[#3DAA72]/80 group-hover:text-[#3DAA72] flex items-center gap-1">
+                    {isDE ? 'Antwort öffnen' : 'Open answer'}
+                    <span className="group-hover:translate-x-0.5 transition-transform">→</span>
+                  </p>
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 

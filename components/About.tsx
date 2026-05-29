@@ -93,7 +93,7 @@ export default function About() {
           {/* Left — editorial intro */}
           <div>
             <p className="reveal text-xs font-mono uppercase tracking-[0.2em] text-[#3DAA72] mb-5">
-              {isDE ? '01 / Über mich' : '01 / About'}
+              {isDE ? '04 / Über mich' : '04 / About'}
             </p>
             <h2 className="reveal reveal-d1 font-display text-[clamp(2.2rem,5vw,3.8rem)] font-black leading-[1.05] text-[#1A1A18] mb-6">
               {isDE ? <>Mehr als ein<br /><em className="text-[#1A3D2B]">Lebenslauf.</em></> : <>More than a<br /><em className="text-[#1A3D2B]">resume.</em></>}

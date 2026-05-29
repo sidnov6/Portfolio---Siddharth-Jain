@@ -1,19 +1,18 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Download } from 'lucide-react'
 import { useLang } from '@/lib/language-context'
 import { track } from '@/lib/track'
 
 const links = [
+  { href: '#skills',      en: 'Skills',     de: 'Fähigkeiten' },
+  { href: '#projects',    en: 'Projects',   de: 'Projekte' },
+  { href: '#capability',  en: 'Stack',      de: 'Stack' },
   { href: '#about',       en: 'About',      de: 'Über mich' },
   { href: '#journey',     en: 'Journey',    de: 'Werdegang' },
-  { href: '#skills',      en: 'Skills',     de: 'Fähigkeiten' },
-  { href: '#capability',  en: 'Stack',      de: 'Stack' },
-  { href: '#projects',    en: 'Projects',   de: 'Projekte' },
   { href: '#education',   en: 'Education',  de: 'Ausbildung' },
-  { href: '#pivot',       en: 'Next',       de: 'Nächstes' },
-  { href: '#writing',     en: 'Writing',    de: 'Blog' },
   { href: '#beyond',      en: 'Life',       de: 'Leben' },
+  { href: '#writing',     en: 'Writing',    de: 'Blog' },
   { href: '#contact',     en: 'Contact',    de: 'Kontakt' },
 ]
 
@@ -35,7 +34,6 @@ export default function Navbar({ onChatOpen }: { onChatOpen: () => void }) {
       { threshold: 0.4 }
     )
     links.forEach(({ href }) => {
-      // Only hash links map to in-page sections — skip URL links like /blog
       if (!href.startsWith('#')) return
       const el = document.querySelector(href)
       if (el) io.observe(el)
@@ -59,13 +57,13 @@ export default function Navbar({ onChatOpen }: { onChatOpen: () => void }) {
           </a>
 
           {/* Desktop links */}
-          <div className="hidden lg:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-0.5">
             {links.map(({ href, en, de }) => (
               <a
                 key={href}
                 href={href}
                 onClick={() => track('click', { link: `nav_${href.replace('#', '')}` })}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                className={`px-2.5 py-1.5 rounded-lg text-[13px] font-medium transition-all duration-200 ${
                   active === href
                     ? 'bg-[#1A3D2B] text-white'
                     : 'text-[#4A4A47] hover:text-[#1A3D2B] hover:bg-[#E8F5EE]'
@@ -77,22 +75,35 @@ export default function Navbar({ onChatOpen }: { onChatOpen: () => void }) {
           </div>
 
           {/* Right actions */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             {/* Language toggle */}
             <div className="hidden sm:flex items-center rounded-lg border border-[#E4E0D6] overflow-hidden bg-white/60 text-xs font-mono font-semibold">
               <button
                 onClick={() => setLang('en')}
-                className={`px-2.5 py-1.5 transition-all ${lang === 'en' ? 'bg-[#1A3D2B] text-white' : 'text-[#6E7A70] hover:text-[#1A3D2B]'}`}
+                className={`px-2 py-1.5 transition-all ${lang === 'en' ? 'bg-[#1A3D2B] text-white' : 'text-[#6E7A70] hover:text-[#1A3D2B]'}`}
               >EN</button>
               <button
                 onClick={() => setLang('de')}
-                className={`px-2.5 py-1.5 transition-all ${lang === 'de' ? 'bg-[#1A3D2B] text-white' : 'text-[#6E7A70] hover:text-[#1A3D2B]'}`}
+                className={`px-2 py-1.5 transition-all ${lang === 'de' ? 'bg-[#1A3D2B] text-white' : 'text-[#6E7A70] hover:text-[#1A3D2B]'}`}
               >DE</button>
             </div>
 
+            {/* Resume — sticky download CTA for recruiters */}
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              onClick={() => track('resume_download', { source: 'navbar' })}
+              className="hidden sm:flex items-center gap-1.5 px-3 py-2 bg-white border border-[#E4E0D6] text-[#1A3D2B] rounded-xl text-[13px] font-semibold hover:border-[#1A3D2B]/40 hover:bg-[#F8F5EE] transition-all duration-200"
+              title={lang === 'de' ? 'Lebenslauf herunterladen' : 'Download resume'}
+            >
+              <Download size={13} />
+              {lang === 'de' ? 'CV' : 'Resume'}
+            </a>
+
+            {/* Ask AI */}
             <button
               onClick={onChatOpen}
-              className="flex items-center gap-2 px-4 py-2 bg-[#1A3D2B] text-white rounded-xl text-sm font-semibold hover:bg-[#2D7A52] transition-all duration-200 shadow-md shadow-[#1A3D2B]/20 hover:shadow-[#1A3D2B]/30 hover:scale-105"
+              className="flex items-center gap-2 px-3 py-2 bg-[#1A3D2B] text-white rounded-xl text-[13px] font-semibold hover:bg-[#2D7A52] transition-all duration-200 shadow-md shadow-[#1A3D2B]/20 hover:shadow-[#1A3D2B]/30 hover:scale-105"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-[#3DAA72] animate-pulse" />
               {lang === 'de' ? 'KI fragen' : 'Ask AI'}
@@ -124,6 +135,18 @@ export default function Navbar({ onChatOpen }: { onChatOpen: () => void }) {
                   {lang === 'de' ? de : en}
                 </a>
               ))}
+
+              {/* Resume CTA on mobile */}
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                onClick={() => { track('resume_download', { source: 'navbar_mobile' }); setMenuOpen(false) }}
+                className="mx-4 mt-2 flex items-center justify-center gap-2 px-4 py-2.5 bg-white border border-[#E4E0D6] text-[#1A3D2B] rounded-xl text-sm font-semibold hover:bg-[#F8F5EE] transition-colors"
+              >
+                <Download size={14} />
+                {lang === 'de' ? 'Lebenslauf' : 'Download Resume'}
+              </a>
+
               {/* Mobile lang toggle */}
               <div className="flex gap-2 px-4 pt-2">
                 {(['en', 'de'] as const).map(l => (
