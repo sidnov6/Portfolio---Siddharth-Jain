@@ -103,6 +103,22 @@ export default function ResumeBuilder({ pwd }: { pwd: string }) {
   const addProject    = () => update({ projects: [...resume.projects, blankProject()] })
   const removeProject = (idx: number) => update({ projects: resume.projects.filter((_, i) => i !== idx) })
 
+  /* extracurriculars share the experience shape */
+  const setExtra = (idx: number, patch: Partial<ResumeExperience>) =>
+    update({ extracurriculars: resume.extracurriculars.map((e, i) => i === idx ? { ...e, ...patch } : e) })
+  const addExtra    = () => update({ extracurriculars: [...resume.extracurriculars, blankExperience()] })
+  const removeExtra = (idx: number) => update({ extracurriculars: resume.extracurriculars.filter((_, i) => i !== idx) })
+  const setExtraBullet = (eIdx: number, bIdx: number, value: string) =>
+    setExtra(eIdx, { bullets: resume.extracurriculars[eIdx].bullets.map((b, i) => i === bIdx ? value : b) })
+  const addExtraBullet    = (eIdx: number) => setExtra(eIdx, { bullets: [...resume.extracurriculars[eIdx].bullets, ''] })
+  const removeExtraBullet = (eIdx: number, bIdx: number) =>
+    setExtra(eIdx, { bullets: resume.extracurriculars[eIdx].bullets.filter((_, i) => i !== bIdx) })
+
+  const setLanguages = (text: string) =>
+    update({ additionalInfo: { ...resume.additionalInfo, languages: text.split(',').map(s => s.trim()).filter(Boolean) } })
+  const setHobbies = (text: string) =>
+    update({ additionalInfo: { ...resume.additionalInfo, hobbies:   text.split(',').map(s => s.trim()).filter(Boolean) } })
+
   return (
     <div className="space-y-6">
       {/* Sticky action bar */}
@@ -222,7 +238,74 @@ export default function ResumeBuilder({ pwd }: { pwd: string }) {
         </div>
       </Card>
 
-      <Card title="Certifications" right={<button onClick={addCert} className="text-xs font-semibold text-[#1A3D2B] hover:underline">+ Add</button>}>
+      <Card
+        title="Extracurricular Activities"
+        hint="Same shape as roles. Shown on the PDF between Career and Additional Information."
+        right={<button onClick={addExtra} className="text-xs font-semibold text-[#1A3D2B] hover:underline">+ Add activity</button>}
+      >
+        <div className="space-y-5">
+          {resume.extracurriculars.map((e, i) => (
+            <div key={i} className="p-4 bg-[#F8F5EE] rounded-xl border border-[#E4E0D6]">
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-[11px] font-mono uppercase tracking-wider text-[#8A9280]">Activity {i + 1}</p>
+                <button onClick={() => removeExtra(i)} className="text-[11px] text-[#C03810] hover:underline">Remove</button>
+              </div>
+              <Grid2>
+                <Input label="Role"         value={e.title}    onChange={v => setExtra(i, { title: v })} />
+                <Input label="Organisation" value={e.company}  onChange={v => setExtra(i, { company: v })} />
+                <Input label="Location"     value={e.location} onChange={v => setExtra(i, { location: v })} />
+                <div />
+                <Input label="Start" value={e.start} onChange={v => setExtra(i, { start: v })} />
+                <Input label="End"   value={e.end}   onChange={v => setExtra(i, { end: v })} />
+              </Grid2>
+              <div className="mt-3">
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="block text-xs font-mono uppercase tracking-wider text-[#6E7A70]">Bullets</label>
+                  <button onClick={() => addExtraBullet(i)} className="text-[11px] font-semibold text-[#1A3D2B] hover:underline">+ Add bullet</button>
+                </div>
+                <div className="space-y-2">
+                  {e.bullets.map((b, bi) => (
+                    <div key={bi} className="flex gap-2 items-start">
+                      <textarea
+                        value={b}
+                        onChange={ev => setExtraBullet(i, bi, ev.target.value)}
+                        rows={2}
+                        className="flex-1 px-3 py-2 bg-white border border-[#E4E0D6] rounded-lg text-[13px] leading-relaxed focus:outline-none focus:border-[#1A3D2B]/40 resize-y"
+                      />
+                      <button onClick={() => removeExtraBullet(i, bi)} className="text-[#C03810] text-xs px-2 py-1 hover:bg-[#FEF2EE] rounded">×</button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Card>
+
+      <Card title="Additional Information" hint="Languages and hobbies — appear under the Additional Information section after the skill groups.">
+        <div className="space-y-3">
+          <div>
+            <label className="block text-xs font-mono uppercase tracking-wider text-[#6E7A70] mb-1.5">Languages (comma-separated)</label>
+            <input
+              value={resume.additionalInfo.languages.join(', ')}
+              onChange={e => setLanguages(e.target.value)}
+              placeholder="English (Native), Hindi (Native), French (Elementary)"
+              className="w-full px-3 py-2 bg-white border border-[#E4E0D6] rounded-lg text-[13px] focus:outline-none focus:border-[#1A3D2B]/40"
+            />
+          </div>
+          <div>
+            <label className="block text-xs font-mono uppercase tracking-wider text-[#6E7A70] mb-1.5">Hobbies (comma-separated)</label>
+            <input
+              value={resume.additionalInfo.hobbies.join(', ')}
+              onChange={e => setHobbies(e.target.value)}
+              placeholder="Basketball, Manchester United, Geopolitics"
+              className="w-full px-3 py-2 bg-white border border-[#E4E0D6] rounded-lg text-[13px] focus:outline-none focus:border-[#1A3D2B]/40"
+            />
+          </div>
+        </div>
+      </Card>
+
+      <Card title="Certifications" hint="Not shown on the Harvard PDF — kept here so they can be embedded as bullet points inside Education or Career if needed." right={<button onClick={addCert} className="text-xs font-semibold text-[#1A3D2B] hover:underline">+ Add</button>}>
         <div className="space-y-3">
           {resume.certifications.map((c, i) => (
             <div key={i} className="grid grid-cols-1 sm:grid-cols-[1fr_1fr_120px_40px] gap-2 items-end">
@@ -235,7 +318,7 @@ export default function ResumeBuilder({ pwd }: { pwd: string }) {
         </div>
       </Card>
 
-      <Card title="Projects" right={<button onClick={addProject} className="text-xs font-semibold text-[#1A3D2B] hover:underline">+ Add</button>}>
+      <Card title="Projects" hint="Not shown on the Harvard PDF — used on the site embed only." right={<button onClick={addProject} className="text-xs font-semibold text-[#1A3D2B] hover:underline">+ Add</button>}>
         <div className="space-y-3">
           {resume.projects.map((p, i) => (
             <div key={i} className="grid grid-cols-1 sm:grid-cols-[200px_1fr_40px] gap-2 items-end">
