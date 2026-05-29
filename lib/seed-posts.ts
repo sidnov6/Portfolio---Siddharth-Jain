@@ -4,6 +4,99 @@ const now = new Date().toISOString()
 
 export const SEED_POSTS: Post[] = [
   {
+    slug: 'building-recoupe-subrogation-agents',
+    title: 'Building Recoupe — Why Subrogation Is the Best Vertical to Pressure-Test Agentic AI',
+    excerpt: 'A multi-agent system that reads insurance claims, assigns fault by jurisdiction, computes what is recoverable, and pursues it — with grounded citations and an append-only audit trail. Here is what I learned shipping it.',
+    date: '2026-05-28T09:00:00.000Z',
+    tags: ['Agentic AI', 'Insurance', 'RAG', 'Multi-Agent'],
+    published: true,
+    createdAt: now,
+    updatedAt: now,
+    body: `US property & casualty insurers leave an estimated **$15–25 billion** in subrogation recovery on the table every year. Not because they cannot — because they will not. Human adjusters can only work the biggest files. The long tail of small claims, where the math says *"you could probably recover $2K but it takes a paralegal three hours and a $400 demand letter,"* gets dropped at intake. That is the gap I built **Recoupe** to close.
+
+[Try the live demo →](https://recoupe.onrender.com/#/dashboard)
+
+## What subrogation actually is
+
+When your insurer pays a claim and someone else is legally at fault — the other driver, a landlord's negligence, a defective product — the insurer has a legal right to recover from the at-fault party. This is *subrogation*. In practice it is one of the most underbuilt workflows in insurance: most carriers run it on people, spreadsheets, and intuition about which files are worth pursuing.
+
+Two things make it the perfect AI test bed:
+
+1. **The ground truth is codifiable.** Negligence law is published. Carrier settlement behaviour is observable. Recoverable amounts are derivable from medical, repair, and wage-loss numbers already sitting in the claim file.
+2. **The decisions repeat.** A claim has the same shape every time — facts, jurisdiction, damages, fault, deadlines. Repetition is exactly what agents are good at.
+
+## What Recoupe is
+
+Recoupe is an **autonomous subrogation pipeline** built as a chain of seven specialized agents, each with a single job:
+
+- **Intake Agent** — reads the claim file (LLM extraction via Groq when connected, deterministic heuristics otherwise) and extracts parties, losses, and fault facts.
+- **Liability Agent** — assigns the fault percentage under the correct state's negligence regime (comparative, modified, or contributory).
+- **Quantum Agent** — computes the recoverable dollar amount given fault, damages, and policy limits.
+- **Strategy Agent** — decides *pursue* or *drop*, with the threshold tunable per carrier.
+- **Demand Agent** — drafts the demand letter with grounded statutory citations.
+- **Negotiation Agent** — works counter-offers against carrier-specific settlement behaviour.
+- **Litigation Agent** — escalates only when the expected value of suit beats settlement.
+
+Each agent runs in sequence, writes its findings to an append-only audit trail, and the next agent reads from that trail rather than re-prompting the model. The whole pipeline streams to the UI via Server-Sent Events so a user can watch the agents think.
+
+## The two design choices that mattered most
+
+### 1. Deterministic skeleton, LLM polish
+
+When no Groq API key is configured, every agent runs on deterministic heuristics — the same numerical formulas, the same citation database, the same audit trail. Output is bit-identical between runs. The LLM is layered on top for narrative explanation, document extraction, and edge-case reasoning.
+
+Why this matters: insurance is a regulated industry. A model that produces different fault percentages on Tuesday than it did on Monday is not deployable. By making the math deterministic and the language model an *explainer on top*, the system is auditable without losing the value of LLMs where they actually help.
+
+> The LLM is not the strategy. It is the feature extractor and the narrator. The strategy is the codified math underneath.
+
+### 2. Citation integrity as a first-class metric
+
+Every statutory claim the system makes must trace to a real source in the knowledge base. The guardrail layer rejects unsourced citations before they reach the audit trail. The analytics dashboard tracks **citation integrity %** as a top-line metric, right alongside dollar recovery and win rate.
+
+Lawyers do not hire researchers who cite cases that do not exist. The same standard should apply to AI systems generating legal arguments — and almost no production GenAI system today actually enforces this.
+
+## The codified moat
+
+The "Intelligence" tab in Recoupe exposes the layer that actually does the work:
+
+- **Negligence rules** — comparative vs contributory negligence, made-whole doctrine, anti-subrogation rule, statutes of limitations, tolling rules — per US jurisdiction.
+- **Carrier graph** — observed settlement behaviour, typical offer-to-demand ratios, escalation thresholds for the major carriers.
+- **RAG collections** — the retrievable corpus the agents draw citations from.
+
+The agents are only as good as this knowledge base. Most of the actual work in shipping Recoupe was not LLM engineering — it was building this layer.
+
+## How the dashboard grades itself
+
+Recoupe runs against synthetic claims with **known-true** fault and recoverable values, which means the agents can be scored. The metrics on the analytics page:
+
+- **Total recovered** ($)
+- **Identified recoverable** ($) — the system's estimate of what was on the table
+- **Recovery rate %** — actual recovered divided by truly recoverable
+- **Win rate %** — claims that ended in a settlement above zero
+- **Quantum error %** — mean error on the recoverable dollar amount
+- **Liability MAE** — mean absolute error in fault percentage, in points
+- **Citation integrity %** — share of cited authorities that were genuinely retrieved
+
+This is the part I am proudest of. Most agentic systems do not have a quantitative answer to *"how right is it?"* Recoupe does, because the domain itself gives you a ground truth to measure against.
+
+## What this taught me about agentic AI
+
+Three lessons that generalize beyond insurance:
+
+1. **The agents are not the moat. The codified knowledge base is.** Anyone can wire seven LLM calls into a chain. Almost nobody can build the per-jurisdiction negligence map.
+2. **Deterministic skeleton + LLM polish beats LLM end-to-end.** For any regulated workflow, separate the math you can verify from the language that needs explaining. Run them on different layers.
+3. **Audit trails are a product feature, not an afterthought.** Every decision Recoupe makes records the model used, the confidence, the evidence retrieved, and the approver if any. That trail is what makes a compliance officer say yes.
+
+## Where systems like this go next
+
+Subrogation is one of dozens of insurance workflows that look identical from a build-perspective: codifiable rules, repeatable decisions, clear ground truth, regulatory pressure for explainability. Bad-faith review, coordination of benefits recovery, fraud triage, reinsurance allocation — same shape.
+
+The next decade of insurance technology will not be won by chatbots bolted onto policy admin systems. It will be won by autonomous pipelines, grounded in the codified law of each jurisdiction, that recover the money humans cannot afford to chase.
+
+[Try the live demo →](https://recoupe.onrender.com/#/dashboard)
+`,
+  },
+  {
     slug: 'jpmorgan-ai-bet-banking-future',
     title: "JPMorgan's $2B AI Bet: What 2,000 Use Cases Tell Us About Banking's Next Decade",
     excerpt: "Jamie Dimon spent $2B on AI in 2024 and built 2,000+ use cases. Here's what that signals for every engineer wanting to work in banking.",

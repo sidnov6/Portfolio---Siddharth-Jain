@@ -90,6 +90,23 @@ const projects = [
     github: 'https://github.com/sidnov6/Dam-Rehabilitation-Chatbot',
     demoUrl: 'https://dam-rehabilitation-chatbot-75ykbjzaxmyugbchirtoxp.streamlit.app/?embed=true',
     demoFallback: 'https://dam-rehabilitation-chatbot-75ykbjzaxmyugbchirtoxp.streamlit.app/',
+    demoPlatform: 'Streamlit',
+  },
+  {
+    id: 9, category: 'Gen AI',
+    title: 'Recoupe — Autonomous Subrogation',
+    org: 'Personal Project',
+    desc_en: 'Multi-agent platform that reads closed insurance claims, assigns fault by jurisdiction, computes the recoverable amount, drafts demand letters, and works counter-offers. Seven specialized agents over a RAG layer of US negligence law + carrier behaviour. Every decision citation-grounded and auditable.',
+    desc_de: 'Multi-Agent-Plattform, die abgeschlossene Versicherungsfälle liest, die Haftung pro Jurisdiktion zuordnet, den erstattungsfähigen Betrag berechnet, Forderungsschreiben verfasst und Gegenangebote bearbeitet. Sieben Agenten über einer RAG-Schicht aus US-Fahrlässigkeitsrecht + Carrier-Verhalten. Jede Entscheidung ist zitatgestützt und prüfungsfest.',
+    impact_en: '7 agents · citation-grounded',
+    impact_de: '7 Agenten · zitatgestützt',
+    tags: ['Multi-Agent', 'RAG', 'Groq', 'FastAPI', 'Insurance AI'],
+    color: '#4A1E3F', bg: 'rgba(74,30,63,0.06)',
+    live: true,
+    private: true,
+    demoUrl: 'https://recoupe.onrender.com/#/dashboard',
+    demoFallback: 'https://recoupe.onrender.com/#/dashboard',
+    demoPlatform: 'Render',
   },
   {
     id: 7, category: 'Gen AI',
@@ -124,11 +141,12 @@ const filters: { id: string; en: string; de: string }[] = [
   { id: 'Data Engineering', en: 'Data Engineering', de: 'Data Engineering' },
 ]
 
-function LiveDemoModal({ title, demoUrl, fallbackUrl, color, onClose }: {
+function LiveDemoModal({ title, demoUrl, fallbackUrl, color, platform, onClose }: {
   title: string
   demoUrl: string
   fallbackUrl: string
   color: string
+  platform?: string
   onClose: () => void
 }) {
   return (
@@ -143,7 +161,7 @@ function LiveDemoModal({ title, demoUrl, fallbackUrl, color, onClose }: {
             <div className="w-2.5 h-2.5 rounded-full animate-pulse" style={{ background: color }} />
             <div>
               <p className="font-bold text-[#1A1A18] text-sm">{title}</p>
-              <p className="text-[10px] text-[#8A9280] font-mono">Live Demo · Streamlit</p>
+              <p className="text-[10px] text-[#8A9280] font-mono">{platform ? `Live Demo · ${platform}` : 'Live Demo'}</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -281,6 +299,10 @@ export default function Projects() {
                     <a href={p.github} target="_blank" className="flex items-center gap-1.5 text-[#4A4A47] hover:text-[#1A1A18] text-xs font-medium transition-colors">
                       <Github size={14} /> Code
                     </a>
+                  ) : p.live ? (
+                    <span className="flex items-center gap-1.5 text-[#C0B8B0] text-xs">
+                      <Lock size={13} /> Source private
+                    </span>
                   ) : (
                     <span className="flex items-center gap-1.5 text-[#C0B8B0] text-xs">
                       <Lock size={13} /> Enterprise
@@ -319,6 +341,7 @@ export default function Projects() {
           demoUrl={demo.demoUrl}
           fallbackUrl={'demoFallback' in demo && demo.demoFallback ? demo.demoFallback : demo.demoUrl}
           color={demo.color}
+          platform={'demoPlatform' in demo ? demo.demoPlatform : undefined}
           onClose={() => setDemo(null)}
         />
       )}
