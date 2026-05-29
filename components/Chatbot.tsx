@@ -3,8 +3,22 @@ import { useState, useRef, useEffect } from 'react'
 import { X, Send, Bot, User, Minimize2, Maximize2, Loader2, Sparkles } from 'lucide-react'
 import { useLang } from '@/lib/language-context'
 import { track } from '@/lib/track'
+import cannedAnswers from '@/data/cannedAnswers.json'
 
 type Message = { role: 'user' | 'assistant'; content: string; id: string }
+
+const cannedByLang = cannedAnswers as unknown as Record<'en' | 'de', Record<string, string>>
+
+function lookupCanned(text: string, lang: 'en' | 'de'): string | null {
+  const table = cannedByLang[lang]
+  if (!table) return null
+  if (table[text]) return table[text]
+  const norm = text.toLowerCase().trim().replace(/[.!?]+$/, '')
+  for (const [k, v] of Object.entries(table)) {
+    if (k.toLowerCase().trim().replace(/[.!?]+$/, '') === norm) return v
+  }
+  return null
+}
 
 const starters = {
   en: [
@@ -112,6 +126,16 @@ export default function Chatbot({ isOpen, onClose, initialQuestion }: { isOpen: 
     setMessages(next)
     setInput('')
     setLoading(true)
+
+    const canned = lookupCanned(content, lang)
+    if (canned) {
+      track('chatbot_canned_hit', { lang })
+      await new Promise(r => setTimeout(r, 450))
+      setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), role: 'assistant', content: canned }])
+      setLoading(false)
+      return
+    }
+
     try {
       const res  = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: next, lang }) })
       const data = await res.json().catch(() => ({}))

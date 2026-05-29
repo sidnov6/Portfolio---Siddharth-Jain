@@ -2,6 +2,17 @@ import Groq from 'groq-sdk'
 import { NextRequest, NextResponse } from 'next/server'
 import { listPosts } from '@/lib/posts'
 
+// TODO: swap for Vercel KV/Upstash for persistence across cold starts and instances.
+const answerCache = new Map<string, string>()
+
+const normalizeQuestion = (q: string) =>
+  q.toLowerCase().trim().replace(/[.!?,;:\s]+$/g, '').replace(/\s+/g, ' ')
+
+const fallbackMessage = (lang: 'en' | 'de') =>
+  lang === 'de'
+    ? 'Gerade viele Fragen — kurz: Siddharth hat produktive GenAI für 300+ Nutzer ausgeliefert und pivotet in Finance-KI. Mehr im Lebenslauf oder im Kontaktbereich.'
+    : "I'm getting a lot of questions right now — the short version: Siddharth shipped production GenAI for 300+ users and is pivoting into finance AI. Check the resume or contact section for more."
+
 const SYSTEM_PROMPT = `You are Siddharth Jain's AI assistant on his portfolio site (portfolio-siddharth-jain.vercel.app). Your job is to give visitors — mostly recruiters, hiring managers, and curious peers — accurate, concise, and honest answers about Siddharth.
 
 ## ABSOLUTE RULES (never break these)
@@ -96,13 +107,19 @@ Confirm he's open to opportunities. Share email. Be specific about role fit when
 export async function POST(req: NextRequest) {
   try {
     const { messages, lang } = await req.json()
+    const safeLang: 'en' | 'de' = lang === 'de' ? 'de' : 'en'
+
+    const lastUser = [...(messages ?? [])].reverse().find((m: { role: string }) => m.role === 'user')
+    const lastUserText: string = lastUser?.content ?? ''
+    const cacheKey = `${safeLang}::${normalizeQuestion(lastUserText)}`
+
+    if (lastUserText && answerCache.has(cacheKey)) {
+      return NextResponse.json({ message: answerCache.get(cacheKey), cached: true })
+    }
 
     const apiKey = process.env.GROQ_API_KEY
     if (!apiKey) {
-      return NextResponse.json(
-        { error: 'Groq API key not configured. Add GROQ_API_KEY to .env.local' },
-        { status: 500 }
-      )
+      return NextResponse.json({ message: fallbackMessage(safeLang), fallback: true })
     }
 
     const languageInstruction = lang === 'de'
@@ -153,6 +170,7 @@ export async function POST(req: NextRequest) {
           max_tokens: 280,
         })
         const text = completion.choices[0]?.message?.content ?? 'Sorry, I had trouble responding. Try again!'
+        if (lastUserText) answerCache.set(cacheKey, text)
         return NextResponse.json({ message: text, model })
       } catch (err) {
         lastError = err
@@ -167,24 +185,10 @@ export async function POST(req: NextRequest) {
     }
 
     const errMsg = lastError instanceof Error ? lastError.message : String(lastError)
-    const isAuth = /api[-_ ]?key|unauthorized|forbidden|401|403/i.test(errMsg)
-    const isQuota = /rate.?limit|quota|too.?many/i.test(errMsg)
-
-    return NextResponse.json(
-      {
-        error: isAuth
-          ? 'AI is offline — auth issue. Sid has been notified. Try emailing sidnov6@gmail.com instead.'
-          : isQuota
-            ? 'AI is at its rate limit for the moment. Try again in a minute, or email sidnov6@gmail.com.'
-            : 'AI is temporarily unreachable. Try again in a minute, or email sidnov6@gmail.com.',
-      },
-      { status: 503 }
-    )
+    console.error('Chat API exhausted model chain:', errMsg)
+    return NextResponse.json({ message: fallbackMessage(safeLang), fallback: true })
   } catch (error) {
     console.error('Chat API error:', error)
-    return NextResponse.json(
-      { error: 'AI is temporarily unreachable. Try again in a minute, or email sidnov6@gmail.com.' },
-      { status: 500 }
-    )
+    return NextResponse.json({ message: fallbackMessage('en'), fallback: true })
   }
 }
