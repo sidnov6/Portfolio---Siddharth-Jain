@@ -226,12 +226,76 @@ function CommitteeArt({ color }: ArtProps) {
   )
 }
 
+/* AEGIS Live — AML surveillance: tx graph, a scan sweep, a red sanctioned bloom */
+function SurveillanceArt({ color }: ArtProps) {
+  const nodes = [
+    { x: 60, y: 60 }, { x: 130, y: 110 }, { x: 110, y: 40 },
+    { x: 200, y: 70 }, { x: 200, y: 138 }, { x: 300, y: 50 }, { x: 340, y: 120 },
+  ]
+  const links = [[0, 2], [0, 1], [2, 3], [1, 3], [1, 4], [3, 5], [4, 6], [3, 6]]
+  const flagged = { x: 300, y: 50 } // the sanctioned hit
+  const alert = '#FF5A6E'
+  return (
+    <svg className={frame} viewBox={vb} preserveAspectRatio={slice} aria-hidden>
+      <defs>
+        <linearGradient id="sv-bg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor={color} />
+          <stop offset="100%" stopColor={color} stopOpacity="0.78" />
+        </linearGradient>
+      </defs>
+      <rect width="400" height="180" fill="url(#sv-bg)" />
+      {/* faint grid */}
+      {[36, 90, 144].map(y => (
+        <line key={`h${y}`} x1="0" y1={y} x2="400" y2={y} stroke="#fff" strokeOpacity="0.05" strokeWidth="1" />
+      ))}
+      {[100, 200, 300].map(x => (
+        <line key={`v${x}`} x1={x} y1="0" x2={x} y2="180" stroke="#fff" strokeOpacity="0.05" strokeWidth="1" />
+      ))}
+      {/* graph edges */}
+      {links.map(([a, b], i) => (
+        <line key={i} x1={nodes[a].x} y1={nodes[a].y} x2={nodes[b].x} y2={nodes[b].y} stroke="#fff" strokeOpacity="0.16" strokeWidth="1" />
+      ))}
+      {/* transaction particles flowing along edges */}
+      <circle r="3" fill="#fff">
+        <animateMotion dur="2.6s" repeatCount="indefinite" path={`M${nodes[0].x} ${nodes[0].y} L${nodes[1].x} ${nodes[1].y} L${nodes[3].x} ${nodes[3].y}`} />
+      </circle>
+      <circle r="3" fill="#fff">
+        <animateMotion dur="3.1s" begin="0.8s" repeatCount="indefinite" path={`M${nodes[2].x} ${nodes[2].y} L${nodes[3].x} ${nodes[3].y} L${nodes[5].x} ${nodes[5].y}`} />
+      </circle>
+      <circle r="3" fill={alert}>
+        <animateMotion dur="2.9s" begin="0.4s" repeatCount="indefinite" path={`M${nodes[3].x} ${nodes[3].y} L${nodes[4].x} ${nodes[4].y} L${nodes[6].x} ${nodes[6].y}`} />
+      </circle>
+      {/* nodes */}
+      {nodes.map((n, i) => (
+        <circle key={i} cx={n.x} cy={n.y} r="6" fill="#fff" opacity="0.8">
+          <animate attributeName="opacity" values="0.45;0.9;0.45" dur="2.6s" begin={`${i * 0.25}s`} repeatCount="indefinite" />
+        </circle>
+      ))}
+      {/* sanctioned hit: red bloom */}
+      <circle cx={flagged.x} cy={flagged.y} r="6" fill={alert} />
+      {[0, 0.9].map((b, i) => (
+        <circle key={i} cx={flagged.x} cy={flagged.y} r="6" fill="none" stroke={alert} strokeWidth="2">
+          <animate attributeName="r" values="6;22" dur="1.8s" begin={`${b}s`} repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0.7;0" dur="1.8s" begin={`${b}s`} repeatCount="indefinite" />
+        </circle>
+      ))}
+      {/* scoring scan sweep */}
+      <line x1="0" y1="0" x2="0" y2="180" stroke="#fff" strokeWidth="1.5" strokeOpacity="0.5">
+        <animate attributeName="x1" values="-10;410" dur="3.2s" repeatCount="indefinite" />
+        <animate attributeName="x2" values="-10;410" dur="3.2s" repeatCount="indefinite" />
+        <animate attributeName="strokeOpacity" values="0;0.5;0" dur="3.2s" repeatCount="indefinite" />
+      </line>
+    </svg>
+  )
+}
+
 const registry: Record<string, (p: ArtProps) => ReactElement> = {
   dam: DamArt,
   agents: AgentsArt,
   radar: RadarArt,
   credit: CreditArt,
   committee: CommitteeArt,
+  surveillance: SurveillanceArt,
 }
 
 export default function ProjectArt({ art, color }: { art: string; color: string }) {

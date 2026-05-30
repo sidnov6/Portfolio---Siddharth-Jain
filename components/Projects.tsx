@@ -90,12 +90,30 @@ const projects = [
     demoFallback: 'https://frontend-nu-ecru-66.vercel.app/',
     demoPlatform: 'Vercel',
   },
+  {
+    id: 13, category: 'Data Engineering',
+    title: 'AEGIS Live — Real-Time Streaming AML',
+    org: 'Personal Project',
+    desc_en: 'A live surveillance wall that scores real Bitcoin-mempool transactions for money-laundering risk the instant they arrive. Resilient WebSocket ingestion → event bus with backpressure → a sliding-window transaction graph → an ensemble of sanctions screening, LightGBM, and anomaly detection → subgraph-explained alerts with LLM-drafted SARs. Fast-path p95 in single-digit milliseconds. Built solo for $0.',
+    desc_de: 'Eine Live-Überwachungswand, die echte Bitcoin-Mempool-Transaktionen im Moment ihres Eintreffens auf Geldwäscherisiko bewertet. Robuste WebSocket-Ingestion → Event-Bus mit Backpressure → gleitender Transaktionsgraph → Ensemble aus Sanktions-Screening, LightGBM und Anomalieerkennung → durch Teilgraphen erklärte Alerts mit LLM-verfassten SARs. Fast-Path-p95 im einstelligen Millisekundenbereich. Im Alleingang für $0 gebaut.',
+    impact_en: 'Live BTC mempool · single-digit-ms p95 latency',
+    impact_de: 'Live-BTC-Mempool · einstellige-ms-p95-Latenz',
+    tags: ['Streaming', 'AML', 'LightGBM', 'Graph', 'WebSocket', 'FastAPI'],
+    color: '#9B2D4F', bg: 'rgba(155,45,79,0.06)',
+    art: 'surveillance',
+    live: true,
+    github: 'https://github.com/sidnov6/aegis-live',
+    demoUrl: 'https://ui-kappa-kohl.vercel.app/',
+    demoFallback: 'https://ui-kappa-kohl.vercel.app/',
+    demoPlatform: 'Vercel',
+  },
 ]
 
 const filters: { id: string; en: string; de: string }[] = [
   { id: 'All',              en: 'All',              de: 'Alle' },
   { id: 'Gen AI',           en: 'Gen AI',           de: 'GenAI' },
   { id: 'Data Science',     en: 'Data Science',     de: 'Data Science' },
+  { id: 'Data Engineering', en: 'Data Engineering', de: 'Data Engineering' },
 ]
 
 function LiveDemoModal({ title, demoUrl, fallbackUrl, color, platform, onClose }: {
