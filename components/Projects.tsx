@@ -14,6 +14,7 @@ const projects = [
     impact_de: 'KI für Infrastruktur · Live',
     tags: ['Streamlit', 'Python', 'LLM', 'AI Chatbot', 'Civil AI'],
     color: '#1A6B8A', bg: 'rgba(26,107,138,0.06)',
+    shot: 'https://dam-rehabilitation-chatbot-75ykbjzaxmyugbchirtoxp.streamlit.app/',
     live: true,
     github: 'https://github.com/sidnov6/Dam-Rehabilitation-Chatbot',
     demoUrl: 'https://dam-rehabilitation-chatbot-75ykbjzaxmyugbchirtoxp.streamlit.app/?embed=true',
@@ -30,11 +31,12 @@ const projects = [
     impact_de: '7 Agenten · zitatgestützt',
     tags: ['Multi-Agent', 'RAG', 'Groq', 'FastAPI', 'Insurance AI'],
     color: '#4A1E3F', bg: 'rgba(74,30,63,0.06)',
+    shot: 'https://sidnov6-recoupe.hf.space',
     live: true,
     private: true,
-    demoUrl: 'https://recoupe.onrender.com/#/dashboard',
-    demoFallback: 'https://recoupe.onrender.com/#/dashboard',
-    demoPlatform: 'Render',
+    demoUrl: 'https://sidnov6-recoupe.hf.space/#/dashboard',
+    demoFallback: 'https://sidnov6-recoupe.hf.space/#/dashboard',
+    demoPlatform: 'Hugging Face Spaces',
   },
   {
     id: 10, category: 'Gen AI',
@@ -46,6 +48,7 @@ const projects = [
     impact_de: '100% Zitatintegrität · F1 0,957 auf DORA',
     tags: ['Multi-Agent', 'EU Regulation', 'RAG', 'FastAPI', 'Groq', 'EUR-Lex'],
     color: '#0A3B7A', bg: 'rgba(10,59,122,0.06)',
+    shot: 'https://sidnov6-regradar.hf.space',
     live: true,
     github: 'https://github.com/sidnov6/regradar',
     demoUrl: 'https://sidnov6-regradar.hf.space',
@@ -62,13 +65,37 @@ const projects = [
     impact_de: 'PD · LGD · EAD → EL · Basel / IRB',
     tags: ['LightGBM', 'PD / LGD / EAD', 'SHAP', 'Basel / IRB', 'FastAPI', 'Next.js'],
     color: '#0F4C5C', bg: 'rgba(15,76,92,0.06)',
+    shot: 'https://sidnov6-creditforge.hf.space',
     live: true,
     github: 'https://github.com/sidnov6/CreditForge',
     demoUrl: 'https://sidnov6-creditforge.hf.space',
     demoFallback: 'https://sidnov6-creditforge.hf.space',
     demoPlatform: 'Hugging Face Spaces',
   },
+  {
+    id: 12, category: 'Gen AI',
+    title: 'QUORUM — AI Investment Committee',
+    org: 'Personal Project',
+    desc_en: 'A simulated investment committee of specialized agents — bull, bear, macro strategist, quant/risk officer, PM, and critic — that argue from real market data across structured debate rounds and converge on a documented allocation, with a human holding the final gate. Every number is computed deterministically in Python (SEC EDGAR, prices, FRED); the LLM only narrates. Paper-only, point-in-time backtested vs SPY.',
+    desc_de: 'Ein simuliertes Investmentkomitee spezialisierter Agenten — Bull, Bear, Makro-Stratege, Quant/Risk-Officer, PM und Kritiker — die anhand echter Marktdaten über strukturierte Debattenrunden argumentieren und sich auf eine dokumentierte Allokation einigen, mit menschlichem Freigabe-Gate. Jede Zahl wird deterministisch in Python berechnet (SEC EDGAR, Kurse, FRED); das LLM erzählt nur. Reines Paper-Portfolio, Point-in-Time gegen SPY backgetestet.',
+    impact_en: '6 agents · deterministic numbers · backtested vs SPY',
+    impact_de: '6 Agenten · deterministische Zahlen · gegen SPY getestet',
+    tags: ['Multi-Agent', 'SEC EDGAR', 'Backtesting', 'FastAPI', 'Next.js', 'SSE'],
+    color: '#1F3A5F', bg: 'rgba(31,58,95,0.06)',
+    shot: 'https://frontend-nu-ecru-66.vercel.app/',
+    live: true,
+    github: 'https://github.com/sidnov6/quorum-investment-committee',
+    demoUrl: 'https://frontend-nu-ecru-66.vercel.app/',
+    demoFallback: 'https://frontend-nu-ecru-66.vercel.app/',
+    demoPlatform: 'Vercel',
+  },
 ]
+
+// Live screenshot via thum.io. The `wait` lets client-rendered SPAs hydrate
+// before capture, and the `?shot=1` token keeps the cache key off any blank
+// snapshot thum.io may have cached for the bare URL.
+const shotSrc = (url: string) =>
+  `https://image.thum.io/get/width/1200/crop/720/wait/15/noanimate/${url}${url.includes('?') ? '&' : '?'}shot=1`
 
 const filters: { id: string; en: string; de: string }[] = [
   { id: 'All',              en: 'All',              de: 'Alle' },
@@ -190,22 +217,31 @@ export default function Projects() {
         <div className="reveal grid md:grid-cols-2 xl:grid-cols-3 gap-5">
           {shown.map(p => (
             <div key={p.id} className="group bg-[#F8F5EE] border border-[#E4E0D6] rounded-2xl overflow-hidden card-lift flex flex-col">
-              {/* Top color band */}
-              <div className="relative h-36 flex items-center justify-center overflow-hidden" style={{ background: p.bg }}>
+              {/* Top screenshot band */}
+              <div className="relative h-44 overflow-hidden" style={{ background: p.bg }}>
+                {/* Live screenshot of the project (auto-rendered via thum.io) */}
+                <img
+                  src={shotSrc(p.shot)}
+                  alt={p.title}
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  onError={e => { (e.currentTarget as HTMLImageElement).style.opacity = '0' }}
+                />
+                {/* Readability scrim */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/5 to-black/25" />
                 {/* Category pill */}
-                <div className="relative z-10 flex flex-col items-center gap-2">
-                  <span className="text-xs font-bold font-mono uppercase tracking-widest px-3 py-1 rounded-full"
-                    style={{ background: `${p.color}15`, color: p.color }}>
-                    {p.category}
-                  </span>
-                  <span className="text-[10px] text-[#8A9280] font-mono">{p.org}</span>
-                </div>
+                <span className="absolute top-3 left-3 z-10 text-[11px] font-bold font-mono uppercase tracking-widest px-3 py-1 rounded-full backdrop-blur-sm shadow-sm"
+                  style={{ background: `${p.color}E6`, color: '#fff' }}>
+                  {p.category}
+                </span>
                 {p.live && (
-                  <div className="absolute top-3 right-3 flex items-center gap-1.5 bg-white/80 backdrop-blur-sm rounded-full px-2.5 py-1">
+                  <div className="absolute top-3 right-3 z-10 flex items-center gap-1.5 bg-white/90 backdrop-blur-sm rounded-full px-2.5 py-1 shadow-sm">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#3DAA72] animate-pulse" />
                     <span className="text-[10px] font-mono text-[#1A3D2B] font-bold">LIVE</span>
                   </div>
                 )}
+                {/* Org label */}
+                <span className="absolute bottom-3 left-3 z-10 text-[11px] text-white/95 font-mono drop-shadow-md">{p.org}</span>
               </div>
 
               <div className="p-5 flex flex-col flex-1">
