@@ -1,0 +1,35 @@
+name: Keep demos warm
+
+# Pings the free-tier demo backends so recruiters don't hit a cold-start
+# spinner. Render sleeps after ~15 min idle (the tightest window), so we run
+# every 10 minutes. HF Spaces sleep after ~48h idle; Streamlit similar.
+# Public repo => unlimited Actions minutes. Failures are ignored (best-effort).
+#
+# Note: GitHub may delay scheduled runs under load, and disables schedules
+# after 60 days of no repo activity — re-enable from the Actions tab if so.
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping demo backends
+        run: |
+          urls=(
+            "https://quorum-api-a81d.onrender.com/api/health"
+            "https://sidnov6-aegis-live-backend.hf.space/api/health"
+            "https://sidnov6-regradar.hf.space"
+            "https://sidnov6-creditforge.hf.space"
+            "https://sidnov6-recoupe.hf.space"
+            "https://dam-rehabilitation-chatbot-75ykbjzaxmyugbchirtoxp.streamlit.app/"
+          )
+          for u in "${urls[@]}"; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 25 -A "keep-warm-bot" "$u" || echo "ERR")
+            echo "$code  $u"
+          done
+          # Best-effort: never fail the job over a sleeping/transient backend.
+          exit 0
