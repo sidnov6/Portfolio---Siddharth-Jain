@@ -1,7 +1,8 @@
 'use client'
 import { useEffect, useRef } from 'react'
+import { Download } from 'lucide-react'
 import { useLang } from '@/lib/language-context'
-import ResumeEmbed from '@/components/ResumeEmbed'
+import { track } from '@/lib/track'
 
 const photos = [
   { src: '/beyond/IMG_5397.jpg',   caption: 'Georgia Tech, Atlanta',    caption_de: 'Georgia Tech, Atlanta',      span: 'col-span-1 row-span-2' },
@@ -131,17 +132,27 @@ export default function About() {
           </div>
         </div>
 
-        {/* Embedded resume — auto-syncs from admin Resume Builder */}
+        {/* Resume — download CTA */}
         <div className="reveal mb-20">
-          <div className="flex items-baseline justify-between mb-6 flex-wrap gap-2">
+          <div className="flex flex-col items-center text-center gap-4 border border-[#E4E0D6] rounded-2xl bg-white py-10 px-6">
             <p className="text-xs font-mono uppercase tracking-[0.2em] text-[#3DAA72]">
-              {isDE ? 'Lebenslauf · live' : 'Resume · live'}
+              {isDE ? 'Lebenslauf' : 'Resume'}
             </p>
-            <p className="text-xs text-[#8A9280]">
-              {isDE ? 'ATS-konform · einspaltig · stets aktuell' : 'ATS-friendly · single column · always current'}
+            <p className="text-[#6E7A70] text-sm max-w-md leading-relaxed">
+              {isDE
+                ? 'Die vollständige einseitige PDF — ATS-konform und stets aktuell.'
+                : 'The full one-page PDF — ATS-friendly and always current.'}
             </p>
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              onClick={() => track('resume_download', { source: 'about' })}
+              className="inline-flex items-center gap-2 px-5 py-3 bg-[#1A3D2B] text-white rounded-xl text-sm font-semibold hover:bg-[#2D7A52] transition-colors shadow-md shadow-[#1A3D2B]/20"
+            >
+              <Download size={16} />
+              {isDE ? 'Lebenslauf herunterladen' : 'Download Resume'}
+            </a>
           </div>
-          <ResumeEmbed />
         </div>
 
         {/* Photo collage — full width */}

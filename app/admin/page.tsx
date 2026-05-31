@@ -1,6 +1,5 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
-import ResumeBuilder from '@/components/admin/ResumeBuilder'
 
 interface Analytics {
   pageviews: number
@@ -48,7 +47,7 @@ export default function AdminPage() {
   const [authed, setAuthed] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const [tab, setTab] = useState<'analytics' | 'posts' | 'resume'>('analytics')
+  const [tab, setTab] = useState<'analytics' | 'posts'>('analytics')
 
   /* analytics */
   const [data, setData] = useState<Analytics | null>(null)
@@ -203,19 +202,12 @@ export default function AdminPage() {
             onClick={() => setTab('posts')}
             className={`px-4 py-3 text-sm font-semibold border-b-2 transition-colors ${tab === 'posts' ? 'border-[#1A3D2B] text-[#1A3D2B]' : 'border-transparent text-[#8A9280] hover:text-[#1A1A18]'}`}
           >✍️ Posts ({posts.length})</button>
-          <button
-            onClick={() => setTab('resume')}
-            className={`px-4 py-3 text-sm font-semibold border-b-2 transition-colors ${tab === 'resume' ? 'border-[#1A3D2B] text-[#1A3D2B]' : 'border-transparent text-[#8A9280] hover:text-[#1A1A18]'}`}
-          >📄 Resume Builder</button>
         </div>
 
         {/* ── ANALYTICS TAB ── */}
         {tab === 'analytics' && data && (
           <AnalyticsView data={data} />
         )}
-
-        {/* ── RESUME TAB ── */}
-        {tab === 'resume' && <ResumeBuilder pwd={pwd} />}
 
         {/* ── POSTS TAB ── */}
         {tab === 'posts' && (
